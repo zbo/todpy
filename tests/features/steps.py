@@ -16,4 +16,4 @@ def check_number(step, expected):
         "Got %d" % world.number
 
 def factorial(number):
-    return -1
+    return 1
