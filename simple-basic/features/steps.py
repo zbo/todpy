@@ -12,6 +12,7 @@ def compute_its_fatorial(step):
 
 @step('I see the number (\d+)')
 def check_number(step, expected):
+    #pdb.set_trace()
     expected = int(expected)
     assert world.number == expected, \
         "Got %d" % world.number

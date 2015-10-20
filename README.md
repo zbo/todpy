@@ -9,3 +9,6 @@ solve:http://www.microsoft.com/en-us/download/details.aspx?id=44266
 
 issue:pkg_resources.DistributionNotFound: The 'funcsigs' distribution was not found and is required by mock
 solve:pip install funcsigs
+
+run it:
+run at this folder, python runner.py simple-selenium
