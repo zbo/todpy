@@ -1,2 +1,3 @@
 /.idea
 /web/*.sqlite3
+/web/*/*.pyc
