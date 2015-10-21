@@ -7,6 +7,9 @@ http://pythonhosted.org/lettuce/
 pip install lettuce<br/>
 easy_install python-Levenshtein<br/>
 ***
+install selenium
+pip install -U selenium
+***
 <h5 style="color:#6ab344">
 issue:visual c++ 9.0 required
 </h5>
