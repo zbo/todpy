@@ -22,3 +22,6 @@ solve:pip install funcsigs
 ***
 <h5 style="color:#6ab344">run it:</h5>
 run at this folder, python runner.py simple-selenium
+***
+<h5 style="color:#C72A7E">Web part:</h5>
+pip install Django==1.7.6
