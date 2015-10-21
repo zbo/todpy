@@ -1,13 +1,15 @@
 import sys
+sys.path.append("..")
 import lettuce
 
-def load_setps(base_path):
-    FileSystem = lettuce.fs.FileSystem
-    files = FileSystem.locate(base_path, '*.py')
+def load_steps(base_path):
+    filesystem = lettuce.fs.FileSystem
+    all=[]
+    files = filesystem.locate(base_path, '*.py')
     for filename in files:
-        root = FileSystem.dirname(filename)
+        root = filesystem.dirname(filename)
         sys.path.insert(0, root)
-        to_load = FileSystem.filename(filename, with_extension=False)
+        to_load = filesystem.filename(filename, with_extension=False)
         try:
             module = __import__(to_load)
         except ValueError as e:
@@ -16,12 +18,12 @@ def load_setps(base_path):
             if 'empty module name' in err_msg.lower():
                 continue
             else:
-                e.args = ('{0} when importing {1}'
-                          .format(e, filename)),
+                e.args = ('{0} when importing {1}'.format(e, filename)),
                 raise e
 
         reload(module)  # always take fresh meat :)
+        all.append(module)
         sys.path.remove(root)
-        return module
+    return all
 
 

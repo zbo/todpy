@@ -7,7 +7,7 @@ import pdb
 
 
 @step("I open page \'([^\']*)\'")
-def open_page(step, url):
+def when_i_open_page(step, url):
     # pdb.set_trace()
     world.browser = webdriver.Chrome()
     world.browser.get(url)

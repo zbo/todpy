@@ -1,3 +1,9 @@
 expose steps to web
 1. Main entry point at /Library/Python/2.7/site-packages/lettuce/bin.py
 2. Make a test to get steps from certain folder
+
+
+
+# [file can be loaded]
+# ffs=l_runner.loader.find_feature_files()
+# steps=l_runner.loader.find_and_load_step_definitions()
