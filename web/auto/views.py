@@ -7,6 +7,9 @@ def index(request):
     steps=Steps.getStepByFolder()
     return render(request, 'auto/index.html', {'steps': steps})
 
+def create(request):
+    return render(request, 'auto/create.html')
+
 def detail(request, question_id):
     return HttpResponse("You're looking at question %s." % question_id)
 

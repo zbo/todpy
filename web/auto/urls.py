@@ -6,6 +6,8 @@ from . import views
 urlpatterns = [
     # ex: /auto/
     url(r'^$', views.index, name='index'),
+    # ex: /auto/create
+    url(r'create', views.create, name='create'),
     # ex: /auto/5/
     url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     # ex: /auto/5/results/
