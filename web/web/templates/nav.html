@@ -1,25 +1,33 @@
 <div class="container-fluid">
-      <div class="row">
+    <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
-          <!--<ul class="nav nav-sidebar">-->
+            <ul class="nav nav-sidebar">
+                <!--<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
+                <li><a href="/auto">List</a></li>
+                <li><a href="/auto/create">Create</a></li>
+                <li><a href="/auto/execute">Exe</a></li>
+            </ul>
+            <!--<ul class="nav nav-sidebar">-->
             <!--<li><a href="">Nav item</a></li>-->
             <!--<li><a href="">Nav item again</a></li>-->
             <!--<li><a href="">One more nav</a></li>-->
             <!--<li><a href="">Another nav item</a></li>-->
             <!--<li><a href="">More navigation</a></li>-->
-          <!--</ul>-->
-          <!--<ul class="nav nav-sidebar">-->
+            <!--</ul>-->
+            <!--<ul class="nav nav-sidebar">-->
             <!--<li><a href="">Nav item again</a></li>-->
             <!--<li><a href="">One more nav</a></li>-->
             <!--<li><a href="">Another nav item</a></li>-->
-          <!--</ul>-->
+            <!--</ul>-->
         </div>
-        {% block content %} {% endblock %}
-      </div>
     </div>
+</div>
+<!--<script type="text/javascript">-->
+    <!--$(document).ready(function(){-->
+        <!--all_nav_li=$(".sidebar").find("li");-->
+        <!--$(all_nav_li).bind("click",function(){-->
+          <!--$(all_nav_li).addClass("active");-->
+        <!--});-->
+        <!--//debugger-->
+    <!--})-->
+<!--</script>-->
