@@ -31,11 +31,11 @@
   <body>
     {% include 'header.html' %}
     {% include 'nav.html' %}
-
+    {% block content %} {% endblock %}
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <!-- script src="{{ STATIC_URL }}js/holder.min.js"></script-->
