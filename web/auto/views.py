@@ -1,8 +1,11 @@
 from django.http import HttpResponse
-
+from django.shortcuts import render, get_object_or_404
+from models import Steps
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the auto index.")
+    #return HttpResponse("Hello, world. You're at the auto index.")
+    steps=Steps.getStepByFolder()
+    return render(request, 'auto/index.html', {'steps': steps})
 
 def detail(request, question_id):
     return HttpResponse("You're looking at question %s." % question_id)
