@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     # ex: /auto/create
     url(r'create', views.create, name='create'),
+    # ex: /auto/sample
+    url(r'sample', views.sample, name='sample'),
     # ex: /auto/5/
     url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     # ex: /auto/5/results/

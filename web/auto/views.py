@@ -10,6 +10,9 @@ def index(request):
 def create(request):
     return render(request, 'auto/create.html')
 
+def sample(request):
+    return render(request, 'auto/sample.html')
+
 def detail(request, question_id):
     return HttpResponse("You're looking at question %s." % question_id)
 
