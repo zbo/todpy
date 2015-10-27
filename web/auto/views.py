@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from models import Steps
+from models import Step
+import pdb
 
 def index(request):
-    #return HttpResponse("Hello, world. You're at the auto index.")
-    steps=Steps.getStepByFolder()
+    steps=Step.getStepByFolder()
+    print steps
     return render(request, 'auto/index.html', {'steps': steps})
 
 def create(request):

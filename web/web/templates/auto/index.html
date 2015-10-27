@@ -3,12 +3,40 @@
 {% block content %}
 <script type="text/javascript">
     active_nav_path(window.location.pathname)
+
+
 </script>
 <!--<script type="text/babel" src="{{ STATIC_URL }}react/sample/counter.js"></script>-->
-<script type="text/babel" src="{{ STATIC_URL }}react/auto/steplist.js"></script>
+<!--<script type="text/babel" src="{{ STATIC_URL }}react/auto/steplist.js"></script>-->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 class="page-header">All steps</h1>
-    <div id="steps_list"></div>
+    <!--<div id="steps_list"></div>-->
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>steps</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key in steps.keys %}
+                    <tr>
+                        <td>
+                            <div>{{ key }}</div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-sm-8 -->
 </div>
 
 {% endblock %}
