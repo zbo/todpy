@@ -4,23 +4,11 @@
 <script type="text/javascript">
     active_nav_path(window.location.pathname)
 </script>
-<script type="text/babel" src="{{ STATIC_URL }}react/sample/counter.js"></script>
+<!--<script type="text/babel" src="{{ STATIC_URL }}react/sample/counter.js"></script>-->
+<script type="text/babel" src="{{ STATIC_URL }}react/auto/steplist.js"></script>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">
-        <div id="message" align="center"></div>
-    </h1>
-
-    <div class="col-sm-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Panel title</h3>
-            </div>
-            <div class="panel-body">
-                Panel content
-            </div>
-        </div>
-    </div>
-    <!-- /.col-sm-8 -->
+    <h1 class="page-header">All steps</h1>
+    <div id="steps_list"></div>
 </div>
 
 {% endblock %}
