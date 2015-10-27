@@ -9,6 +9,7 @@ def index(request):
     return render(request, 'auto/index.html', {'steps': steps})
 
 def create(request):
+
     return render(request, 'auto/create.html')
 
 def sample(request):

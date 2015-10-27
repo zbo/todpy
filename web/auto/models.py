@@ -30,3 +30,16 @@ class Step(models.Model):
             mergedDict.update(modules[i].STEP_REGISTRY)
             resultDict=mergedDict
         return resultDict
+
+
+class Feature(models.Model):
+    description = models.CharField(max_length=255)
+    module=models.CharField(max_length=255)
+    location = models.TextField()
+
+class Scenario(models.Model):
+    scenario = models.CharField(max_length=255)
+    feature = models.ForeignKey(Feature, related_name=("feature_scenario"))
+    description = models.CharField(max_length=255)
+    location = models.TextField()
+    #TODO dataset
