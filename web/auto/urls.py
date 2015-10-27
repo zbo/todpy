@@ -8,6 +8,10 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     # ex: /auto/create
     url(r'create', views.create, name='create'),
+
+    # ex: /auto/search_steps
+    url(r'search_steps', views.search_steps, name='search_steps'),
+
     # ex: /auto/sample
     url(r'sample', views.sample, name='sample'),
     # ex: /auto/5/

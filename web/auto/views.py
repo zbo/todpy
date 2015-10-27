@@ -1,16 +1,23 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from models import Step
+import json
 import pdb
 
 def index(request):
-    steps=Step.getStepByFolder()
-    print steps
+    steps=Step.getStepByFolder('../simple-selenium')
     return render(request, 'auto/index.html', {'steps': steps})
 
 def create(request):
-
     return render(request, 'auto/create.html')
+
+# http://localhost:8000/auto/search_steps?key_word=aaa&type=when
+def search_steps(request):
+    key_word = request.GET.get('key_word')
+    type=request.GET.get('type')
+    response_data=Step.searchStep(key_word,type)
+    pdb.set_trace()
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def sample(request):
     return render(request, 'auto/sample.html')

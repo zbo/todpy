@@ -6,19 +6,22 @@ import lettuce
 sys.path.append('../')
 sys.path.append('../../')
 from steploader import load_steps
+import jsons
 
 # Create your models here.
-base_path = '../simple-selenium'
 
 class Step(models.Model):
+    def __init__(self,function,description):
+        self.function=function
+        self.description=description
+
     function = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     module=models.CharField(max_length=255)
     location = models.TextField()
 
     @staticmethod
-    def getStepByFolder():
-        #pdb.set_trace()
+    def getStepByFolder(base_path):
         resultDict={}
         tags = None
         l_runner = lettuce.Runner(
@@ -30,6 +33,16 @@ class Step(models.Model):
             mergedDict.update(modules[i].STEP_REGISTRY)
             resultDict=mergedDict
         return resultDict
+
+    @staticmethod
+    def searchStep(key_word,type):
+        dict=Step.getStepByFolder('../simple-selenium')
+        keys=dict.keys()
+        #pdb.set_trace()
+        result={}
+        for key in keys:
+            result[key]=dict[key].func_name
+        return result
 
 
 class Feature(models.Model):
