@@ -3,11 +3,9 @@
 {% block content %}
 <script type="text/javascript">
 active_nav_path(window.location.pathname)
-
-
-
 </script>
-<script type="text/babel" src="{{ STATIC_URL }}js/create/app.js"></script>
+
+
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="toolbar pull-right">
@@ -25,20 +23,60 @@ active_nav_path(window.location.pathname)
                     </button>
                 </div>
                 <div class="panel-body">
-                    <div class="btn-group" role="group" style="display:flex" >
-                           <button type="button" class="btn btn-default">Add Step</button>
+                    <div class="btn-group" role="group" style="display:flex; margin-bottom: 5px" >
+                           <button name="add-step" type="button" class="btn btn-default">Add Step</button>
                     </div>
 
                     <div class="well well-sm">
-                        When I login as a valid user
+                        <div class="row">
+                            <div class="col-md-10" data-type="when">When I login as a valid user</div>
+                            <div class="col-md-2">
+                                <button class="step-edit-btn btn btn-xs btn-primary">Edit</button>
+                                <button class="step-delete-btn btn btn-xs btn-danger">X</button></div>
+                        </div>
                     </div>
 
                     <div class="well well-sm">
-                        When I have a developer account
+                        <div class="row">
+                            <div class="col-md-10" >
+                                <span data-type="when" style="font-weight:bold" class="step-type">When</span>
+                                <span class="step-description">I have a developer account</span>
+                            </div>
+
+                            <div class="col-md-2">
+                                <button class="step-edit-btn btn btn-xs btn-primary">Edit</button>
+                                <button class="step-delete-btn btn btn-xs btn-danger">X</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h4>Filter by Type</h4>
+                                <select id="select-step-type" style="width:80px">
+                                    <option>Given </option>
+                                    <option>When </option>
+                                    <option>Then </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Select Step</h4>
+                                <select id="select-step" style="width:100%">
+                                    <option>When I login as a valid user</option>
+                                    <option>When I have a developer account</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-8" style="margin-top:5px;">
+                                <button class="btn btn-sm btn-primary">OK</button>
+                                <button class="btn btn-sm btn-danger">Cancel</button>
+                            </div>
+                        </div>
                     </div>
 
 
-                    Panel content
                 </div>
             </div>
         </div>
@@ -59,7 +97,6 @@ active_nav_path(window.location.pathname)
         </div>
     </div>
 
-
-
-
-    {% endblock %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/select2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/create/app.js"></script>
+{% endblock %}

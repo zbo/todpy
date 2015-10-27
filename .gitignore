@@ -1,7 +1,5 @@
 /.idea
 /web/*.sqlite3
-<<<<<<< HEAD
 *.pyc
-=======
 /web/*/*.pyc
->>>>>>> 42bce1774c046f66470603e39707166bfd7ea2bc
+node_modules/

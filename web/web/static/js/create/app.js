@@ -14,3 +14,20 @@ function appendScenarioForm(domElement){
        domElement.append(container);
 
 }
+
+var TOD = TOD || {};
+TOD.btn = {};
+
+$(document).ready(function(){
+    $(".step-edit-btn").click(function(e){
+      TOD.btn = e.target;
+      console.log(TOD.btn)
+      var step_container = $(TOD.btn.parentElement.previousElementSibling);
+      TOD.selectedType = step_container.find("span.step-type")[0].dataset["type"];
+      TOD.selectedStep = step_container.find("span.step-description")[0].innerHTML;
+
+
+    });
+
+    $("select").select2();
+});
