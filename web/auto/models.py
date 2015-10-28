@@ -6,7 +6,6 @@ import lettuce
 sys.path.append('../')
 sys.path.append('../../')
 from steploader import load_steps
-import jsons
 
 # Create your models here.
 
