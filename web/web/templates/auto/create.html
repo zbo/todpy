@@ -5,8 +5,6 @@
 active_nav_path(window.location.pathname)
 </script>
 
-
-
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="toolbar pull-right">
         <button id="create_scenario" class="btn btn-default btn-sm">Create</button>
@@ -15,7 +13,7 @@ active_nav_path(window.location.pathname)
 
     <div class="row">
         <div id="scenarios-container" class="col-sm-8">
-            <div class="panel panel-default">
+            <div class="panel panel-default hide">
                 <div class="panel-heading">
                     <h3 class="panel-title" style="display: inline-block;">Scenario</h3>
                     <button class="btn btn-sm btn-default" style="right: 24px;position: absolute;">
@@ -38,7 +36,7 @@ active_nav_path(window.location.pathname)
 
                     <div class="well well-sm">
                         <div class="row">
-                            <div class="col-md-10" >
+                            <div class="col-md-10"  style="border-right:1px dashed gray">
                                 <span data-type="when" style="font-weight:bold" class="step-type">When</span>
                                 <span class="step-description">I have a developer account</span>
                             </div>
@@ -52,32 +50,40 @@ active_nav_path(window.location.pathname)
 
                     <div class="well well-sm">
                         <div class="row">
-                            <div class="col-sm-3">
-                                <h4>Filter by Type</h4>
+                            <div class="col-sm-2">
+                                <h4>By Type</h4>
                                 <select id="select-step-type" style="width:80px">
                                     <option>Given </option>
                                     <option>When </option>
                                     <option>Then </option>
                                 </select>
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8" style="border-right:1px dashed gray">
                                 <h4>Select Step</h4>
                                 <select id="select-step" style="width:100%">
                                     <option>When I login as a valid user</option>
                                     <option>When I have a developer account</option>
                                 </select>
                             </div>
+                            <div class="col-sm-2" style="margin-top:20px">
+                                <button class="step-save-btn btn btn-xs btn-success">Save</button>
+                                <button class="step-discard-btn btn btn-xs btn-danger">X</button>
+                            </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4 col-md-offset-8" style="margin-top:5px;">
                                 <button class="btn btn-sm btn-primary">OK</button>
                                 <button class="btn btn-sm btn-danger">Cancel</button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
+<!--                     <div id="stepContainer">
+                    </div> -->
 
                 </div>
+            </div>
+            <div id="featureContainer">
             </div>
         </div>
         <!-- /.col-sm-8 -->
@@ -96,6 +102,13 @@ active_nav_path(window.location.pathname)
             <!-- /.col-sm-4 -->
         </div>
     </div>
+    <script type="text/javascript">
+        var TOD = TOD || {};
+        TOD.react = TOD.react || {};
+    </script>
+    <!-- <script type="text/babel" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>-->
+    <script type="text/babel" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>
+    <!-- <script type="text/babel" src="{{ STATIC_URL }}react/auto/scenario-container.jsx"></script> -->
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/select2.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/create/app.js"></script>

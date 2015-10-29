@@ -5,8 +5,12 @@ import lettuce
 sys.path.append('../')
 sys.path.append('../../')
 from steploader import load_steps
+<<<<<<< HEAD
 from config.models import FeatureLocation
 from django.db import models
+=======
+# import jsons
+>>>>>>> add react for scenario editing
 
 # Create your models here.
 
