@@ -1,17 +1,17 @@
 - model: config.FeatureLocation
   pk: 1
   fields:
-    type: Ios
+    type: ios
     location: libraries/ios
 
 - model: config.FeatureLocation
   pk: 2
   fields:
-    type: Android
+    type: android
     location: libraries/android
 
 - model: config.FeatureLocation
   pk: 3
   fields:
-    type: Android
+    type: web
     location: libraries/web

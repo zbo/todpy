@@ -1,20 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!--<script type="text/babel" src="{{ STATIC_URL }}react/sample/counter.js"></script>-->
+<!--<script type="text/babel" src="{{ STATIC_URL }}react/auto/steplist.js"></script>-->
+<!--<script type="text/javascript" src="{{ STATIC_URL }}js/select2.js"></script>-->
 <script type="text/javascript">
-    active_nav_path(window.location.pathname)
+active_nav_path(window.location.pathname)
+$(document).ready(function(){
+
+})
+
 
 
 </script>
-<!--<script type="text/babel" src="{{ STATIC_URL }}react/sample/counter.js"></script>-->
-<!--<script type="text/babel" src="{{ STATIC_URL }}react/auto/steplist.js"></script>-->
+
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 class="page-header">All steps</h1>
     <!--<div id="steps_list"></div>-->
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Panel title</h3>
+                <h3 class="panel-title">select type</h3>
+            </div>
+            <div class="panel-body">
+                <!-- Single button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Load Steps From<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="search_steps?type=ios">ios</a></li>
+                        <li><a href="search_steps?type=android">android</a></li>
+                        <li><a href="search_steps?type=web">web</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="search_steps?type=all">all</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">current in memory</h3>
             </div>
             <div class="panel-body">
                 <table class="table table-striped">

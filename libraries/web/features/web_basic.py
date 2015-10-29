@@ -4,7 +4,7 @@ from selenium import webdriver
 import time
 
 
-@step("I lunch browser")
+@step("I lunch web")
 def when_i_lunch_browser(step):
     world.browser = webdriver.Chrome()
 
@@ -33,6 +33,6 @@ def then_i_see_the_group1_in_the_title(step, text):
     assert text in world.browser.title
 
 
-@step("I close the browser")
+@step("I close the web")
 def when_i_close_browser(step):
     world.browser.close()

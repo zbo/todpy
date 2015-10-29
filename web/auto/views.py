@@ -14,7 +14,7 @@ def index(request):
 def create(request):
     return render(request, 'auto/create.html')
 
-# http://localhost:8000/auto/search_steps?key_word=aaa&type=when
+# http://localhost:8000/auto/search_steps?key_word=aaa&type=ios
 def search_steps(request):
     key_word = request.GET.get('key_word')
     type=request.GET.get('type')

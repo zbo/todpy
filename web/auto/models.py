@@ -28,6 +28,8 @@ class Step(models.Model):
             base_path=base_path
         )
         modules = load_steps(base_path)
+
+        pdb.set_trace()
         for i in range(len(modules)):
             mergedDict=resultDict.copy()
             mergedDict.update(modules[i].STEP_REGISTRY)
@@ -36,8 +38,9 @@ class Step(models.Model):
 
     @staticmethod
     def searchStep(key_word,type):
-        pdb.set_trace()
-        dict=Step.getStepByFolder('../simple-selenium')
+        #location need list
+        location=FeatureLocation.objects.filter(type=type).first().location
+        dict=Step.getStepByFolder('../'+location)
         keys=dict.keys()
         #pdb.set_trace()
         result={}

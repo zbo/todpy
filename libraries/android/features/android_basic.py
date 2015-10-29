@@ -8,7 +8,7 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-@step("I lunch app in device")
+@step("I lunch android app in device")
 def i_lunch_app_in_device(step):
     desired_caps = {}
     desired_caps['platformName'] = 'Android'
@@ -23,6 +23,6 @@ def i_lunch_app_in_device(step):
     pass
 
 
-@step("I quit app")
+@step("I quit android app")
 def i_quit_app(step):
     pass
