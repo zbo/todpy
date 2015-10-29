@@ -39,10 +39,10 @@ class Step(models.Model):
             keys=dict.keys()
             temp={}
             for key in keys:
+                #pdb.set_trace()
                 temp[key]=dict[key].func_name
             result=result.copy()
             result.update(temp)
-        pdb.set_trace()
         return result
 
 

@@ -21,3 +21,9 @@
   fields:
     type: web
     location: libraries/web/assert
+
+- model: config.AppSetting
+  pk: 1
+  fields:
+    type: workspace
+    value: workspaces
