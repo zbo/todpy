@@ -28,11 +28,6 @@ def when_i_click_element_with_text(step, text):
     time.sleep(2)
 
 
-@step("I see the \'([^\']*)\' in the title")
-def then_i_see_the_group1_in_the_title(step, text):
-    assert text in world.browser.title
-
-
 @step("I close the web")
 def when_i_close_browser(step):
     world.browser.close()

@@ -23,13 +23,7 @@ class Step(models.Model):
     @staticmethod
     def getStepByFolder(base_path):
         resultDict={}
-        tags = None
-        l_runner = lettuce.Runner(
-            base_path=base_path
-        )
         modules = load_steps(base_path)
-
-        pdb.set_trace()
         for i in range(len(modules)):
             mergedDict=resultDict.copy()
             mergedDict.update(modules[i].STEP_REGISTRY)
@@ -38,14 +32,17 @@ class Step(models.Model):
 
     @staticmethod
     def searchStep(key_word,type):
-        #location need list
-        location=FeatureLocation.objects.filter(type=type).first().location
-        dict=Step.getStepByFolder('../'+location)
-        keys=dict.keys()
-        #pdb.set_trace()
-        result={}
-        for key in keys:
-            result[key]=dict[key].func_name
+        feature_locations=FeatureLocation.objects.filter(type=type)
+        result = {}
+        for fl in feature_locations:
+            dict=Step.getStepByFolder('../'+fl.location)
+            keys=dict.keys()
+            temp={}
+            for key in keys:
+                temp[key]=dict[key].func_name
+            result=result.copy()
+            result.update(temp)
+        pdb.set_trace()
         return result
 
 

@@ -10,7 +10,7 @@ desired_caps['appPackage'] = 'com.ringcentral.android'
 desired_caps['unicodeKeyboard'] = 'True'
 desired_caps['resetKeyboard'] = 'True'
 desired_caps['appActivity'] = '.LoginScreen'
-desired_caps['app'] = 'E:/dev/dev-code/learning/appiumPy/apps/RCMobile_7.5.0.1.125_XIA_UP_Automation.apk'
+desired_caps['app'] = 'E:/dev/dev-code/learning/appiumPy/apps/RCMobile_7.5.action.125_XIA_UP_Automation.apk'
 driver = None
 try:
     driver = webdriver.Remote('http://localhost:4730/wd/hub', desired_caps)
