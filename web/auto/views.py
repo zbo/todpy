@@ -1,6 +1,9 @@
+import sys
+sys.path.append('../')
+sys.path.append('../../')
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from models import Step
+from models import Feature, Scenario, Step
 import json
 import pdb
 
@@ -16,7 +19,6 @@ def search_steps(request):
     key_word = request.GET.get('key_word')
     type=request.GET.get('type')
     response_data=Step.searchStep(key_word,type)
-    pdb.set_trace()
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def sample(request):

@@ -1,4 +1,3 @@
-from django.db import models
 import pdb
 import sys
 import lettuce
@@ -6,6 +5,8 @@ import lettuce
 sys.path.append('../')
 sys.path.append('../../')
 from steploader import load_steps
+from config.models import FeatureLocation
+from django.db import models
 
 # Create your models here.
 
@@ -35,6 +36,7 @@ class Step(models.Model):
 
     @staticmethod
     def searchStep(key_word,type):
+        pdb.set_trace()
         dict=Step.getStepByFolder('../simple-selenium')
         keys=dict.keys()
         #pdb.set_trace()
