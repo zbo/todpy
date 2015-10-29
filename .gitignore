@@ -3,3 +3,4 @@
 *.pyc
 /web/*/*.pyc
 node_modules/
+**/bower_components/
