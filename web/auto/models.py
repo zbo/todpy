@@ -6,6 +6,7 @@ sys.path.append('../')
 sys.path.append('../../')
 from steploader import load_steps
 from config.models import FeatureLocation
+from auto.dto import StepDto
 from django.db import models
 
 # Create your models here.
@@ -40,7 +41,13 @@ class Step(models.Model):
             temp={}
             for key in keys:
                 #pdb.set_trace()
-                temp[key]=dict[key].func_name
+                step_dto = StepDto()
+                step_dto.co_filename = dict[key].func_code.co_filename
+                step_dto.co_firstlineno = dict[key].func_code.co_firstlineno
+                step_dto.co_argcount = dict[key].func_code.co_argcount
+                step_dto.co_varnames = dict[key].func_code.co_varnames
+                step_dto.co_name = dict[key].func_code.co_name
+                temp[key] = step_dto
             result=result.copy()
             result.update(temp)
         return result
