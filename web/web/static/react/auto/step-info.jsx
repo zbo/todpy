@@ -58,6 +58,9 @@ var StepInfoEdit = React.createClass({
           "data": this.state.data
         });
     },
+    handleSelections: function(){
+
+    },
     saveChange: function(e){
         this.props.onContentChange(this.state.data);
         this.props.onChangeMode("display");
@@ -68,6 +71,11 @@ var StepInfoEdit = React.createClass({
     render: function() {
         var type = this.state.data.type;
         var description = this.state.data.description;
+        var supportedType = [
+            {id: 0, text: "Given", val: "Given"},
+            {id: 1, text: "When", val: "When"},
+            {id: 2, text: "Then", val: "Then"}
+        ];
         console.log("render");
         console.log(type+":"+description);
         return (
@@ -76,11 +84,13 @@ var StepInfoEdit = React.createClass({
                 <div className="row">
                     <div className="col-sm-3">
                         <h4>By Type</h4>
-                        <select id="select-step-type" style={{"width":"80px"}} value={type} onChange={this.handleItemChange} data-name="type">
-                            <option value="Given" label="Given"></option>
-                            <option value="When" label="When"></option>
-                            <option value="Then" label="Then"></option>
-                        </select>
+                        <Select2Component id="select-step-type" 
+                            styleWidth="100%"
+                            placeholder="select type"
+                            onSelection = {this.handleSelections}
+                            dataSet={supportedType}
+                            val={[1]}
+                            data-name="type"/>
                     </div>
                     <div className="col-sm-9">
                         <h4>Select Step</h4>
@@ -189,8 +199,11 @@ TOD.react.ScenarioContainer = React.createClass({
         });
     },
     render: function() {
+        var index = 0;
+
         var stepList = this.state.steps.map(function(step){
-            return <TOD.react.StepInfo key={step.description} data={step} />
+
+            return <TOD.react.StepInfo key={index++} data={step} />
         });
 
         return (

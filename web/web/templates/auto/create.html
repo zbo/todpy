@@ -52,7 +52,7 @@ active_nav_path(window.location.pathname)
                         <div class="row">
                             <div class="col-sm-2">
                                 <h4>By Type</h4>
-                                <select id="select-step-type" style="width:80px">
+                                <select style="width:80px">
                                     <option>Given </option>
                                     <option>When </option>
                                     <option>Then </option>
@@ -60,7 +60,7 @@ active_nav_path(window.location.pathname)
                             </div>
                             <div class="col-sm-8" style="border-right:1px dashed gray">
                                 <h4>Select Step</h4>
-                                <select id="select-step" style="width:100%">
+                                <select style="width:100%">
                                     <option>When I login as a valid user</option>
                                     <option>When I have a developer account</option>
                                 </select>
@@ -102,14 +102,18 @@ active_nav_path(window.location.pathname)
             <!-- /.col-sm-4 -->
         </div>
     </div>
+    
+    <script type="text/javascript" src="{{ STATIC_URL }}js/select2.js"></script>
+    
     <script type="text/javascript">
         var TOD = TOD || {};
-        TOD.react = TOD.react || {};
+        TOD.react = {};
     </script>
-    <!-- <script type="text/babel" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>-->
-    <script type="text/babel" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>
+
+    <script type="text/jsx" src="{{ STATIC_URL}}react/components/react-select2.jsx"></script>
+    <script type="text/jsx" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>
     <!-- <script type="text/babel" src="{{ STATIC_URL }}react/auto/scenario-container.jsx"></script> -->
 
-    <script type="text/javascript" src="{{ STATIC_URL }}js/select2.js"></script>
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/create/app.js"></script>
 {% endblock %}
