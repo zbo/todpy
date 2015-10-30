@@ -7,6 +7,9 @@ var StepInfoDisplay = React.createClass({
     changeMode: function(e){
         this.props.onChangeMode("edit");
     },
+    deleteStep: function(e){
+        this.props.onDeleteButtonClick(this.props.data);
+    },
     render: function() {
         console.log("React Render")
         var _self = this;
@@ -17,8 +20,8 @@ var StepInfoDisplay = React.createClass({
                 <span className="step-description">{this.props.data.description}</span>
             </div>
             <div className="col-md-2">
-                <button onClick={_self.changeMode} data-next="edit"  className="btn btn-xs btn-primary">Edit</button>
-                <button className="btn btn-xs btn-danger">X</button>
+                <button onClick={this.changeMode} data-next="edit"  className="btn btn-xs btn-primary">Edit</button>
+                <button onClick={this.deleteStep} className="btn btn-xs btn-danger">X</button>
             </div>
         </div>
         );
@@ -27,10 +30,13 @@ var StepInfoDisplay = React.createClass({
 
 var StepInfoEdit = React.createClass({
     displayName: 'StepInfoEdit',
-    getInitialState() {
+    getInitialState: function() {
         console.log("getInitialState");
+        var _index = Math.round(10000000*Math.random());
         return {
+            index: _index,
             data: {
+                id: -1,
                 type: "",
                 description: "desc1"
             }  
@@ -39,15 +45,18 @@ var StepInfoEdit = React.createClass({
     componentWillMount: function() {
         console.log("Edit will mount:")
         console.log(this.props.data);
+        if(!this.props.data.id){
+            this.props.data.id = Math.round(1000000*Math.random());
+        }
+        console.log(this.props.data);
+
         this.setState({
             data:{
+                id: this.props.data.id,
                 type:this.props.data.type,
                 description: this.props.data.description
             }
         });
-    },
-    componentDidMount: function(prevProps, prevState) {
-        // $("select").select2();  
     },
     handleItemChange: function(e){
         var updateProp = e.target.dataset.name;
@@ -58,8 +67,23 @@ var StepInfoEdit = React.createClass({
           "data": this.state.data
         });
     },
-    handleSelections: function(){
-
+    handleTypeSelections: function(e, selections){
+        this.setState({
+            data: {
+                id: this.state.data.id,
+                type: selections[0].value,
+                description: this.state.data.description
+            }
+        });
+    },
+    handleStepSelections: function(e, selections){
+        this.setState({
+            data: {
+                id: this.state.data.id,
+                type: this.state.data.type,
+                description: selections[0].text
+            }
+        });
     },
     saveChange: function(e){
         this.props.onContentChange(this.state.data);
@@ -72,32 +96,48 @@ var StepInfoEdit = React.createClass({
         var type = this.state.data.type;
         var description = this.state.data.description;
         var supportedType = [
-            {id: 0, text: "Given", val: "Given"},
-            {id: 1, text: "When", val: "When"},
-            {id: 2, text: "Then", val: "Then"}
+            {id: 0, text: "Given", value: "Given"},
+            {id: 1, text: "When", value: "When"},
+            {id: 2, text: "Then", value: "Then"}
         ];
-        console.log("render");
-        console.log(type+":"+description);
+
+        var providedSteps = [
+            {id: 0, text: "description of previous defined step one, and something else as a loooooooooooooooooooooooooooooooooooooooooooooooooooog text block"},
+            {id: 1, text: "description of previous defined step two, and something else"},
+            {id: 2, text: "description of previous defined step three, and something else"},
+            {id: 3, text: "description of previous defined step four, and something else"},
+        ]
+
+        var typeIndex = [supportedType.findIndex(function(e){
+            return e.text===type;
+        })];
+
+        var selectTypeId = "select-step-type-"+this.state.id;
+        var selectStepId = "select-step-"+this.state.id;
+
         return (
         <div className="row">
             <div className="col-md-10">
                 <div className="row">
                     <div className="col-sm-3">
                         <h4>By Type</h4>
-                        <Select2Component id="select-step-type" 
+                        <Select2Component id={selectTypeId}
                             styleWidth="100%"
                             placeholder="select type"
-                            onSelection = {this.handleSelections}
+                            onSelection = {this.handleTypeSelections}
                             dataSet={supportedType}
                             val={[1]}
                             data-name="type"/>
                     </div>
                     <div className="col-sm-9">
                         <h4>Select Step</h4>
-                        <select id="select-step" style={{"width":"100%"}} value={description} onChange={this.handleItemChange} data-name="description">
-                            <option value="When I login as a valid user">When I login as a valid user</option>
-                            <option value="When I have a developer account">When I have a developer account</option>
-                        </select>
+                        <Select2Component id={selectStepId}
+                            styleWidth="100%"
+                            placeholder="select step"
+                            onSelection = {this.handleStepSelections}
+                            dataSet={providedSteps}
+                            val={[1]}
+                            data-name="description"/>
                     </div>
                 </div>
             </div>
@@ -117,6 +157,7 @@ TOD.react.StepInfo = React.createClass({
         return {
             mode: "display",
             data: {
+                id: -1,
                 type: "Given",
                 description: "This is description from React"
             }
@@ -126,6 +167,7 @@ TOD.react.StepInfo = React.createClass({
         this.setState({
             mode: this.props.data.mode,
             data: {
+                id: this.props.data.id,
                 type: this.props.data.type,
                 description: this.props.data.description
             }
@@ -136,7 +178,16 @@ TOD.react.StepInfo = React.createClass({
     },
     handleContentChange: function(_data){
         console.log("handleContentChange");
-        this.setState({data:_data});
+        console.log(_data);
+        this.setState({
+            mode: "display",
+            data:{
+                id: _data.id,
+                type: _data.type,
+                description: _data.description
+            }
+        });
+        this.props.onContentChange(_data);
     },
     render: function() {
         // console.log("React Render")
@@ -145,9 +196,9 @@ TOD.react.StepInfo = React.createClass({
             switch (_self.state.mode)
             {
                 case "display":
-                    return (<StepInfoDisplay onChangeMode={_self.changeMode} data={_self.state.data}/>);
+                    return (<StepInfoDisplay key={_self.state.data.id} onChangeMode={_self.changeMode} onDeleteButtonClick={_self.props.onDeleteButtonClick} data={_self.state.data}/>);
                 case "edit":
-                    return (<StepInfoEdit onContentChange={_self.handleContentChange} onChangeMode={_self.changeMode} data={_self.state.data}/>);
+                    return (<StepInfoEdit key={_self.state.data.id} onContentChange={_self.handleContentChange} onChangeMode={_self.changeMode} data={_self.state.data}/>);
             }
         })();
 
@@ -168,27 +219,48 @@ TOD.react.ScenarioContainer = React.createClass({
             description: "description of scenario",
             steps: [
                 {
+                    id: 1,
                     mode: "display",
                     type: "Given",
-                    description: "a clean and valid account in system"
+                    description: "1. a clean and valid account in system"
                 },
                 {
+                    id: 2,
                     mode: "display",
                     type: "When",
-                    description: "I login the system"
+                    description: "2. I login the system"
                 },
                 {
+                    id: 3,
+                    mode: "display",
+                    type: "Then",
+                    description: "3. I have authorization of developer"
+                },
+                {
+                    id: 4,
                     mode: "display",
                     type: "When",
-                    description: "I have authorization of developer"
+                    description: "4. I try to access NPA functionanlirty"
+                },
+                {
+                    id: 5,
+                    mode: "display",
+                    type: "Then",
+                    description: "5. I can see what I wanted to see"
                 }
             ]
         };
     },
+    componentWillUpdate(nextProps, nextState) {
+          
+        return true;
+    },
     onAddButtonClick: function(e){
         console.log("On add button clicked");
         var _steps = this.state.steps;
+        var _id = Math.round(1000000*Math.random());
         _steps.push({
+            id: _id,
             mode: "edit",
             type: "",
             description: ""
@@ -198,12 +270,45 @@ TOD.react.ScenarioContainer = React.createClass({
             steps: _steps
         });
     },
+    deleteStep: function(step){
+        console.log(step);
+        console.log("delete button clicked");
+
+        var _steps = this.state.steps.filter(function(_step){
+            if(_step.id==step.id){
+                return false;
+            }
+            return true;
+        });
+
+        this.setState({
+            steps: _steps
+        });
+    },
+    updateStep: function(step){
+        console.log(step);
+        console.log("step updated");
+
+       var _steps = this.state.steps.map(function(_step){
+            if(_step.id==step.id){
+                return step;
+            }
+            return _step;
+        });
+
+        console.log(_steps);
+        this.setState({
+            steps: _steps
+        });
+    },
     render: function() {
-        var index = 0;
+        var _self = this;
+
+        console.log("render scenario panel");
+        // console.log(this.state.steps);
 
         var stepList = this.state.steps.map(function(step){
-
-            return <TOD.react.StepInfo key={index++} data={step} />
+            return <TOD.react.StepInfo key={step.id} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
         });
 
         return (
@@ -216,7 +321,7 @@ TOD.react.ScenarioContainer = React.createClass({
                 </div>
                 <div className="panel-body">
                     <div className="btn-group" role="group" style={{"display":"flex", "marginBottom": "5px"}} >
-                           <button onClick={this.onAddButtonClick} name="add-step" type="button" className="btn btn-default">Add Step</button>
+                         <button onClick={this.onAddButtonClick} name="add-step" type="button" className="btn btn-default">Add Step</button>
                     </div>
                     {stepList}
                 </div>

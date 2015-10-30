@@ -132,13 +132,12 @@ var Select2Component = React.createClass({
       multiple: this.props.multiple,
       val: val
     };
-    console.log(options);
-
+    
     var $node = this.getInputElem();
     
     console.log($node);
     TOD.react.selectNode = $node;
-
+    console.log(val);
     $node
         .val(val)
         .select2(options)
