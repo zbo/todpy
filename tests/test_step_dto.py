@@ -24,6 +24,11 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.contrib import admin
 
+class DateEncoder(json.JSONEncoder ):
+  def default(self, obj):
+    if isinstance(obj, StepDto):
+      return obj.render_json()
+    return json.JSONEncoder.default(self, obj)
 
 def load_config():
     global config
@@ -31,15 +36,27 @@ def load_config():
     for setting in AppSetting.objects.all():
         config[setting.type] = setting.value
 
-'''
-step 1 given open browser
-step 2 click one element
-step 3 assert some element is there
-'''
-
 django.setup()
 load_config()
 
 print config
-
-print '=' * 80
+print FeatureLocation
+feature_locations = FeatureLocation.objects.filter(type='ios')
+result = {}
+for fl in feature_locations:
+    dict = Step.getStepByFolder('../' + fl.location)
+    keys = dict.keys()
+    temp = {}
+    for key in keys:
+        step_dto = StepDto()
+        step_dto.co_filename = dict[key].func_code.co_filename
+        step_dto.co_firstlineno = dict[key].func_code.co_firstlineno
+        step_dto.co_argcount = dict[key].func_code.co_argcount
+        step_dto.co_varnames = dict[key].func_code.co_varnames
+        step_dto.co_name = dict[key].func_code.co_name
+        temp[key] = step_dto
+    result = result.copy()
+    result.update(temp)
+print result
+print json.dumps(result,cls=DateEncoder)
+print '='*80
