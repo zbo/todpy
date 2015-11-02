@@ -5,16 +5,16 @@ from selenium import webdriver
 import time
 
 
-@step("I lunch web")
-def when_i_lunch_browser(step):
+@step("I open web browser")
+def i_open_browser(step):
     world.browser = webdriver.Chrome()
 
 
 @step("I open page \'([^\']*)\'")
-def when_i_open_page(step, url):
+def i_open_page(step, url):
     world.browser.get(url)
 
 
-@step("I close the web")
-def when_i_close_browser(step):
+@step("I close web browser")
+def i_close_browser(step):
     world.browser.close()

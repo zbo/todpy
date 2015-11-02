@@ -47,6 +47,7 @@ class Step(models.Model):
                 step_dto.co_argcount = dict[key].func_code.co_argcount
                 step_dto.co_varnames = dict[key].func_code.co_varnames
                 step_dto.co_name = dict[key].func_code.co_name
+                step_dto.step_name = key
                 temp[key] = step_dto
             result=result.copy()
             result.update(temp)

@@ -20,7 +20,6 @@ def search_steps(request):
     key_word = request.GET.get('key_word')
     type=request.GET.get('type')
     response_data=Step.searchStep(key_word,type)
-    pdb.set_trace()
     return HttpResponse(json.dumps(response_data,cls=DateEncoder), content_type="application/json")
 
 def sample(request):
