@@ -11,11 +11,14 @@ class DateEncoder(json.JSONEncoder):
 
 class StepDto:
     def __init__(self):
+        self.uuid = ''
         self.co_filename = ''
         self.co_firstlineno = 0
         self.co_argcount = 0
         self.co_varnames = {}
         self.co_name = ''
+        self.step_name = ''
+        self.parameters = []
 
     def render_json(self):
         json = {}
@@ -24,4 +27,5 @@ class StepDto:
         json['co_argcount'] = self.co_argcount
         json['co_varnames'] = self.co_varnames
         json['co_name'] = self.co_name
+        json['step_name'] = self.step_name
         return json
