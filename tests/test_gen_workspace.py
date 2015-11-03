@@ -73,3 +73,11 @@ all_steps = '''[
                 }
             ]'''
 all_steps = json.loads(all_steps)
+for step in all_steps:
+    print step
+# generate workspace
+# 1, generate structure
+
+# 2, generate test.feature from json
+# 3, move reference python
+

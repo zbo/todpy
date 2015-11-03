@@ -6,5 +6,5 @@ import time
 
 @step("I input text into textbox with id \'([^\']*)\'")
 def i_type_text(step, id):
-    #world.browser = webdriver.Chrome()
+
     element = world.browser.find_element_by_id(id)
