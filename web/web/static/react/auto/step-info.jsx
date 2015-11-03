@@ -184,7 +184,8 @@ TOD.react.StepInfo = React.createClass({
     componentWillMount: function(){
         this.setState({
             mode: this.props.data.mode,
-            data: {                id: this.props.data.id,
+            data: {
+                id: this.props.data.id,
                 type: this.props.data.type,
                 description: this.props.data.description
             }
@@ -239,7 +240,7 @@ TOD.react.ScenarioContainer = React.createClass({
                     id: 1,
                     mode: "display",
                     type: "Given",
-                    description: " a clean and valid account in system"，
+                    description: " a clean and valid account in system",
                     step: {
 
                     }
