@@ -38,13 +38,13 @@ var StepInfoEdit = React.createClass({
             data: {
                 id: -1,
                 type: "",
-                description: "desc1"
+                description: "desc1",
+                value: {}
             }  
         };
     },
     componentWillMount: function() {
-        console.log("Edit will mount:")
-        console.log(this.props.data);
+
         if(!this.props.data.id){
             this.props.data.id = Math.round(1000000*Math.random());
         }
@@ -77,6 +77,7 @@ var StepInfoEdit = React.createClass({
         });
     },
     handleStepSelections: function(e, selections){
+        console.log(selections);
         this.setState({
             data: {
                 id: this.state.data.id,
@@ -101,12 +102,8 @@ var StepInfoEdit = React.createClass({
             {id: 2, text: "Then", value: "Then"}
         ];
 
-        var providedSteps = [
-            {id: 0, text: "description of previous defined step one, and something else as a loooooooooooooooooooooooooooooooooooooooooooooooooooog text block"},
-            {id: 1, text: "description of previous defined step two, and something else"},
-            {id: 2, text: "description of previous defined step three, and something else"},
-            {id: 3, text: "description of previous defined step four, and something else"},
-        ]
+        var stepService = new TOD.service.StepService();
+        var providedSteps = stepService.getDefinedStepsByPlatform("web");
 
         var typeIndex = [supportedType.findIndex(function(e){
             return e.text===type;
@@ -114,6 +111,21 @@ var StepInfoEdit = React.createClass({
 
         var selectTypeId = "select-step-type-"+this.state.id;
         var selectStepId = "select-step-"+this.state.id;
+
+        var parameterList = (function(){
+            return (
+                <div className="parameter_list" style={{"marginTop":"5px"}}>
+                    <form className="form-horizontal">
+                      <div className="form-group">
+                        <label for="inputEmail3" className="col-sm-2 control-label">Arg1: </label>
+                        <div className="col-sm-10">
+                          <input type="textarea" className="form-control" ></input>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            );
+        })();
 
         return (
         <div className="row">
@@ -140,6 +152,11 @@ var StepInfoEdit = React.createClass({
                             data-name="description"/>
                     </div>
                 </div>
+                <div className="row" style={{"borderTop":"1px dashed gray","marginTop":"5px"}}>
+                    <div className="col-sm-12">
+                        {parameterList}
+                    </div>
+                </div>
             </div>
             <div className="col-md-2" style={{"marginTop":"20px"}}>
                 <button onClick={this.saveChange} data-next="display" className="btn btn-xs btn-success">Save</button>
@@ -159,7 +176,8 @@ TOD.react.StepInfo = React.createClass({
             data: {
                 id: -1,
                 type: "Given",
-                description: "This is description from React"
+                description: "This is description from React",
+                step: {}
             }
         };
     },
@@ -222,7 +240,10 @@ TOD.react.ScenarioContainer = React.createClass({
                     id: 1,
                     mode: "display",
                     type: "Given",
-                    description: "1. a clean and valid account in system"
+                    description: " a clean and valid account in system"，
+                    step: {
+
+                    }
                 },
                 {
                     id: 2,
