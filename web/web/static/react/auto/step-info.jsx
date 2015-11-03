@@ -184,8 +184,7 @@ TOD.react.StepInfo = React.createClass({
     componentWillMount: function(){
         this.setState({
             mode: this.props.data.mode,
-            data: {
-                id: this.props.data.id,
+            data: {                id: this.props.data.id,
                 type: this.props.data.type,
                 description: this.props.data.description
             }
