@@ -2,5 +2,6 @@
 /web/*.sqlite3
 *.pyc
 /web/*/*.pyc
+workspaces/
 node_modules/
 **/bower_components/

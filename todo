@@ -11,3 +11,7 @@ expose steps to web
 # ffs=l_runner.loader.find_feature_files()
 # steps=l_runner.loader.find_and_load_step_definitions()
 
+
+# load steps from module
+# http://localhost:8000/auto/search_steps?key_word=aaa&type=when
+

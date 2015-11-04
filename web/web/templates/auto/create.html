@@ -7,7 +7,8 @@ active_nav_path(window.location.pathname)
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="toolbar pull-right">
-        <button id="create_scenario" class="btn btn-default btn-sm">Create</button>
+        <button id="save_features" class="btn btn-success btn-sm">Save</button>
+        <button id="create_scenario" class="btn btn-primary btn-sm">Create Scenario </button>
     </div>
     <h1 class="page-header">Create new test</h1>
 
@@ -52,7 +53,11 @@ active_nav_path(window.location.pathname)
                         <div class="row">
                             <div class="col-sm-2">
                                 <h4>By Type</h4>
+<<<<<<< HEAD
                                 <select id="select-step-type" style="width:80px">
+=======
+                                <select style="width:80px">
+>>>>>>> origin/react
                                     <option>Given </option>
                                     <option>When </option>
                                     <option>Then </option>
@@ -60,7 +65,7 @@ active_nav_path(window.location.pathname)
                             </div>
                             <div class="col-sm-8" style="border-right:1px dashed gray">
                                 <h4>Select Step</h4>
-                                <select id="select-step" style="width:100%">
+                                <select style="width:100%">
                                     <option>When I login as a valid user</option>
                                     <option>When I have a developer account</option>
                                 </select>
@@ -102,14 +107,23 @@ active_nav_path(window.location.pathname)
             <!-- /.col-sm-4 -->
         </div>
     </div>
+    
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/select2.full.js"></script>
+    
     <script type="text/javascript">
         var TOD = TOD || {};
-        TOD.react = TOD.react || {};
+        TOD.react = {};
     </script>
-    <!-- <script type="text/babel" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>-->
-    <script type="text/babel" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/service/step-service.js"></script>
+
+    <script type="text/jsx" src="{{ STATIC_URL}}react/components/react-select2.jsx"></script>
+    <script type="text/jsx" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>
     <!-- <script type="text/babel" src="{{ STATIC_URL }}react/auto/scenario-container.jsx"></script> -->
 
-    <script type="text/javascript" src="{{ STATIC_URL }}js/select2.js"></script>
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/create/app.js"></script>
 {% endblock %}

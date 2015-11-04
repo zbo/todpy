@@ -32,6 +32,6 @@
   },
   "dependencies": {
     "require": "",
-    "react": "^0.14.0"
+    "react": "^0.13.3"
   }
 }

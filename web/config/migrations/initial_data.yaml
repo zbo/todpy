@@ -1,17 +1,29 @@
 - model: config.FeatureLocation
   pk: 1
   fields:
-    type: Ios
+    type: ios
     location: libraries/ios
 
 - model: config.FeatureLocation
   pk: 2
   fields:
-    type: Android
+    type: android
     location: libraries/android
 
 - model: config.FeatureLocation
   pk: 3
   fields:
-    type: Android
-    location: libraries/web
+    type: web
+    location: libraries/web/action
+
+- model: config.FeatureLocation
+  pk: 4
+  fields:
+    type: web
+    location: libraries/web/assert
+
+- model: config.AppSetting
+  pk: 1
+  fields:
+    type: workspace
+    value: workspaces

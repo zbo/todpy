@@ -33,7 +33,9 @@
     <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/react.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/JSXTransformer.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script> -->
     <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
     <script src="{{ STATIC_URL }}js/rc-tod-common.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
@@ -46,6 +48,8 @@
 {% include 'header.html' %}
 {% include 'nav.html' %}
 {% block content %} {% endblock %}
+
+{% block scripts %} {% endblock %}
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

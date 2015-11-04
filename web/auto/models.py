@@ -5,12 +5,10 @@ import lettuce
 sys.path.append('../')
 sys.path.append('../../')
 from steploader import load_steps
-<<<<<<< HEAD
 from config.models import FeatureLocation
+from auto.dto import StepDto
 from django.db import models
-=======
-# import jsons
->>>>>>> add react for scenario editing
+
 
 # Create your models here.
 
@@ -27,10 +25,6 @@ class Step(models.Model):
     @staticmethod
     def getStepByFolder(base_path):
         resultDict={}
-        tags = None
-        l_runner = lettuce.Runner(
-            base_path=base_path
-        )
         modules = load_steps(base_path)
         for i in range(len(modules)):
             mergedDict=resultDict.copy()
@@ -40,13 +34,24 @@ class Step(models.Model):
 
     @staticmethod
     def searchStep(key_word,type):
-        pdb.set_trace()
-        dict=Step.getStepByFolder('../simple-selenium')
-        keys=dict.keys()
-        #pdb.set_trace()
-        result={}
-        for key in keys:
-            result[key]=dict[key].func_name
+        feature_locations=FeatureLocation.objects.filter(type=type)
+        result = {}
+        for fl in feature_locations:
+            dict=Step.getStepByFolder('../'+fl.location)
+            keys=dict.keys()
+            temp={}
+            for key in keys:
+                #pdb.set_trace()
+                step_dto = StepDto()
+                step_dto.co_filename = dict[key].func_code.co_filename
+                step_dto.co_firstlineno = dict[key].func_code.co_firstlineno
+                step_dto.co_argcount = dict[key].func_code.co_argcount
+                step_dto.co_varnames = dict[key].func_code.co_varnames
+                step_dto.co_name = dict[key].func_code.co_name
+                step_dto.step_name = key
+                temp[key] = step_dto
+            result=result.copy()
+            result.update(temp)
         return result
 
 
