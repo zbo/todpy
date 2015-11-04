@@ -11,6 +11,18 @@ from django.db import models
 
 # Create your models here.
 
+class Feature(models.Model):
+    description = models.CharField(max_length=255)
+    module=models.CharField(max_length=255)
+    location = models.TextField()
+
+
+class Scenario(models.Model):
+    feature = models.ForeignKey(Feature, related_name=("feature_scenario"))
+    description = models.CharField(max_length=255)
+    location = models.TextField()
+    #TODO dataset
+
 class Step(models.Model):
     def __init__(self,function,description):
         self.function=function
@@ -19,6 +31,7 @@ class Step(models.Model):
     function = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     module=models.CharField(max_length=255)
+    scenario = models.ForeignKey(Scenario, related_name=("scenario_step"))
     location = models.TextField()
 
     @staticmethod
@@ -52,16 +65,3 @@ class Step(models.Model):
             result=result.copy()
             result.update(temp)
         return result
-
-
-class Feature(models.Model):
-    description = models.CharField(max_length=255)
-    module=models.CharField(max_length=255)
-    location = models.TextField()
-
-class Scenario(models.Model):
-    scenario = models.CharField(max_length=255)
-    feature = models.ForeignKey(Feature, related_name=("feature_scenario"))
-    description = models.CharField(max_length=255)
-    location = models.TextField()
-    #TODO dataset

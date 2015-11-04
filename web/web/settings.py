@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'auto',
     'config',
+    'workspace',
     'django_extensions',
     'pipeline',
     'rest_framework'
