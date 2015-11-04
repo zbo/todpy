@@ -55,6 +55,27 @@ TOD.util = TOD.util || {};
 TOD.util.stepParser = {
 	ANY_STRING: "'([^']*)'",
 	ONLY_NUMBER: "(\d+)",
+	extractParameters: function(step_Definition){
+		var result = [];
+		if(!step_Definition){
+			return result;
+		}
+
+		var _argCount = step_Definition.co_argcount,
+			_varNames = step_Definition.co_varnames,
+			_stepText = step_Definition.value,
+			_variables = step_Definition.co_variables;
+		
+		if(_argCount>1){
+			for(var i=1;i<argCount;i++){
+				result.push({
+					"arg": _varNames[i],
+					"value": _variables[_varNames[i]]
+				});
+			}
+		}
+		return result;
+	},
 	parseDescription: function(step_Definition){
 		var _argCount = step_Definition.co_argcount,
 			_varNames = step_Definition.co_varnames,
@@ -75,7 +96,6 @@ TOD.util.stepParser = {
 
 				// If _indexAnystring equal to _indexOnlyNumber
 				// then it must be below 0
-
 				if ((_indexOnlyNumber>=0) && (_indexAnyString>_indexOnlyNumber || _indexAnyString<0)){
 					_stepText = _stepText.replace(this.ONLY_NUMBER, replacement);
 

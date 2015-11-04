@@ -39,7 +39,7 @@ var StepInfoEdit = React.createClass({
                 id: -1,
                 type: "",
                 description: "desc1",
-                value: {}
+                step: {}
             }  
         };
     },
@@ -54,7 +54,8 @@ var StepInfoEdit = React.createClass({
             data:{
                 id: this.props.data.id,
                 type:this.props.data.type,
-                description: this.props.data.description
+                description: this.props.data.description,
+                step: this.props.data.step
             }
         });
     },
@@ -64,7 +65,7 @@ var StepInfoEdit = React.createClass({
         
         this.state.data[updateProp] = e.target.value;
         this.setState({
-          "data": this.state.data
+          data: this.state.data
         });
     },
     handleTypeSelections: function(e, selections){
@@ -72,17 +73,21 @@ var StepInfoEdit = React.createClass({
             data: {
                 id: this.state.data.id,
                 type: selections[0].value,
-                description: this.state.data.description
+                description: this.state.data.description,
+                step:this.state.data.step
             }
         });
     },
-    handleStepSelections: function(e, selections){
+    handleStepSelections: function(e, selections, next){
+        console.log("handle step selection")
         console.log(selections);
+        // TOD.util.stepParser.parseDescription
         this.setState({
             data: {
                 id: this.state.data.id,
                 type: this.state.data.type,
-                description: selections[0].text
+                description: selections[0].text,
+
             }
         });
     },
@@ -94,38 +99,44 @@ var StepInfoEdit = React.createClass({
         this.props.onChangeMode("display");  
     },
     render: function() {
-        var type = this.state.data.type;
-        var description = this.state.data.description;
+        var type = this.state.data.type,
+            description = this.state.data.description,
+            _step = this.state.data.step,
+            _self = this;
+
         var supportedType = [
             {id: 0, text: "Given", value: "Given"},
             {id: 1, text: "When", value: "When"},
             {id: 2, text: "Then", value: "Then"}
         ];
-
-        var stepService = new TOD.service.StepService();
-        var providedSteps = stepService.getDefinedStepsByPlatform("web");
-
         var typeIndex = [supportedType.findIndex(function(e){
             return e.text===type;
         })];
 
-        var selectTypeId = "select-step-type-"+this.state.id;
-        var selectStepId = "select-step-"+this.state.id;
 
-        var parameterList = (function(){
+        // var stepService = new TOD.service.StepService();
+        var providedSteps = (new TOD.service.StepService()).getDefinedStepsByPlatform("web");
+
+        var stepParameters = TOD.util.stepParser.extractParameters(_step);
+
+        var parameterList = stepParameters.map(function(para){
             return (
                 <div className="parameter_list" style={{"marginTop":"5px"}}>
                     <form className="form-horizontal">
                       <div className="form-group">
-                        <label for="inputEmail3" className="col-sm-2 control-label">Arg1: </label>
+                        <label className="col-sm-2 control-label">{para.arg}: </label>
                         <div className="col-sm-10">
-                          <input type="textarea" className="form-control" ></input>
+                          <input type="textarea" className="form-control" value={para.value}></input>
                         </div>
                       </div>
                     </form>
                 </div>
             );
-        })();
+        });
+
+        var selectTypeId = "select-step-type-"+this.state.index,
+            selectStepId = "select-step-"+this.state.index;
+
 
         return (
         <div className="row">
@@ -138,7 +149,7 @@ var StepInfoEdit = React.createClass({
                             placeholder="select type"
                             onSelection = {this.handleTypeSelections}
                             dataSet={supportedType}
-                            val={[1]}
+                            val={typeIndex}
                             data-name="type"/>
                     </div>
                     <div className="col-sm-9">
@@ -148,6 +159,7 @@ var StepInfoEdit = React.createClass({
                             placeholder="select step"
                             onSelection = {this.handleStepSelections}
                             dataSet={providedSteps}
+                            multiple={false}
                             val={[1]}
                             data-name="description"/>
                     </div>
@@ -187,7 +199,8 @@ TOD.react.StepInfo = React.createClass({
             data: {
                 id: this.props.data.id,
                 type: this.props.data.type,
-                description: this.props.data.description
+                description: this.props.data.description,
+                step: this.props.data.step
             }
         });
     },
@@ -202,7 +215,8 @@ TOD.react.StepInfo = React.createClass({
             data:{
                 id: _data.id,
                 type: _data.type,
-                description: _data.description
+                description: _data.description,
+                step: _data.step
             }
         });
         this.props.onContentChange(_data);
@@ -284,7 +298,8 @@ TOD.react.ScenarioContainer = React.createClass({
             id: _id,
             mode: "edit",
             type: "",
-            description: ""
+            description: "",
+            step:{}
         });
 
         this.setState({
