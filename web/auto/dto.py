@@ -29,3 +29,8 @@ class StepDto:
         json['co_name'] = self.co_name
         json['step_name'] = self.step_name
         return json
+
+class StepDtoPostConvert:
+    def convert(self):
+
+        pass

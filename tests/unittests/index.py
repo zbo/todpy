@@ -46,6 +46,12 @@ class app_setting_tests(unittest.TestCase):
         import test_gen_workspace
         test_gen_workspace.test()
 
+    def test_step_dto(self):
+        import test_step_dto
+        test_step_dto.test()
 
+    def test_step_dto_post_convert(self):
+        import test_step_dto_post_convert
+        test_step_dto_post_convert.test()
 if __name__ == '__main__':
     unittest.main()
