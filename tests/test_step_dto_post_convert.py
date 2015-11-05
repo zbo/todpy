@@ -11,7 +11,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web.settings")
 # Shell Plus Model Imports
 from auto.models import Feature, Scenario, Step
 from auto.dto import StepDto
-from auto.converter import StepDtoPostConvert
+from auto.saver import StepDtoPostSaver
 from config.models import AppSetting, FeatureLocation
 from workspace.models import WorkSpace
 from django.contrib.admin.models import LogEntry
@@ -123,7 +123,7 @@ def test():
             ]
         }
     }'''
-    converter = StepDtoPostConvert()
+    converter = StepDtoPostSaver()
     result = converter.convert(all_steps)
     print result
 

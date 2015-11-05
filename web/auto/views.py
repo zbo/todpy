@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from models import Feature, Scenario, Step
 from dto import DateEncoder, StepDto
+from django.views.decorators.csrf import csrf_exempt
+from auto.saver import StepDtoPostSaver
 import json
 import pdb
 
@@ -21,6 +23,16 @@ def search_steps(request):
     type=request.GET.get('type')
     response_data=Step.searchStep(key_word,type)
     return HttpResponse(json.dumps(response_data,cls=DateEncoder), content_type="application/json")
+
+@csrf_exempt
+def save_feature(request):
+    if request.method != 'POST':
+        return HttpResponse("only post allowed")
+    else:
+        json_data=request.body
+        saver = StepDtoPostSaver()
+        result = saver.convert(json_data)
+        return HttpResponse(request.body)
 
 def sample(request):
     return render(request, 'auto/sample.html')

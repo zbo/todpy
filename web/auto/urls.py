@@ -11,13 +11,6 @@ urlpatterns = [
 
     # ex: /auto/search_steps
     url(r'search_steps', views.search_steps, name='search_steps'),
+    url(r'save_feature', views.save_feature, name='save_feature'),
 
-    # ex: /auto/sample
-    url(r'sample', views.sample, name='sample'),
-    # ex: /auto/5/
-    url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
-    # ex: /auto/5/results/
-    url(r'^(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
-    # ex: /auto/5/vote/
-    url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
 ]

@@ -3,7 +3,7 @@ import json
 from models import Feature, Scenario, Step
 
 
-class StepDtoPostConvert:
+class StepDtoPostSaver:
     def __init__(self):
         pass
 
