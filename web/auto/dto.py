@@ -6,6 +6,8 @@ class DataEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, StepDto):
             return obj.render_json()
+        if isinstance(obj, FeatureDto):
+            return obj.render_json()
         return json.JSONEncoder.default(self, obj)
 
 
@@ -49,6 +51,16 @@ class FeatureDto:
         for sce in scenario_list:
             self.scenarios.append(sce)
 
+    def render_json(self):
+        json = {}
+        json['name'] = self.name
+        json['description'] = self.description
+        scenarios = []
+        for sce in self.scenarios:
+            scenarios.append(sce.render_json())
+        json['scenarios'] = scenarios
+        return json
+
 
 class ScenarioDto:
     def __init__(self, description):
@@ -60,3 +72,12 @@ class ScenarioDto:
             s_dto = StepDto()
             s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description)
             self.steps.append(s_dto)
+
+    def render_json(self):
+        json={}
+        json['description'] = self.description
+        steps = []
+        for step in self.steps:
+            steps.append(step.render_json())
+        json['steps']=steps
+        return json

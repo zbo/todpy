@@ -11,7 +11,7 @@ sys.path.append('../../')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web.settings")
 # Shell Plus Model Imports
 from auto.models import Feature, Scenario, Step
-from auto.dto import StepDto, FeatureDto, ScenarioDto
+from auto.dto import StepDto, FeatureDto, ScenarioDto, DataEncoder
 from config.models import AppSetting, FeatureLocation
 from workspace.models import WorkSpace
 from django.contrib.admin.models import LogEntry
@@ -39,7 +39,7 @@ def test():
 
         scenarios.append(s_dto)
     feature_dto.fill_scenarios(scenarios)
-    print feature_dto
+    print json.dumps((feature_dto),cls=DataEncoder)
 
 
 if __name__ == '__main__':

@@ -7,6 +7,12 @@ class StepDtoPostSaver:
     def __init__(self):
         pass
 
+    def replace_u(self, str_in):
+        tmp = '['
+        for s in str_in:
+            tmp+=s+','
+        return tmp[0:len(tmp)-1]+']'
+
     def save(self, json_str):
         json_obj = json.loads(json_str)
         feature_name = json_obj['feature']['feature_name']
@@ -21,6 +27,7 @@ class StepDtoPostSaver:
             for step in steps:
                 step = step[step.keys()[0]]
                 step_save = Step().fill(sce_save, step['step_name'], step['co_name'], step['co_file_name'],
-                                        step['co_firstlineno'], step['co_argcount'], str(step['co_varnames']))
+                                        step['co_firstlineno'], step['co_argcount'],
+                                        self.replace_u(step['co_varnames']))
                 step_save.save()
         return feature_save
