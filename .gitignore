@@ -1,5 +1,5 @@
 /.idea
-/web/*.sqlite3
+/web/db.sqlite3
 *.pyc
 /web/*/*.pyc
 workspaces/

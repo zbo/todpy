@@ -38,8 +38,8 @@ class Migration(migrations.Migration):
             name='Step',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('function', models.CharField(max_length=255)),
                 ('description', models.CharField(max_length=255)),
+                ('function', models.CharField(max_length=255)),
                 ('module', models.CharField(max_length=255)),
                 ('location', models.TextField()),
                 ('scenario', models.ForeignKey(to='auto.Scenario')),
