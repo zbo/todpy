@@ -126,7 +126,7 @@ var Select2Component = React.createClass({
     if (this.props.val.length > 0) {
       val = this.props.multiple ? this.props.val : this.props.val[0];
     }
-
+    console.log("multiple: "+this.props.multiple);
     var options = {
       data: this.props.dataSet,
       multiple: this.props.multiple,
@@ -191,7 +191,7 @@ var Select2Component = React.createClass({
     var style = {width: this.props.styleWidth};
     return (
         <div className={this.props.hasError ? this.props.errorClass : ""}>
-          <div type='hidden' style={style} id={this.props.id}/>
+          <input type='hidden' style={style} id={this.props.id}/>
         </div>
         );
   }
