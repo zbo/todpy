@@ -4,7 +4,7 @@ sys.path.append('../../')
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from models import Feature, Scenario, Step
-from dto import DateEncoder, StepDto
+from dto import DataEncoder, StepDto
 from django.views.decorators.csrf import csrf_exempt
 from auto.saver import StepDtoPostSaver
 import json
@@ -22,7 +22,7 @@ def search_steps(request):
     key_word = request.GET.get('key_word')
     type=request.GET.get('type')
     response_data=Step.searchStep(key_word,type)
-    return HttpResponse(json.dumps(response_data,cls=DateEncoder), content_type="application/json")
+    return HttpResponse(json.dumps(response_data,cls=DataEncoder), content_type="application/json")
 
 @csrf_exempt
 def save_feature(request):

@@ -57,5 +57,9 @@ class app_setting_tests(unittest.TestCase):
         import test_step_dto_post_convert
         test_step_dto_post_convert.test()
 
+    def test_get_all_by_feature(self):
+        import test_get_all_by_feature
+        test_get_all_by_feature.test()
+
 if __name__ == '__main__':
     unittest.main()
