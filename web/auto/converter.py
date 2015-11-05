@@ -10,7 +10,8 @@ class StepDtoPostConvert:
     def convert(self, json_str):
         json_obj = json.loads(json_str)
         feature_name = json_obj['feature']['feature_name']
-        feature_save = Feature().fill(feature_name, '', '')
+        feature_desc = json_obj['feature']['feature_description']
+        feature_save = Feature().fill(feature_name, feature_desc, '', '')
         feature_save.save()
         scenarios = json_obj['feature']['scenarios']
         for sce in scenarios:

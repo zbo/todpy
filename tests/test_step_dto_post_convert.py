@@ -32,6 +32,7 @@ def test():
     all_steps = '''{
         "feature": {
             "feature_name": "first feature name",
+            "feature_description": "I want to test this first test case for fun",
             "scenarios": [
                 {
                     "scenario_name": "first scenario",

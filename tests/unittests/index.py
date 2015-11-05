@@ -32,10 +32,10 @@ from django.contrib import admin
 class app_setting_tests(unittest.TestCase):
     def setUp(self):
         django.setup()
-        import tool_clear_workspace
-        tool_clear_workspace.do()
-        import tool_reset_db
-        tool_reset_db.do()
+        # import tool_clear_workspace
+        # tool_clear_workspace.do()
+        # import tool_reset_db
+        # tool_reset_db.do()do
 
     def tearDown(self):
         pass

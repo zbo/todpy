@@ -12,12 +12,13 @@ from django.db import models
 # Create your models here.
 
 class Feature(models.Model):
-    def fill(self, description, module, location):
+    def fill(self, name, description, module, location):
+        self.name = name
         self.description = description
         self.module = module
         self.location = location
         return self
-
+    name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     module = models.CharField(max_length=255)
     location = models.TextField()
