@@ -7,16 +7,18 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('config', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AppSetting',
+            name='WorkSpace',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('type', models.CharField(max_length=255)),
-                ('value', models.CharField(max_length=255)),
+                ('name', models.CharField(max_length=255)),
+                ('rootlocation', models.CharField(max_length=755)),
+                ('createat', models.DateTimeField(auto_now_add=True)),
+                ('updateat', models.DateTimeField(auto_now=True)),
             ],
             options={
             },

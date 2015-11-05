@@ -2,6 +2,7 @@ __author__ = 'bob.zhu'
 import json
 
 
+
 class DateEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, StepDto):
@@ -29,3 +30,5 @@ class StepDto:
         json['co_name'] = self.co_name
         json['step_name'] = self.step_name
         return json
+
+

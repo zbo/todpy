@@ -14,16 +14,16 @@
   pk: 3
   fields:
     type: web
-    location: libraries/web/action
-
-- model: config.FeatureLocation
-  pk: 4
-  fields:
-    type: web
-    location: libraries/web/assert
+    location: libraries/web
 
 - model: config.AppSetting
   pk: 1
   fields:
     type: workspace
     value: workspaces
+
+- model: config.AppSetting
+  pk: 2
+  fields:
+    type: projectbase
+    value: /Users/bob.zhu/project/todpy/
