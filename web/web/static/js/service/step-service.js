@@ -27,7 +27,7 @@ TOD.service.StepService = function(){
 				var step = dataObj[index];
 				step.id = _id++;
 				step.value = index;
-				step.text = index;
+				step.text = dataObj[index].step_name;
 				TOD.util.stepParser.decorateDescriptionPlaceHolder(step);
 				dataArray.push(step);
 			}			
@@ -65,12 +65,20 @@ TOD.util.stepParser = {
 			_varNames = step_Definition.co_varnames,
 			_stepText = step_Definition.value,
 			_variables = step_Definition.co_variables;
+
+		if(!_variables){
+			step_Definition.co_variables={};
+			_variables = step_Definition.co_variables;
+		}
 		
 		if(_argCount>1){
-			for(var i=1;i<argCount;i++){
+			for(var i=1;i<_argCount;i++){
+
+				var replacement = _variables.hasOwnProperty(_varNames[i])? _variables[_varNames[i]]: "[?]";
+
 				result.push({
 					"arg": _varNames[i],
-					"value": _variables[_varNames[i]]
+					"value": replacement
 				});
 			}
 		}
@@ -79,16 +87,16 @@ TOD.util.stepParser = {
 	parseDescription: function(step_Definition){
 		var _argCount = step_Definition.co_argcount,
 			_varNames = step_Definition.co_varnames,
-			_stepText = step_Definition.value,
+			_stepText = step_Definition.step_name,
 			_variables = step_Definition.co_variables;
 
 		if(_argCount<=1){
 			step_Definition.description = _stepText;
 		}
 		else {
-			for(var i=1;i<argCount;i++){
+			for(var i=1;i<_argCount;i++){
 				//Should traverse the String and replace all placeholder with val from _variables
-				var replacement = _variables[_varNames[i]];
+				var replacement = "'"+_variables[_varNames[i]]+"'";
 
 
 				var _indexAnyString = _stepText.indexOf(this.ANY_STRING),
@@ -111,7 +119,7 @@ TOD.util.stepParser = {
 		if(!step_Definition){
 			return ;
 		}
-		var _stepText = step_Definition.text;
+		var _stepText = step_Definition.step_name;
 		var _indexAnyString = _stepText.indexOf(this.ANY_STRING),
 			_indexOnlyNumber = _stepText.indexOf(this.ONLY_NUMBER);
 

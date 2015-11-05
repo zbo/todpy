@@ -31,7 +31,6 @@ var StepInfoDisplay = React.createClass({
 var StepInfoEdit = React.createClass({
     displayName: 'StepInfoEdit',
     getInitialState: function() {
-        console.log("getInitialState");
         var _index = Math.round(10000000*Math.random());
         return {
             index: _index,
@@ -48,8 +47,6 @@ var StepInfoEdit = React.createClass({
         if(!this.props.data.id){
             this.props.data.id = Math.round(1000000*Math.random());
         }
-        console.log(this.props.data);
-
         this.setState({
             data:{
                 id: this.props.data.id,
@@ -59,15 +56,15 @@ var StepInfoEdit = React.createClass({
             }
         });
     },
-    handleItemChange: function(e){
-        var updateProp = e.target.dataset.name;
-        console.log(updateProp);
+    // handleItemChange: function(e){
+    //     var updateProp = e.target.dataset.name;
+    //     console.log(updateProp);
         
-        this.state.data[updateProp] = e.target.value;
-        this.setState({
-          data: this.state.data
-        });
-    },
+    //     this.state.data[updateProp] = e.target.value;
+    //     this.setState({
+    //       data: this.state.data
+    //     });
+    // },
     handleTypeSelections: function(e, selections){
         this.setState({
             data: {
@@ -81,17 +78,29 @@ var StepInfoEdit = React.createClass({
     handleStepSelections: function(e, selections, next){
         console.log("handle step selection")
         console.log(selections);
-        // TOD.util.stepParser.parseDescription
+        
+        var _selected = selections[0];
+
         this.setState({
             data: {
                 id: this.state.data.id,
                 type: this.state.data.type,
-                description: selections[0].text,
-
+                description: this.state.data.step.description,
+                step: _selected
             }
         });
     },
+    handleStepParameterChange: function(e, g){
+        var $dom = e.target;
+        var arg = $dom.dataset["name"];
+
+        this.state.data.step.co_variables[arg] = e.target.value;
+        this.setState({data: this.state.data});
+    },
     saveChange: function(e){
+        var _step = this.state.data.step;
+        TOD.util.stepParser.parseDescription(_step);
+        this.state.data.description = _step.description;
         this.props.onContentChange(this.state.data);
         this.props.onChangeMode("display");
     },
@@ -114,28 +123,33 @@ var StepInfoEdit = React.createClass({
         })];
 
 
-        // var stepService = new TOD.service.StepService();
         var providedSteps = (new TOD.service.StepService()).getDefinedStepsByPlatform("web");
+        var stepIndex = [providedSteps.findIndex(function(step){
+            return _step.value===step.value;  
+        })];
 
         var stepParameters = TOD.util.stepParser.extractParameters(_step);
 
+        var selectTypeId = "select-step-type-"+this.state.index,
+            selectStepId = "select-step-"+this.state.index,
+            editorPrefix = this.state.data.id;
+
         var parameterList = stepParameters.map(function(para){
+            var _key = editorPrefix+"_"+para.arg+"_input";
+            var _data = para.value;
             return (
-                <div className="parameter_list" style={{"marginTop":"5px"}}>
-                    <form className="form-horizontal">
+                <div key={_key} className="parameter_list" style={{"marginTop":"5px"}}>
+                    <div className="form-horizontal">
                       <div className="form-group">
                         <label className="col-sm-2 control-label">{para.arg}: </label>
                         <div className="col-sm-10">
-                          <input type="textarea" className="form-control" value={para.value}></input>
+                          <input id={_key} onChange={_self.handleStepParameterChange} data-name={para.arg} type="text" className="form-control" value={_data}></input>
                         </div>
                       </div>
-                    </form>
+                    </div>
                 </div>
             );
         });
-
-        var selectTypeId = "select-step-type-"+this.state.index,
-            selectStepId = "select-step-"+this.state.index;
 
         return (
         <div className="row">
@@ -159,7 +173,7 @@ var StepInfoEdit = React.createClass({
                             onSelection = {this.handleStepSelections}
                             dataSet={providedSteps}
                             multiple={false}
-                            val={[1]}
+                            val={stepIndex}
                             data-name="description"/>
                     </div>
                 </div>
@@ -255,32 +269,39 @@ TOD.react.ScenarioContainer = React.createClass({
                     type: "Given",
                     description: " a clean and valid account in system",
                     step: {
-
                     }
                 },
                 {
                     id: 2,
                     mode: "display",
                     type: "When",
-                    description: "2. I login the system"
+                    description: "2. I login the system",
+                    step: {
+                    }
                 },
                 {
                     id: 3,
                     mode: "display",
                     type: "Then",
-                    description: "3. I have authorization of developer"
+                    description: "3. I have authorization of developer",
+                    step: {
+                    }
                 },
                 {
                     id: 4,
                     mode: "display",
                     type: "When",
-                    description: "4. I try to access NPA functionanlirty"
+                    description: "4. I try to access NPA functionanlirty",
+                    step: {
+                    }
                 },
                 {
                     id: 5,
                     mode: "display",
                     type: "Then",
-                    description: "5. I can see what I wanted to see"
+                    description: "5. I can see what I wanted to see",
+                    step: {
+                    }
                 }
             ]
         };
@@ -336,6 +357,12 @@ TOD.react.ScenarioContainer = React.createClass({
             steps: _steps
         });
     },
+    saveScenario: function(e){
+        console.log("Save Scenario Info");
+        console.log(this.state.steps);
+
+
+    },
     render: function() {
         var _self = this;
 
@@ -350,13 +377,14 @@ TOD.react.ScenarioContainer = React.createClass({
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <h3 className="panel-title" style={{"display": "inline-block"}}>Scenario</h3>
-                    <button className="btn btn-sm btn-default" style={{"right": "24px","position": "absolute"}}>
+                    <button className="btn btn-xs btn-default" style={{"right": "24px","position": "absolute"}}>
                         <span className="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
                 <div className="panel-body">
                     <div className="btn-group" role="group" style={{"display":"flex", "marginBottom": "5px"}} >
-                         <button onClick={this.onAddButtonClick} name="add-step" type="button" className="btn btn-default">Add Step</button>
+                         <button onClick={this.onAddButtonClick} data-name="add-step" type="button" className="btn btn-default">Add Step</button>
+                         <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary">Save Scenario</button>
                     </div>
                     {stepList}
                 </div>

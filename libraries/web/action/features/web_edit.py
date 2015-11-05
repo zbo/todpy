@@ -6,5 +6,10 @@ import time
 
 @step("I input text into textbox with id \'([^\']*)\'")
 def i_type_text(step, id):
+    element = world.browser.find_element_by_id(id)
 
+
+
+@step("I input value \'([^\']*)\' into textbox with id \'([^\']*)\'")
+def i_type_text(step, value, id):
     element = world.browser.find_element_by_id(id)
