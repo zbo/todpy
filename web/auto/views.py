@@ -31,7 +31,7 @@ def save_feature(request):
     else:
         json_data=request.body
         saver = StepDtoPostSaver()
-        result = saver.convert(json_data)
+        result = saver.save(json_data)
         return HttpResponse(request.body)
 
 def sample(request):

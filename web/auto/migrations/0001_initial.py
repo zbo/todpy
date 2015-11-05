@@ -43,6 +43,8 @@ class Migration(migrations.Migration):
                 ('function', models.CharField(max_length=255)),
                 ('module', models.CharField(max_length=255)),
                 ('location', models.TextField()),
+                ('argnumbers', models.IntegerField()),
+                ('varlist', models.CharField(max_length=255)),
                 ('scenario', models.ForeignKey(to='auto.Scenario')),
             ],
             options={

@@ -29,7 +29,7 @@ from django.contrib import admin
 
 def test():
     django.setup()
-    feature_id = 2
+    feature_id = 1
     feature = Feature.objects.filter(id=feature_id).first()
     feature_dto = FeatureDto(feature.name, feature.description)
     scenarios = []
@@ -38,8 +38,8 @@ def test():
         s_dto.fill_steps(sce.step_set.all())
 
         scenarios.append(s_dto)
-    print scenarios
-    # feature_dto.fill_scenarios(scenarios)
+    feature_dto.fill_scenarios(scenarios)
+    print feature_dto
 
 
 if __name__ == '__main__':

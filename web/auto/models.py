@@ -37,12 +37,14 @@ class Scenario(models.Model):
 
 
 class Step(models.Model):
-    def fill(self, scenario, description, function, module, location):
+    def fill(self, scenario, description, function, module, location, argmunber, varlist):
         self.scenario = scenario
         self.description = description
         self.function = function
         self.module = module
         self.location = location
+        self.argnumbers = argmunber
+        self.varlist = varlist
         return self
 
     scenario = models.ForeignKey(Scenario)
@@ -50,6 +52,8 @@ class Step(models.Model):
     function = models.CharField(max_length=255)
     module = models.CharField(max_length=255)
     location = models.TextField()
+    argnumbers = models.IntegerField()
+    varlist = models.CharField(max_length=255)
 
     @staticmethod
     def getStepByFolder(base_path):

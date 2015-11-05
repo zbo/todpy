@@ -124,7 +124,7 @@ def test():
         }
     }'''
     converter = StepDtoPostSaver()
-    result = converter.convert(all_steps)
+    result = converter.save(all_steps)
     print result
 
     # for step in all_steps:

@@ -58,5 +58,5 @@ class ScenarioDto:
     def fill_steps(self, step_set):
         for step in step_set.all():
             s_dto = StepDto()
-            # s_dto.fill(step.module,step.location,)
-            # self.steps.append(s)
+            s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description)
+            self.steps.append(s_dto)
