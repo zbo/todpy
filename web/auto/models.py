@@ -26,24 +26,29 @@ class Feature(models.Model):
 
 
 class Scenario(models.Model):
-    def fill(self, feature, description, location):
+    def fill(self, feature, description, step_sequence):
         self.feature = feature
         self.description = description
-        self.location = location
+        self.step_sequence = step_sequence
         return self
+
+    def set_sequence(self, step_sequence):
+        self.step_sequence=step_sequence
 
     feature = models.ForeignKey(Feature)
     description = models.CharField(max_length=255)
-    location = models.TextField()
+    step_sequence = models.TextField()
 
 
 class Step(models.Model):
-    def fill(self, scenario, description, function, module, location):
+    def fill(self, scenario, description, function, module, location, argmunber, varlist):
         self.scenario = scenario
         self.description = description
         self.function = function
         self.module = module
         self.location = location
+        self.argnumbers = argmunber
+        self.varlist = varlist
         return self
 
     scenario = models.ForeignKey(Scenario)
@@ -51,6 +56,8 @@ class Step(models.Model):
     function = models.CharField(max_length=255)
     module = models.CharField(max_length=255)
     location = models.TextField()
+    argnumbers = models.IntegerField()
+    varlist = models.CharField(max_length=255)
 
     @staticmethod
     def getStepByFolder(base_path):

@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.CharField(max_length=255)),
-                ('location', models.TextField()),
+                ('step_sequence', models.TextField()),
                 ('feature', models.ForeignKey(to='auto.Feature')),
             ],
             options={
@@ -43,6 +43,8 @@ class Migration(migrations.Migration):
                 ('function', models.CharField(max_length=255)),
                 ('module', models.CharField(max_length=255)),
                 ('location', models.TextField()),
+                ('argnumbers', models.IntegerField()),
+                ('varlist', models.CharField(max_length=255)),
                 ('scenario', models.ForeignKey(to='auto.Scenario')),
             ],
             options={

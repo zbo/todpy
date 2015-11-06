@@ -4,6 +4,7 @@ import os
 import django
 import json
 import uuid
+import unittest
 
 sys.path.append('../web')
 sys.path.append('../../')
@@ -26,6 +27,7 @@ from django.db.models import Avg, Count, F, Max, Min, Sum, Q, Prefetch
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.contrib import admin
+
 
 def test():
     django.setup()
@@ -91,7 +93,7 @@ def test():
                     ]
                 },
                 {
-                    "scenario_name": "first scenario",
+                    "scenario_name": "second scenario",
                     "steps": [
                         {
                             "id-0001": {
@@ -123,15 +125,11 @@ def test():
             ]
         }
     }'''
-    converter = StepDtoPostSaver()
-    result = converter.convert(all_steps)
+    saver = StepDtoPostSaver()
+    result = saver.save(all_steps)
     print result
+    return result
 
-    # for step in all_steps:
-    #     print step
 
 if __name__ == '__main__':
     test()
-
-
-
