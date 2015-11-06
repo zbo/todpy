@@ -25,15 +25,18 @@ class Feature(models.Model):
 
 
 class Scenario(models.Model):
-    def fill(self, feature, description, location):
+    def fill(self, feature, description, step_sequence):
         self.feature = feature
         self.description = description
-        self.location = location
+        self.step_sequence = step_sequence
         return self
+
+    def set_sequence(self, step_sequence):
+        self.step_sequence=step_sequence
 
     feature = models.ForeignKey(Feature)
     description = models.CharField(max_length=255)
-    location = models.TextField()
+    step_sequence = models.TextField()
 
 
 class Step(models.Model):

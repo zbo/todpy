@@ -54,12 +54,18 @@ class app_setting_tests(unittest.TestCase):
         test_step_dto.test()
 
     def test_a_step_dto_post_save(self):
-        import test_step_dto_post_convert
-        test_step_dto_post_convert.test()
+        import test_step_dto_post_save
+        result = test_step_dto_post_save.test()
+        all_steps = result.scenario_set.all().first().step_set.all()
+        sequence_text = ''
+        for s in all_steps:
+            sequence_text += str(s.id) + '|'
+        self.assertEquals(sequence_text, result.scenario_set.all().first().step_sequence)
 
     def test_b_get_all_by_feature(self):
         import test_get_all_by_feature
         test_get_all_by_feature.test()
+
 
 if __name__ == '__main__':
     unittest.main()

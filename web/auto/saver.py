@@ -10,8 +10,8 @@ class StepDtoPostSaver:
     def replace_u(self, str_in):
         tmp = '['
         for s in str_in:
-            tmp+=s+','
-        return tmp[0:len(tmp)-1]+']'
+            tmp += s + ','
+        return tmp[0:len(tmp) - 1] + ']'
 
     def save(self, json_str):
         json_obj = json.loads(json_str)
@@ -20,7 +20,9 @@ class StepDtoPostSaver:
         feature_save = Feature().fill(feature_name, feature_desc, '', '')
         feature_save.save()
         scenarios = json_obj['feature']['scenarios']
+
         for sce in scenarios:
+            sequence = ''
             sce_save = Scenario().fill(feature_save, sce['scenario_name'], '')
             sce_save.save()
             steps = sce['steps']
@@ -30,4 +32,7 @@ class StepDtoPostSaver:
                                         step['co_firstlineno'], step['co_argcount'],
                                         self.replace_u(step['co_varnames']))
                 step_save.save()
+                sequence += str(step_save.id) + '|'
+            sce_save.set_sequence(sequence)
+            sce_save.save()
         return feature_save
