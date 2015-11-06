@@ -35,12 +35,14 @@ def test():
         "feature": {
             "feature_name": "first feature name",
             "feature_description": "I want to test this first test case for fun",
+            "feature_id": "new",
             "scenarios": [
                 {
                     "scenario_name": "first scenario",
+                    "scenario_id": "new",
                     "steps": [
                         {
-                            "id-0001": {
+                            "new": {
                                 "co_firstlineno": 8,
                                 "co_name": "i_open_browser",
                                 "step_name": "I open web browser",
@@ -52,7 +54,7 @@ def test():
                             }
                         },
                         {
-                            "id-0002": {
+                            "new": {
                                 "co_firstlineno": 13,
                                 "co_name": "i_open_page",
                                 "step_name": "I open page '([^']*)'",
@@ -65,7 +67,7 @@ def test():
                             }
                         },
                         {
-                            "id-0003": {
+                            "new": {
                                 "co_firstlineno": 14,
                                 "co_name": "i_click_element_with_text",
                                 "step_name": "I click element with text '([^']*)'",
@@ -79,7 +81,7 @@ def test():
                             }
                         },
                         {
-                            "id-0004": {
+                            "new": {
                                 "co_firstlineno": 18,
                                 "co_name": "i_close_browser",
                                 "step_name": "I close web browser",
@@ -94,9 +96,10 @@ def test():
                 },
                 {
                     "scenario_name": "second scenario",
+                    "scenario_id": "new",
                     "steps": [
                         {
-                            "id-0001": {
+                            "new": {
                                 "co_firstlineno": 8,
                                 "co_name": "i_open_browser",
                                 "step_name": "I open web browser",
@@ -108,7 +111,7 @@ def test():
                             }
                         },
                         {
-                            "id-0002": {
+                            "new": {
                                 "co_firstlineno": 13,
                                 "co_name": "i_open_page",
                                 "step_name": "I open page '([^']*)'",
@@ -127,7 +130,7 @@ def test():
     }'''
     saver = StepDtoPostSaver()
     result = saver.save(all_steps)
-    print result
+    #print result
     return result
 
 
