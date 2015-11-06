@@ -35,29 +35,29 @@ class app_setting_tests(unittest.TestCase):
         # import tool_clear_workspace
         # tool_clear_workspace.do()
         # import tool_reset_db
-        # tool_reset_db.do()do
+        # tool_reset_db.do()
 
     def tearDown(self):
         pass
 
-    def test_app_setting(self):
+    def test_a_app_setting(self):
         results= AppSetting.getSetting('workspace')
         self.assertEqual(len(results),1)
         self.assertEqual(results[0],'workspaces')
 
-    def test_gen_workspace(self):
+    def test_a_gen_workspace(self):
         import test_gen_workspace
         test_gen_workspace.test()
 
-    def test_step_dto(self):
+    def test_a_step_dto(self):
         import test_step_dto
         test_step_dto.test()
 
-    def test_step_dto_post_convert(self):
+    def test_a_step_dto_post_save(self):
         import test_step_dto_post_convert
         test_step_dto_post_convert.test()
 
-    def test_get_all_by_feature(self):
+    def test_b_get_all_by_feature(self):
         import test_get_all_by_feature
         test_get_all_by_feature.test()
 
