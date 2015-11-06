@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'search_steps', views.search_steps, name='search_steps'),
     url(r'save_feature', views.save_feature, name='save_feature'),
     url(r'get_feature/(?P<feature_id>[0-9]+)/$', views.get_feature, name='get_feature'),
+    url(r'update_feature/(?P<feature_id>[0-9]+)/$', views.update_feature, name='update_feature'),
+
 
 
 ]

@@ -1,1 +1,1 @@
-ps -ax|grep python|grep -v grep|tr -s ' '|cut -f2 -d ' '|xargs kill -9
+ps -ax|grep python|grep -v grep|tr -s ' '|cut -f1 -d ' '|xargs kill -9
