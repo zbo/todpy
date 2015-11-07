@@ -1,4 +1,5 @@
 __author__ = 'bob.zhu'
+from auto.models import Feature, Scenario, Step
 
 def assert_all(instance, feature):
     instance.assertEqual(feature.name,'change name feature name')
@@ -10,3 +11,10 @@ def assert_all(instance, feature):
     instance.assertEqual(feature.scenario_set.first().deleted,0)
     instance.assertEqual(feature.scenario_set.get(id=2).deleted,1)
     instance.assertEqual(feature.scenario_set.get(id=3).deleted,0)
+    instance.assertEqual(Step.objects.get(pk=1).deleted,0)
+    instance.assertEqual(Step.objects.get(pk=2).deleted,1)
+    instance.assertEqual(Step.objects.get(pk=3).deleted,0)
+    instance.assertEqual(Step.objects.get(pk=4).deleted,0)
+    instance.assertEqual(Step.objects.get(pk=5).deleted,1)
+    instance.assertEqual(Step.objects.get(pk=6).deleted,1)
+    instance.assertEqual(Step.objects.get(pk=7).deleted,0)
