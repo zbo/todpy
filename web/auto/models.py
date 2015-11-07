@@ -40,7 +40,7 @@ class Scenario(models.Model):
 
 
 class Step(models.Model):
-    def fill(self, scenario, description, function, module, location, argmunber, varlist):
+    def fill(self, scenario, description, function, module, location, argmunber, varlist, description_with_args):
         self.scenario = scenario
         self.description = description
         self.function = function
@@ -48,10 +48,12 @@ class Step(models.Model):
         self.location = location
         self.argnumbers = argmunber
         self.varlist = varlist
+        self.description_with_agrs = description_with_args
         return self
 
     scenario = models.ForeignKey(Scenario)
     description = models.CharField(max_length=255)
+    description_with_agrs = models.CharField(max_length=255)
     function = models.CharField(max_length=255)
     module = models.CharField(max_length=255)
     location = models.TextField()
