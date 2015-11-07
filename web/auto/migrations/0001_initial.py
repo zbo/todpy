@@ -50,6 +50,7 @@ class Migration(migrations.Migration):
                 ('argnumbers', models.IntegerField()),
                 ('varlist', models.CharField(max_length=255)),
                 ('deleted', models.BooleanField(default=False)),
+                ('action_type', models.CharField(default=b'Then', max_length=20)),
                 ('scenario', models.ForeignKey(to='auto.Scenario')),
             ],
             options={

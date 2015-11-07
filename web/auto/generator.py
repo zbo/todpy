@@ -10,6 +10,6 @@ class FeatureFileGenerator:
         feature_description= feature.description
         feature_file_name = "{0}-{1}".format(str(feature.id),feature_description.replace(' ','-'))
         plain_text.append("Feature: {0}".format(feature_description))
-        for scenario in feature.scenario_set.all():
+        for scenario in feature.scenario_set.filter(deleted=0):
             plain_text.append("  Scenario: {0}".format(scenario.description))
         return plain_text

@@ -42,6 +42,7 @@ def test():
                         "steps": [
                             {
                                 "1": {
+                                    "action_type": "Given",
                                     "co_firstlineno": 8,
                                     "co_name": "i_open_browser",
                                     "step_name": "I open web browser",
@@ -54,6 +55,7 @@ def test():
                             },
                             {
                                 "new": {
+                                    "action_type": "When",
                                     "co_firstlineno": 13,
                                     "co_name": "i_open_page",
                                     "step_name": "I open page '([^']*)'",
@@ -67,6 +69,7 @@ def test():
                             },
                             {
                                 "3": {
+                                    "action_type": "Then",
                                     "co_firstlineno": 14,
                                     "co_name": "i_click_element_with_text",
                                     "step_name": "I click element with text '([^']*)'",
@@ -81,6 +84,7 @@ def test():
                             },
                             {
                                 "4": {
+                                    "action_type": "Then",
                                     "co_firstlineno": 18,
                                     "co_name": "i_close_browser",
                                     "step_name": "I close web browser",
@@ -99,6 +103,7 @@ def test():
                         "steps": [
                             {
                                 "new": {
+                                    "action_type": "Given",
                                     "co_firstlineno": 8,
                                     "co_name": "i_open_browser",
                                     "step_name": "I open web browser",
@@ -111,6 +116,7 @@ def test():
                             },
                             {
                                 "new": {
+                                    "action_type": "When",
                                     "co_firstlineno": 13,
                                     "co_name": "i_open_page",
                                     "step_name": "I open page '([^']*)'",
