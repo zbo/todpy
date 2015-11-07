@@ -1,6 +1,7 @@
 __author__ = 'bob.zhu'
 import json
 from models import Feature, Scenario, Step
+from workspace.models import WorkSpace
 import pdb
 
 
@@ -88,7 +89,11 @@ class StepDtoPostUpdater:
         feature_desc = json_obj['feature']['feature_description']
         feature_id = json_obj['feature']['feature_id']
         feature_update = Feature.objects.get(id=feature_id)
+        workspace_id = feature_update.workspace
+        workspace = WorkSpace.objects.get(id=workspace_id)
         feature_update.fill(feature_name, feature_desc, '', '')
+        feature_update.update_workspace(workspace)
+
         feature_update.save()
         scenarios = json_obj['feature']['scenarios']
         for sce in scenarios:
