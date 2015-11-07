@@ -17,9 +17,8 @@ from auto.generator import FeatureFileGenerator
 def test():
     django.setup()
     feature = Feature.objects.get(pk=1)
-    for line in FeatureFileGenerator.generate_feature(feature):
-        print line
-    pass
+    generate_feature = FeatureFileGenerator.generate_feature(feature)
+    return generate_feature
 
 if __name__ == '__main__':
     test()

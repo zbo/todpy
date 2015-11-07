@@ -139,7 +139,7 @@ def test():
     saver = StepDtoPostSaver()
     result = saver.save(all_steps)
     result.update_workspace(workspace)
-    print result.generate_feature()
+    #plain_text = result.generate_feature()
     #print result
     return result
 

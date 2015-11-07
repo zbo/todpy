@@ -43,8 +43,8 @@ def test():
     django.setup()
     load_config()
 
-    print config
-    print FeatureLocation
+    #print config
+    #print FeatureLocation
     feature_locations = FeatureLocation.objects.filter(type='ios')
     result = {}
     for fl in feature_locations:
@@ -61,9 +61,9 @@ def test():
             temp[key] = step_dto
         result = result.copy()
         result.update(temp)
-    print result
-    print json.dumps(result, cls=DateEncoder)
-    print '=' * 80
+    #print result
+    #print json.dumps(result, cls=DateEncoder)
+    #print '=' * 80
 
 
 if __name__ == '__main__':
