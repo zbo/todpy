@@ -50,7 +50,9 @@ class app_setting_tests(unittest.TestCase):
 
     def test_ba_get_all_by_feature(self):
         import test_get_all_by_feature
-        test_get_all_by_feature.test()
+        import assert_get_all_by_feature
+        json_data = test_get_all_by_feature.test()
+        assert_get_all_by_feature.assert_before_update(self,json_data)
 
     def test_bb_update_all_by_feature(self):
         import test_update_all_by_feature

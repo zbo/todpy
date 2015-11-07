@@ -1,6 +1,7 @@
 __author__ = 'bob.zhu'
 import json
-
+import pdb
+import models
 
 class DataEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -67,8 +68,12 @@ class ScenarioDto:
         self.description = description
         self.steps = []
 
-    def fill_steps(self, step_set):
-        for step in step_set.all():
+    def fill_steps(self, scenario):
+        sequence = scenario.step_sequence
+        sequence = sequence[0:len(sequence)-1]
+        sequence_array = sequence.split('|')
+        for id in sequence_array:
+            step = models.Step.objects.get(pk=id)
             s_dto = StepDto()
             s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description)
             self.steps.append(s_dto)
