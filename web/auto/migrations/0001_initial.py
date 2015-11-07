@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
                 ('description', models.CharField(max_length=255)),
                 ('module', models.CharField(max_length=255)),
                 ('location', models.TextField()),
+                ('workspace', models.IntegerField()),
             ],
             options={
             },

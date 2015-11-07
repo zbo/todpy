@@ -17,12 +17,19 @@ class Feature(models.Model):
         self.description = description
         self.module = module
         self.location = location
+        self.workspace = -1
         return self
+
+    def update_workspace(self, workspace):
+        self.workspace = workspace.id
+        self.location = workspace.rootlocation
+        self.save()
+
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     module = models.CharField(max_length=255)
     location = models.TextField()
-
+    workspace = models.IntegerField()
 
 class Scenario(models.Model):
     def fill(self, feature, description, step_sequence):

@@ -13,6 +13,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web.settings")
 from auto.models import Feature, Scenario, Step
 from auto.dto import StepDto
 from auto.saver import StepDtoPostSaver
+from workspace.saver import WorkSpaceGenerater
 from config.models import AppSetting, FeatureLocation
 from workspace.models import WorkSpace
 from django.contrib.admin.models import LogEntry
@@ -128,8 +129,11 @@ def test():
             ]
         }
     }'''
+    workspace = WorkSpaceGenerater.gen_workspace('web')
+
     saver = StepDtoPostSaver()
     result = saver.save(all_steps)
+    result.update_workspace(workspace)
     #print result
     return result
 

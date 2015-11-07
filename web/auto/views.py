@@ -7,6 +7,7 @@ from models import Feature, Scenario, Step
 from dto import DataEncoder, StepDto, FeatureDto, ScenarioDto
 from django.views.decorators.csrf import csrf_exempt
 from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
+from workspace.saver import WorkSpaceGenerater
 import json
 import pdb
 
@@ -32,6 +33,8 @@ def save_feature(request):
         json_data=request.body
         saver = StepDtoPostSaver()
         result = saver.save(json_data)
+        workspace =WorkSpaceGenerater.gen_workspace('web')
+        result.update_workspace(workspace)
         return HttpResponse(request.body)
 
 def get_feature(request, feature_id):
