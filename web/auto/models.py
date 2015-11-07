@@ -16,8 +16,9 @@ class Feature(models.Model):
         self.name = name
         self.description = description
         self.module = module
-        self.location = location
-        self.workspace = -1
+        if self.workspace == None:
+            self.location = location
+            self.workspace = -1
         return self
 
     def update_workspace(self, workspace):
