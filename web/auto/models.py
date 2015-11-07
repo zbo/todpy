@@ -7,6 +7,7 @@ sys.path.append('../../')
 from steploader import load_steps
 from config.models import FeatureLocation
 from auto.dto import StepDto
+from auto.generator import FeatureFileGenerator
 from django.db import models
 
 # Create your models here.
@@ -26,11 +27,16 @@ class Feature(models.Model):
         self.location = workspace.rootlocation
         self.save()
 
+    def generate_feature(self):
+        return FeatureFileGenerator.generate_feature(self)
+        return plain_text
+
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     module = models.CharField(max_length=255)
     location = models.TextField()
     workspace = models.IntegerField()
+    deleted = models.BooleanField(default=False)
 
 class Scenario(models.Model):
     def fill(self, feature, description, step_sequence):
@@ -45,6 +51,7 @@ class Scenario(models.Model):
     feature = models.ForeignKey(Feature)
     description = models.CharField(max_length=255)
     step_sequence = models.TextField()
+    deleted = models.BooleanField(default=False)
 
 
 class Step(models.Model):
@@ -67,6 +74,7 @@ class Step(models.Model):
     location = models.TextField()
     argnumbers = models.IntegerField()
     varlist = models.CharField(max_length=255)
+    deleted = models.BooleanField(default=False)
 
     @staticmethod
     def getStepByFolder(base_path):

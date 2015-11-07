@@ -14,6 +14,7 @@ from config.models import AppSetting, FeatureLocation
 
 
 
+
 class app_setting_tests(unittest.TestCase):
     def setUp(self):
         django.setup()
@@ -53,13 +54,10 @@ class app_setting_tests(unittest.TestCase):
 
     def test_bb_update_all_by_feature(self):
         import test_update_all_by_feature
+        import assert_update_feature
         feature = test_update_all_by_feature.test()
-        self.assertEqual(feature.name,'change name feature name')
-        self.assertEqual(feature.description,'not fun now')
-        self.assertEqual(feature.scenario_set.count(),3)
-        self.assertEqual(feature.scenario_set.first().step_sequence,'1|7|3|4|')
-        self.assertEqual(feature.scenario_set.get(id=2).step_sequence,'5|6|')
-        self.assertEqual(feature.scenario_set.get(id=3).step_sequence,'8|9|')
+        assert_update_feature.assert_all(self, feature)
+
 
 if __name__ == '__main__':
     unittest.main()
