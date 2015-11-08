@@ -73,7 +73,7 @@ class app_setting_tests(unittest.TestCase):
         result = test_feature_file_generator.test()
         assert_feature_file.assert_gen_file(self, result)
 
-    def test_bd_execute_sample(self):
+    def test_be_execute_sample(self):
         print '.'*20+'test_bd_execute_sample'+'.'*20
         import test_execute_sample
         result = test_execute_sample.test()
