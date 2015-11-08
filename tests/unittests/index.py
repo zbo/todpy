@@ -66,12 +66,17 @@ class app_setting_tests(unittest.TestCase):
         feature = test_update_all_by_feature.test()
         assert_update_feature.assert_all(self, feature)
 
-    def test_feature_file_generator(self):
-        print '.'*20+'test_feature_file_generator'+'.'*20
+    def test_bc_feature_file_generator(self):
+        print '.'*20+'test_bc_feature_file_generator'+'.'*20
         import test_feature_file_generator
         import assert_feature_file
         result = test_feature_file_generator.test()
         assert_feature_file.assert_gen_file(self, result)
+
+    def test_bd_execute_sample(self):
+        print '.'*20+'test_bd_execute_sample'+'.'*20
+        import test_execute_sample
+        result = test_execute_sample.test()
 
 
 
