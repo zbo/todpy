@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "require": "",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "PubSub": "^1.0.0"
   }
 }
