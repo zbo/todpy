@@ -10,6 +10,7 @@ from auto.dto import StepDto
 from auto.generator import FeatureFileGenerator
 from django.db import models
 
+
 # Create your models here.
 
 class Feature(models.Model):
@@ -109,3 +110,4 @@ class Step(models.Model):
             result = result.copy()
             result.update(temp)
         return result
+
