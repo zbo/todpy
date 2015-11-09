@@ -44,8 +44,8 @@ step 4 close browser
 def test():
     django.setup()
     load_config()
-    print config
-    print '=' * 80
+    #print config
+    #print '=' * 80
     # generate workspace
     workspace = WorkSpace()
 
@@ -56,7 +56,7 @@ def test():
 
     # 2, move reference python
     lib_path = workspace.move_lib_folders()
-    print '-' * 20
+    #print '-' * 20
     workspace.save()
 
     # 3, generate test.feature from json

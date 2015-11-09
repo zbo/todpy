@@ -18,6 +18,8 @@ class Migration(migrations.Migration):
                 ('description', models.CharField(max_length=255)),
                 ('module', models.CharField(max_length=255)),
                 ('location', models.TextField()),
+                ('workspace', models.IntegerField()),
+                ('deleted', models.BooleanField(default=False)),
             ],
             options={
             },
@@ -29,6 +31,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.CharField(max_length=255)),
                 ('step_sequence', models.TextField()),
+                ('deleted', models.BooleanField(default=False)),
                 ('feature', models.ForeignKey(to='auto.Feature')),
             ],
             options={
@@ -40,11 +43,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.CharField(max_length=255)),
+                ('description_with_agrs', models.CharField(max_length=255)),
                 ('function', models.CharField(max_length=255)),
                 ('module', models.CharField(max_length=255)),
                 ('location', models.TextField()),
                 ('argnumbers', models.IntegerField()),
                 ('varlist', models.CharField(max_length=255)),
+                ('deleted', models.BooleanField(default=False)),
+                ('action_type', models.CharField(default=b'Then', max_length=20)),
                 ('scenario', models.ForeignKey(to='auto.Scenario')),
             ],
             options={

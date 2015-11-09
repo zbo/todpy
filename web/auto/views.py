@@ -6,7 +6,8 @@ from django.shortcuts import render, get_object_or_404
 from models import Feature, Scenario, Step
 from dto import DataEncoder, StepDto, FeatureDto, ScenarioDto
 from django.views.decorators.csrf import csrf_exempt
-from auto.saver import StepDtoPostSaver
+from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
+from workspace.saver import WorkSpaceGenerater
 import json
 import pdb
 
@@ -32,17 +33,29 @@ def save_feature(request):
         json_data=request.body
         saver = StepDtoPostSaver()
         result = saver.save(json_data)
+        workspace =WorkSpaceGenerater.gen_workspace('web')
+        result.update_workspace(workspace)
         return HttpResponse(request.body)
 
 def get_feature(request, feature_id):
     feature = Feature.objects.filter(id=feature_id).first()
     feature_dto = FeatureDto(feature.name, feature.description)
     scenarios = []
-    for sce in feature.scenario_set.all():
+    for sce in feature.scenario_set.all().filter(deleted=0):
         s_dto = ScenarioDto(sce.description)
-        s_dto.fill_steps(sce.step_set.all())
+        s_dto.fill_steps(sce)
 
         scenarios.append(s_dto)
     feature_dto.fill_scenarios(scenarios)
     return HttpResponse(json.dumps((feature_dto),cls=DataEncoder), content_type="application/json")
+
+@csrf_exempt
+def update_feature(request, feature_id):
+    if request.method != 'POST':
+        return HttpResponse("only post allowed")
+    else:
+        json_data=request.body
+        updater = StepDtoPostUpdater()
+        result = updater.update(json_data)
+        return HttpResponse(request.body)
 

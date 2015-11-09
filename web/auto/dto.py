@@ -1,6 +1,7 @@
 __author__ = 'bob.zhu'
 import json
-
+import pdb
+import models
 
 class DataEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -21,14 +22,16 @@ class StepDto:
         self.co_name = ''
         self.step_name = ''
         self.parameters = []
+        self.action_type = ''
 
-    def fill(self, co_file_name, co_firstlineno, co_argcount, co_varnames, co_name, step_name):
+    def fill(self, co_file_name, co_firstlineno, co_argcount, co_varnames, co_name, step_name, action_type):
         self.co_filename = co_file_name
         self.co_firstlineno = co_firstlineno
         self.co_argcount = co_argcount
         self.co_varnames = co_varnames
         self.co_name = co_name
         self.step_name = step_name
+        self.action_type = action_type
 
     def render_json(self):
         json = {}
@@ -38,6 +41,7 @@ class StepDto:
         json['co_varnames'] = self.co_varnames
         json['co_name'] = self.co_name
         json['step_name'] = self.step_name
+        json['action_type'] = self.action_type
         return json
 
 
@@ -67,10 +71,14 @@ class ScenarioDto:
         self.description = description
         self.steps = []
 
-    def fill_steps(self, step_set):
-        for step in step_set.all():
+    def fill_steps(self, scenario):
+        sequence = scenario.step_sequence
+        sequence = sequence[0:len(sequence)-1]
+        sequence_array = sequence.split('|')
+        for id in sequence_array:
+            step = models.Step.objects.get(pk=id)
             s_dto = StepDto()
-            s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description)
+            s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description,step.action_type)
             self.steps.append(s_dto)
 
     def render_json(self):
