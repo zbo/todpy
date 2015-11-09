@@ -7,8 +7,9 @@ import uuid
 import unittest
 
 sys.path.append('../web')
+sys.path.append('../web/web/')
 sys.path.append('../../')
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 # Shell Plus Model Imports
 from auto.models import Feature, Scenario, Step
 from auto.dto import StepDto
