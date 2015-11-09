@@ -1,6 +1,7 @@
 // var React = require('react');
 var TOD = TOD || {};
 TOD.react = TOD.react || {};
+TOD.react.data = TOD.react.data || {};
 
 var StepInfoDisplay = React.createClass({
     displayName: 'StepInfoDisplay',
@@ -260,6 +261,7 @@ TOD.react.ScenarioContainer = React.createClass({
     displayName: 'ScenarioContainer',
     getInitialState() {
         return {
+            id: "UBP-XXXX",
             name: "name of scenario",
             description: "description of scenario",
             steps: [
@@ -306,9 +308,29 @@ TOD.react.ScenarioContainer = React.createClass({
             ]
         };
     },
-    componentWillUpdate(nextProps, nextState) {
-          
-        return true;
+    getScenarioData: function(){
+        // console.log(this.state.steps);
+        TOD.react.data.scenarios = TOD.react.data.scenarios || [];
+        var _self = this;
+        var _index = TOD.react.data.scenarios.findIndex(function(scenario){
+            if(!_self.state.id){
+                return false;
+            }
+
+            if(_self.state.id===scenario.id){
+                return true;
+            }
+        });
+
+        if( _index < 0){
+            TOD.react.data.scenarios.push(this.state);
+        } else{
+            TOD.react.data.scenarios[_index] = this.state;
+        }
+
+    },
+    componentWillMount:function() {
+        PubSub.subscribe(TOD.events.getScenarioData, this.getScenarioData);
     },
     onAddButtonClick: function(e){
         console.log("On add button clicked");
@@ -360,8 +382,10 @@ TOD.react.ScenarioContainer = React.createClass({
     saveScenario: function(e){
         console.log("Save Scenario Info");
         console.log(this.state.steps);
-
-
+    },
+    togglePanel: function(e){
+        // console.log(this.getDOMNode());
+        $(ReactDOM.findDOMNode(this)).find(".panel-body").toggle();
     },
     render: function() {
         var _self = this;
@@ -376,8 +400,8 @@ TOD.react.ScenarioContainer = React.createClass({
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title" style={{"display": "inline-block"}}>Scenario</h3>
-                    <button className="btn btn-xs btn-default" style={{"right": "24px","position": "absolute"}}>
+                    <h3 className="panel-title" style={{"display": "inline-block"}}>Scenario: <i>{this.state.name}</i></h3>
+                    <button onClick={this.togglePanel} className="btn btn-xs btn-default" style={{"right": "24px","position": "absolute"}}>
                         <span className="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
@@ -396,6 +420,6 @@ TOD.react.ScenarioContainer = React.createClass({
 
 ReactDOM.render(
    React.createElement(TOD.react.ScenarioContainer, null),
-   document.getElementById('featureContainer')
+   document.getElementById('scenarios-container')
 );
 

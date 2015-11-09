@@ -31,6 +31,8 @@ def save_feature(request):
         return HttpResponse("only post allowed")
     else:
         json_data=request.body
+        import pdb
+        pdb.set_trace()
         saver = StepDtoPostSaver()
         result = saver.save(json_data)
         workspace =WorkSpaceGenerater.gen_workspace('web')
