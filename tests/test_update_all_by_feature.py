@@ -51,7 +51,9 @@ def test():
                                     "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
                                     "co_varnames": [
                                         "step"
-                                    ]
+                                    ],
+                                    "co_variables":{},
+                                    "description":"I open web browser"
                                 }
                             },
                             {
@@ -65,7 +67,9 @@ def test():
                                     "co_varnames": [
                                         "step",
                                         "url"
-                                    ]
+                                    ],
+                                    "co_variables": {"url":"http://www.okcoin.com/"},
+                                    "description": "I open page 'http://www.okcoin.com/'"
                                 }
                             },
                             {
@@ -80,7 +84,9 @@ def test():
                                         "step",
                                         "text",
                                         "element"
-                                    ]
+                                    ],
+                                    "co_variables":{"text":"buy"},
+                                    "description":"I click element with text 'buy'"
                                 }
                             },
                             {
@@ -93,7 +99,9 @@ def test():
                                     "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
                                     "co_varnames": [
                                         "step"
-                                    ]
+                                    ],
+                                    "co_variables":{},
+                                    "description":"I close web browser"
                                 }
                             }
                         ]
@@ -112,7 +120,9 @@ def test():
                                     "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
                                     "co_varnames": [
                                         "step"
-                                    ]
+                                    ],
+                                    "co_variables":{},
+                                    "description":"I open web browser"
                                 }
                             },
                             {
@@ -126,7 +136,9 @@ def test():
                                     "co_varnames": [
                                         "step",
                                         "url"
-                                    ]
+                                    ],
+                                    "co_variables": {"url":"http://www.qq.com"},
+                                    "description": "I open page 'http://www.qq.com/'"
                                 }
                             }
                         ]
