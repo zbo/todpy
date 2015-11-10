@@ -1,16 +1,11 @@
 // var React = require('react');
 
-var ScenarioContainer = React.createClass({
-    displayName: 'ScenarioContainer',
+var ScenariosContainer = React.createClass({
+    displayName: 'ScenariosContainer',
     getInitialState() {
         return {
-            name: "name of scenario",
-            description: "description of scenario",
-            steps: []
+            scenarios: []
         };
-    },
-    onAddButtonClick: function(e){
-    	console.log("On add button clicked");
     },
     render: function() {
     	var stepList = this.state.steps.map(function(step){
@@ -37,5 +32,5 @@ var ScenarioContainer = React.createClass({
     }
 });
 
-export var ScenarioContainer;
+// export var ScenarioContainer;
 // module.exports = ScenarioContainer;
