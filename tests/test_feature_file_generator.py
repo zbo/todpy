@@ -14,12 +14,16 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 from auto.models import Feature, Scenario, Step
 from auto.dto import StepDto
 from auto.generator import FeatureFileGenerator
+from workspace.models import WorkSpace
 
 def test():
     django.setup()
     feature = Feature.objects.get(pk=1)
-    generate_feature = FeatureFileGenerator.generate_feature(feature)
-    return generate_feature
+    generate_feature_plain_text = FeatureFileGenerator.generate_feature(feature)
+    workspace = WorkSpace.objects.first()
+    feature = Feature.objects.first()
+    FeatureFileGenerator.save_feature_file(feature,workspace)
+    return generate_feature_plain_text
 
 if __name__ == '__main__':
     test()

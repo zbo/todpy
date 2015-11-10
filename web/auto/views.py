@@ -9,6 +9,7 @@ from dto import DataEncoder, StepDto, FeatureDto, ScenarioDto
 from django.views.decorators.csrf import csrf_exempt
 from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
 from workspace.saver import WorkSpaceGenerater
+from auto.generator import FeatureFileGenerator
 import json
 import pdb
 
@@ -39,6 +40,7 @@ def save_feature(request):
         saver = StepDtoPostSaver()
         result = saver.save(json_data)
         workspace = WorkSpaceGenerater.gen_workspace('web')
+        FeatureFileGenerator.save_feature_file(result, workspace)
         result.update_workspace(workspace)
         return HttpResponse(request.body)
 
