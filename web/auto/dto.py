@@ -51,12 +51,18 @@ class FeatureDto:
         self.description = description
         self.scenarios = []
 
+    def set_id(self, id):
+        self.id = id
+
     def fill_scenarios(self, scenario_list):
         for sce in scenario_list:
             self.scenarios.append(sce)
 
     def render_json(self):
         json = {}
+        if hasattr(self, 'id'):
+            json['id']=self.id
+
         json['name'] = self.name
         json['description'] = self.description
         scenarios = []

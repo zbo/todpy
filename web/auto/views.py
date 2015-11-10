@@ -31,6 +31,9 @@ def search_steps(request):
     return HttpResponse(json.dumps(response_data, cls=DataEncoder), content_type="application/json")
 
 
+def features(request):
+    return render(request, 'auto/feature.html')
+
 @csrf_exempt
 def save_feature(request):
     if request.method != 'POST':
@@ -47,6 +50,7 @@ def save_feature(request):
 
 def get_feature(request, feature_id):
     feature = Feature.objects.filter(id=feature_id).first()
+
     feature_dto = FeatureDto(feature.name, feature.description)
     scenarios = []
     for sce in feature.scenario_set.all().filter(deleted=0):
@@ -57,6 +61,17 @@ def get_feature(request, feature_id):
     feature_dto.fill_scenarios(scenarios)
     return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
 
+
+def list_features(request):
+    features = Feature.objects.all()
+    feature_dtos = []
+    for feature in features:
+        # pdb.set_trace()
+        feature_dto = FeatureDto(feature.name, feature.description)
+        feature_dto.set_id(feature.id)
+        feature_dtos.append(feature_dto)
+
+    return HttpResponse(json.dumps((feature_dtos),cls=DataEncoder), content_type="application/json")
 
 @csrf_exempt
 def update_feature(request, feature_id):
