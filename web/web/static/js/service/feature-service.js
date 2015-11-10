@@ -12,7 +12,19 @@ TOD.service.featureService = function(){
 
 	}
 
-
+	function getFeatureList(){
+		var featureList = [];
+		$.ajax({
+			type: "GET",
+			url: "/auto/feature/list",
+			async: false,
+			success: function(req, res){
+				console.log("Request success");
+				featureList = req;
+			}
+		});
+		return featureList;
+	}
 
 	function saveFeature(feature){
 		console.log("saveFeature");
@@ -47,6 +59,7 @@ TOD.service.featureService = function(){
 
 	return {
 		"getFeatureById": getFeatureById,
+		"getFeatureList": getFeatureList,
 		"getFeatureListByPlatform": getFeatureListByPlatform,
 		"parseFeatureDto": parseFeatureFromReact,
 		"saveFeature": saveFeature
