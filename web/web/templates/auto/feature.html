@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+<link href="{{ STATIC_URL }}css/react-tree.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+active_nav_path(window.location.pathname)
+</script>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	<h1 class="page-header"> Feature List</h1>
+	<div class="jumbotron">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="btn-group pull-right">
+						<button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-collapse-down"/></button>
+					</div>
+					<h3>This is Filter Container</h3>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<div class="jumbotron">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="feature-tree-view">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/select2.full.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/bower_components/PubSub/pubsub.min.js"></script>
+    
+    <script type="text/javascript" src="{{ STATIC_URL }}js/common/tod-events.js"></script>
+	 <script type="text/javascript" src="{{ STATIC_URL }}js/service/step-service.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/service/scenario-service.js"></script>
+   	<script type="text/javascript" src="{{ STATIC_URL }}js/service/feature-service.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}react/components/react-tree.js"></script>
+    <script type="text/jsx" src="{{ STATIC_URL }}react/auto/feature-list.jsx"></script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/views/feature/app.js"></script>
+{% endblock %}
