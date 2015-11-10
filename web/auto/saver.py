@@ -74,7 +74,7 @@ class CommonSaver:
         step_exist = Step.objects.get(pk=step_id)
         step_exist.fill(sce_exist, step['step_name'], step['co_name'], step['co_file_name'],
                         step['co_firstlineno'], step['co_argcount'],
-                        self.replace_u(step['co_varnames']), step['step_name'], step['action_type'])
+                        self.replace_u(step['co_varnames']), step['description'], step['action_type'])
         step_exist.save()
         return step_exist
 
