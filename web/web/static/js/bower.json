@@ -31,8 +31,6 @@
     "grunt-contrib-watch": ""
   },
   "dependencies": {
-    "require": "",
-    "react": "^0.13.3",
     "pubsub": "^1.0.0"
   }
 }
