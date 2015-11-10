@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('../')
 sys.path.append('../../')
 from django.http import HttpResponse
@@ -11,33 +12,36 @@ from workspace.saver import WorkSpaceGenerater
 import json
 import pdb
 
+
 def index(request):
-    steps=Step.getStepByFolder('../simple-selenium')
+    steps = Step.getStepByFolder('../simple-selenium')
     return render(request, 'auto/index.html', {'steps': steps})
+
 
 def create(request):
     return render(request, 'auto/create.html')
 
+
 # http://localhost:8000/auto/search_steps?key_word=aaa&type=ios
 def search_steps(request):
     key_word = request.GET.get('key_word')
-    type=request.GET.get('type')
-    response_data=Step.searchStep(key_word,type)
-    return HttpResponse(json.dumps(response_data,cls=DataEncoder), content_type="application/json")
+    type = request.GET.get('type')
+    response_data = Step.searchStep(key_word, type)
+    return HttpResponse(json.dumps(response_data, cls=DataEncoder), content_type="application/json")
+
 
 @csrf_exempt
 def save_feature(request):
     if request.method != 'POST':
         return HttpResponse("only post allowed")
     else:
-        json_data=request.body
-        import pdb
-        pdb.set_trace()
+        json_data = request.body
         saver = StepDtoPostSaver()
         result = saver.save(json_data)
-        workspace =WorkSpaceGenerater.gen_workspace('web')
+        workspace = WorkSpaceGenerater.gen_workspace('web')
         result.update_workspace(workspace)
         return HttpResponse(request.body)
+
 
 def get_feature(request, feature_id):
     feature = Feature.objects.filter(id=feature_id).first()
@@ -49,15 +53,15 @@ def get_feature(request, feature_id):
 
         scenarios.append(s_dto)
     feature_dto.fill_scenarios(scenarios)
-    return HttpResponse(json.dumps((feature_dto),cls=DataEncoder), content_type="application/json")
+    return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
+
 
 @csrf_exempt
 def update_feature(request, feature_id):
     if request.method != 'POST':
         return HttpResponse("only post allowed")
     else:
-        json_data=request.body
+        json_data = request.body
         updater = StepDtoPostUpdater()
         result = updater.update(json_data)
         return HttpResponse(request.body)
-

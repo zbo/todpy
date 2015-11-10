@@ -53,7 +53,9 @@ def test():
                                 "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
                                 "co_varnames": [
                                     "step"
-                                ]
+                                ],
+                                "co_variables":{},
+                                "description":"I open web browser"
                             }
                         },
                         {
@@ -67,7 +69,9 @@ def test():
                                 "co_varnames": [
                                     "step",
                                     "url"
-                                ]
+                                ],
+                                "co_variables": {"url":"http://cn.bing.com/"},
+                                "description": "I open page 'http://cn.bing.com/'"
                             }
                         },
                         {
@@ -82,7 +86,9 @@ def test():
                                     "step",
                                     "text",
                                     "element"
-                                ]
+                                ],
+                                "co_variables":{"text":"button"},
+                                "description":"I click element with text 'button'"
                             }
                         },
                         {
@@ -95,7 +101,9 @@ def test():
                                 "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
                                 "co_varnames": [
                                     "step"
-                                ]
+                                ],
+                                "co_variables":{},
+                                "description":"I close web browser"
                             }
                         }
                     ]
@@ -114,7 +122,9 @@ def test():
                                 "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
                                 "co_varnames": [
                                     "step"
-                                ]
+                                ],
+                                "co_variables":{},
+                                "description":"I open web browser"
                             }
                         },
                         {
@@ -128,7 +138,9 @@ def test():
                                 "co_varnames": [
                                     "step",
                                     "url"
-                                ]
+                                ],
+                                "co_variables": {"url":"http://www.baidu.com"},
+                                "description": "I open page 'http://www.baidu.com/'"
                             }
                         }
                     ]
@@ -140,8 +152,8 @@ def test():
     saver = StepDtoPostSaver()
     result = saver.save(all_steps)
     result.update_workspace(workspace)
-    #plain_text = result.generate_feature()
-    #print result
+    # plain_text = result.generate_feature()
+    # print result
     return result
 
 
