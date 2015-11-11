@@ -256,8 +256,7 @@ TOD.react.StepInfo = React.createClass({
     }
 });
 
-
-TOD.react.ScenarioContainer = React.createClass({
+var ScenarioContainer = React.createClass({
     displayName: 'ScenarioContainer',
     getInitialState() {
         return {
@@ -269,40 +268,20 @@ TOD.react.ScenarioContainer = React.createClass({
                     id: 1,
                     mode: "display",
                     type: "Given",
-                    description: " a clean and valid account in system",
+                    description: "I open web brower",
                     step: {
-                    }
-                },
-                {
-                    id: 2,
-                    mode: "display",
-                    type: "When",
-                    description: "2. I login the system",
-                    step: {
-                    }
-                },
-                {
-                    id: 3,
-                    mode: "display",
-                    type: "Then",
-                    description: "3. I have authorization of developer",
-                    step: {
-                    }
-                },
-                {
-                    id: 4,
-                    mode: "display",
-                    type: "When",
-                    description: "4. I try to access NPA functionanlirty",
-                    step: {
-                    }
-                },
-                {
-                    id: 5,
-                    mode: "display",
-                    type: "Then",
-                    description: "5. I can see what I wanted to see",
-                    step: {
+                        "action_type": "Given",
+                        "co_firstlineno": 8,
+                        "co_name": "i_open_browser",
+                        "step_name": "I open web browser",
+                        "co_argcount": 1,
+                        "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
+                        "co_varnames": [
+                            "step"
+                        ],
+                        "co_variables":{},
+                        "description":"I open web browser",
+                        "value": "I open web browser"
                     }
                 }
             ]
@@ -410,6 +389,9 @@ TOD.react.ScenarioContainer = React.createClass({
                          <button onClick={this.onAddButtonClick} data-name="add-step" type="button" className="btn btn-default">Add Step</button>
                          <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary">Save Scenario</button>
                     </div>
+                    <div className="scenario-description">
+                        <p>{this.state.description}</p>
+                    </div>
                     {stepList}
                 </div>
             </div>
@@ -419,7 +401,7 @@ TOD.react.ScenarioContainer = React.createClass({
 
 
 ReactDOM.render(
-   React.createElement(TOD.react.ScenarioContainer, null),
+   React.createElement(ScenarioContainer, null),
    document.getElementById('scenarios-container')
 );
 

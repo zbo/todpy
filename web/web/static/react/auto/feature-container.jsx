@@ -1,4 +1,6 @@
 // var React = require('react');
+var TOD = TOD || {};
+TOD.react = TOD.react || {};
 
 var FeatureContainer = React.createClass({
     displayName: 'FeatureContainer',
@@ -9,6 +11,17 @@ var FeatureContainer = React.createClass({
         	feature_name: "Update apps order in App Gallery",
         	feature_description: "As a Product manager I want to re-order the public apps so that RC apps come first, then followed by 3rd party apps and coming soon apps."
         };
+    },
+    componentDidMount:function() {
+
+        console.log(this.props);
+        if(this.props.data){
+            this.setState({
+                feature_id: this.props.data.feature_id,
+                feature_name: this.props.data.name,
+                feature_description: this.props.data.description
+            });
+        }
     },
     getFeatureData: function(){
 		TOD.react.data.feature = this.state;
@@ -74,8 +87,7 @@ var FeatureContainer = React.createClass({
                           <input onChange={this.handleValueChange} data-name="feature_description" type="text" className="form-control" value={_description}></input>
                         </div>
                       </div>
-                    </div>
-		            
+                    </div>		            
 		        </div>
     		);
     	} else {
@@ -93,8 +105,12 @@ var FeatureContainer = React.createClass({
     }
 });
 
+TOD.react.FeatureContainer = FeatureContainer;
+
 // module.exports = FeatureContainer;
-ReactDOM.render(
-   React.createElement(FeatureContainer, null),
-   document.getElementById('feature-container')
-);
+if(document.getElementById('feature-container')){
+    ReactDOM.render(
+       React.createElement(FeatureContainer, null),
+       document.getElementById('feature-container')
+    );    
+}

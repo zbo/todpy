@@ -25,6 +25,7 @@ def create(request):
 
 # http://localhost:8000/auto/search_steps?key_word=aaa&type=ios
 def search_steps(request):
+    pdb.set_trace()
     key_word = request.GET.get('key_word')
     type = request.GET.get('type')
     response_data = Step.searchStep(key_word, type)
@@ -32,7 +33,10 @@ def search_steps(request):
 
 
 def features(request):
-    return render(request, 'auto/feature.html')
+    return render(request, 'auto/feature_list.html')
+
+def viewDetail(request, feature_id):
+    return render(request, 'auto/feature.html', {'featureId':feature_id})
 
 @csrf_exempt
 def save_feature(request):
@@ -57,8 +61,10 @@ def get_feature(request, feature_id):
         s_dto = ScenarioDto(sce.description)
         s_dto.fill_steps(sce)
         scenarios.append(s_dto)
+
     feature_dto.fill_scenarios(scenarios)
     return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
+
 
 
 def list_features(request):
