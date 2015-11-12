@@ -32,12 +32,22 @@ class Feature(models.Model):
         return FeatureFileGenerator.generate_feature(self)
         return plain_text
 
+    def lock_feature(self):
+        self.executionLock = True
+        self.save()
+
+    def unlock_feature(self):
+        self.executionLock = False
+        self.save()
+
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     module = models.CharField(max_length=255)
     location = models.TextField()
     workspace = models.IntegerField()
     deleted = models.BooleanField(default=False)
+    executionLock = models.BooleanField(default=False)
+
 
 class Scenario(models.Model):
     def fill(self, feature, description, step_sequence):
@@ -47,7 +57,7 @@ class Scenario(models.Model):
         return self
 
     def set_sequence(self, step_sequence):
-        self.step_sequence=step_sequence
+        self.step_sequence = step_sequence
 
     feature = models.ForeignKey(Feature)
     description = models.CharField(max_length=255)
@@ -56,7 +66,8 @@ class Scenario(models.Model):
 
 
 class Step(models.Model):
-    def fill(self, scenario, description, function, module, location, argmunber, varlist, description_with_args, action_type, co_variables):
+    def fill(self, scenario, description, function, module, location, argmunber, varlist, description_with_args,
+             action_type, co_variables):
         self.scenario = scenario
         self.description = description
         self.function = function
@@ -112,4 +123,3 @@ class Step(models.Model):
             result = result.copy()
             result.update(temp)
         return result
-

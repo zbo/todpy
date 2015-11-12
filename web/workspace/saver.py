@@ -1,5 +1,6 @@
 __author__ = 'bob.zhu'
 from models import WorkSpace
+from auto.models import Feature
 import uuid
 
 class WorkSpaceGenerater:
@@ -13,3 +14,14 @@ class WorkSpaceGenerater:
         lib_path = workspace.move_lib_folders()
         workspace.save()
         return workspace
+
+class ExecutionPlanSaver:
+
+    @staticmethod
+    def save_execution_plan(feature_id):
+        feature = Feature.objects.get(pk=feature_id)
+        if feature.executionLock:
+            return "execution already started"
+        else:
+            feature.lock_feature()
+            return "ok"

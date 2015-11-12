@@ -8,7 +8,7 @@ from models import Feature, Scenario, Step
 from dto import DataEncoder, StepDto, FeatureDto, ScenarioDto
 from django.views.decorators.csrf import csrf_exempt
 from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
-from workspace.saver import WorkSpaceGenerater
+from workspace.saver import WorkSpaceGenerater, ExecutionPlanSaver
 from auto.generator import FeatureFileGenerator
 import json
 import pdb
@@ -81,3 +81,7 @@ def update_feature(request, feature_id):
         updater = StepDtoPostUpdater()
         result = updater.update(json_data)
         return HttpResponse(request.body)
+
+def exe_feature(request, feature_id):
+    result = ExecutionPlanSaver.save_execution_plan(feature_id)
+    return HttpResponse("result:{0}".format(result))

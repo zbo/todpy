@@ -33,7 +33,7 @@ class FeatureFileGenerator:
         for line in plain_text:
             file_object.write(line+'\r\n')
         file_object.close()
-        print file_path
+        #print file_path
 
 
 

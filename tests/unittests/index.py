@@ -11,6 +11,7 @@ sys.path.append('../')
 sys.path.append('../../../')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web.settings")
 from config.models import AppSetting, FeatureLocation
+from auto.models import Feature
 
 
 
@@ -73,10 +74,19 @@ class app_setting_tests(unittest.TestCase):
         result = test_feature_file_generator.test()
         assert_feature_file.assert_gen_file(self, result)
 
+    @unittest.skip("save time")
     def test_be_execute_sample(self):
         print '.'*20+'test_bd_execute_sample'+'.'*20
         import test_execute_sample
         result = test_execute_sample.test()
+
+    def test_bf_post_execution_plan(self):
+        print '.'*20+'test_bf_execution_plan'+'.'*20
+        import test_post_exe_plan
+        import assert_post_execution_plan
+        result, feature_id = test_post_exe_plan.test()
+        feature = Feature.objects.get(pk=feature_id)
+        assert_post_execution_plan.assert_all(self, result, feature)
 
 
 

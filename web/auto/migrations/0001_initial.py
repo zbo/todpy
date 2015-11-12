@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('location', models.TextField()),
                 ('workspace', models.IntegerField()),
                 ('deleted', models.BooleanField(default=False)),
+                ('executionLock', models.BooleanField(default=False)),
             ],
             options={
             },

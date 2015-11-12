@@ -40,7 +40,7 @@ def test():
 
         scenarios.append(s_dto)
     feature_dto.fill_scenarios(scenarios)
-    print json.dumps((feature_dto),cls=DataEncoder)
+    # print json.dumps((feature_dto),cls=DataEncoder)
     return json.dumps((feature_dto),cls=DataEncoder)
 
 
