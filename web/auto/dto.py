@@ -21,10 +21,11 @@ class StepDto:
         self.co_varnames = {}
         self.co_name = ''
         self.step_name = ''
-        self.parameters = []
+        self.co_variables = []
         self.action_type = ''
+        self.description = ''
 
-    def fill(self, co_file_name, co_firstlineno, co_argcount, co_varnames, co_name, step_name, action_type):
+    def fill(self, co_file_name, co_firstlineno, co_argcount, co_varnames, co_name, step_name, action_type, co_variables, description):
         self.co_filename = co_file_name
         self.co_firstlineno = co_firstlineno
         self.co_argcount = co_argcount
@@ -32,17 +33,22 @@ class StepDto:
         self.co_name = co_name
         self.step_name = step_name
         self.action_type = action_type
+        self.co_variables = co_variables
+        self.description = description
 
     def render_json(self):
-        json = {}
-        json['co_file_name'] = self.co_filename
-        json['co_firstlineno'] = self.co_firstlineno
-        json['co_argcount'] = self.co_argcount
-        json['co_varnames'] = self.co_varnames
-        json['co_name'] = self.co_name
-        json['step_name'] = self.step_name
-        json['action_type'] = self.action_type
-        return json
+        json_ret = {}
+        json_ret['co_file_name'] = self.co_filename
+        json_ret['co_firstlineno'] = self.co_firstlineno
+        json_ret['co_argcount'] = self.co_argcount
+        json_ret['co_varnames'] = self.co_varnames
+        json_ret['co_name'] = self.co_name
+        json_ret['step_name'] = self.step_name
+        json_ret['action_type'] = self.action_type
+        json_ret['co_variables'] = self.co_variables
+        json_ret['description'] = self.description
+        json_ret['co_variables'] = self.co_variables
+        return json_ret
 
 
 class FeatureDto:
@@ -84,7 +90,7 @@ class ScenarioDto:
         for id in sequence_array:
             step = models.Step.objects.get(pk=id)
             s_dto = StepDto()
-            s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description,step.action_type)
+            s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description,step.action_type, step.co_variables, step.description_with_agrs)
             self.steps.append(s_dto)
 
     def render_json(self):

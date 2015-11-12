@@ -56,7 +56,7 @@ class Scenario(models.Model):
 
 
 class Step(models.Model):
-    def fill(self, scenario, description, function, module, location, argmunber, varlist, description_with_args, action_type):
+    def fill(self, scenario, description, function, module, location, argmunber, varlist, description_with_args, action_type, co_variables):
         self.scenario = scenario
         self.description = description
         self.function = function
@@ -66,6 +66,7 @@ class Step(models.Model):
         self.varlist = varlist
         self.description_with_agrs = description_with_args
         self.action_type = action_type
+        self.co_variables = co_variables
         return self
 
     scenario = models.ForeignKey(Scenario)
@@ -78,6 +79,7 @@ class Step(models.Model):
     varlist = models.CharField(max_length=255)
     deleted = models.BooleanField(default=False)
     action_type = models.CharField(max_length=20, default='Then')
+    co_variables = models.CharField(max_length=255)
 
     @staticmethod
     def getStepByFolder(base_path):

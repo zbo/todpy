@@ -51,6 +51,7 @@ class Migration(migrations.Migration):
                 ('varlist', models.CharField(max_length=255)),
                 ('deleted', models.BooleanField(default=False)),
                 ('action_type', models.CharField(default=b'Then', max_length=20)),
+                ('co_variables', models.CharField(max_length=255)),
                 ('scenario', models.ForeignKey(to='auto.Scenario')),
             ],
             options={

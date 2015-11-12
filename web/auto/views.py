@@ -56,7 +56,6 @@ def get_feature(request, feature_id):
     for sce in feature.scenario_set.all().filter(deleted=0):
         s_dto = ScenarioDto(sce.description)
         s_dto.fill_steps(sce)
-
         scenarios.append(s_dto)
     feature_dto.fill_scenarios(scenarios)
     return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
