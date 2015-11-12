@@ -10,12 +10,12 @@ var ScenarioList = React.createClass({
     componentDidMount() {
         if(this.props.data){
         	this.setState({
-        		scenarios: this.props.data.scenarios
+        		scenarios: this.props.data
         	});
         } 
     },
     render: function() {
-    	var scenarioComponents = scenarios.map(function(scenario){
+    	var scenarioComponents = this.state.scenarios.map(function(scenario){
     		return (
     			<ScenarioContainer key={scenario.id} data={scenario}/>
     		);

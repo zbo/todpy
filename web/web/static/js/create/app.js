@@ -13,5 +13,11 @@ $(document).ready(function(){
         featureService.parseFeatureDto(featureData, scenarioData);
 
         featureService.saveFeature(featureData);
-    })
+    });
+
+    $("#back_to_list_btn").click(function(e){
+		var url = window.location.protocal+"//"+window.location.host+"/auto/features";
+		window.location = url;
+	})	
+
 });

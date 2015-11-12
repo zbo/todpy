@@ -22,7 +22,16 @@ var FeatureDisplayView = React.createClass({
     render: function() {
         return (
             <div>
-            	<FeatureContainer data={this.state.featureDto} />
+            	<div className="jumbotron">
+					<div className="container">
+						<div className="row">
+							<FeatureContainer data={this.state.featureDto} />
+						</div>
+					</div>
+            	</div>
+
+            	<ScenarioList data={this.state.featureDto.scenarios} />
+            	
             </div>
         );
     }

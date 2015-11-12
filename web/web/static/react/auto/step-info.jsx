@@ -311,6 +311,16 @@ var ScenarioContainer = React.createClass({
     componentWillMount:function() {
         PubSub.subscribe(TOD.events.getScenarioData, this.getScenarioData);
     },
+    componentDidMount: function() {
+        if(this.props.data){
+            this.setState({
+                id: this.props.data.id,
+                name: this.props.data.description,
+                description: this.props.data.description,
+                steps: this.props.data.steps
+            });
+        }
+    },
     onAddButtonClick: function(e){
         console.log("On add button clicked");
         var _steps = this.state.steps;
@@ -400,8 +410,10 @@ var ScenarioContainer = React.createClass({
 });
 
 
-ReactDOM.render(
-   React.createElement(ScenarioContainer, null),
-   document.getElementById('scenarios-container')
-);
+if(document.getElementById('scenarios-container')){
+    ReactDOM.render(
+       React.createElement(ScenarioContainer, null),
+       document.getElementById('scenarios-container')
+    );    
+}
 
