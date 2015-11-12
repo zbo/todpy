@@ -47,6 +47,7 @@ class TestLog(models.Model):
 
 class Execution(models.Model):
     workspace = models.ForeignKey(WorkSpace)
+    status = models.CharField(max_length=20, default='queue')
     testlog = models.OneToOneField(TestLog)
     executor = models.CharField(max_length=50)
     starttime = models.DateTimeField(auto_now_add=True)

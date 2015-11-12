@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
             name='Execution',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('status', models.CharField(default=b'queue', max_length=20)),
                 ('executor', models.CharField(max_length=50)),
                 ('starttime', models.DateTimeField(auto_now_add=True)),
                 ('endtime', models.DateTimeField(auto_now_add=True)),
