@@ -11,6 +11,30 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Execution',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('executor', models.CharField(max_length=50)),
+                ('starttime', models.DateTimeField(auto_now_add=True)),
+                ('endtime', models.DateTimeField(auto_now_add=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TestLog',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('content', models.TextField()),
+                ('starttime', models.DateTimeField(auto_now_add=True)),
+                ('endtime', models.DateTimeField(auto_now_add=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='WorkSpace',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -23,5 +47,17 @@ class Migration(migrations.Migration):
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='execution',
+            name='testlog',
+            field=models.OneToOneField(to='workspace.TestLog'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='execution',
+            name='workspace',
+            field=models.ForeignKey(to='workspace.WorkSpace'),
+            preserve_default=True,
         ),
     ]

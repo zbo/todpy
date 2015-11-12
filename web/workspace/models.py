@@ -39,3 +39,16 @@ class WorkSpace(models.Model):
             lib_path.append(item)
         return lib_path
 
+class TestLog(models.Model):
+    #execution = models.OneToOneField(Execution)
+    content = models.TextField()
+    starttime = models.DateTimeField(auto_now_add=True)
+    endtime = models.DateTimeField(auto_now_add=True)
+
+class Execution(models.Model):
+    workspace = models.ForeignKey(WorkSpace)
+    testlog = models.OneToOneField(TestLog)
+    executor = models.CharField(max_length=50)
+    starttime = models.DateTimeField(auto_now_add=True)
+    endtime = models.DateTimeField(auto_now_add=True)
+
