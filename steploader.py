@@ -38,9 +38,10 @@ def load_steps(base_path):
 
         reload(module)  # always take fresh meat :)
         step_meta = StepMeta()
-        step_meta.STEP_REGISTRY = copy.deepcopy(module.STEP_REGISTRY)
-        step_meta.CALLBACK_REGISTRY = copy.deepcopy(module.CALLBACK_REGISTRY)
-        all.append(step_meta)
-        clear_global(module)
+        if hasattr(module, "STEP_REGISTRY"):
+            step_meta.STEP_REGISTRY = copy.deepcopy(module.STEP_REGISTRY)
+            step_meta.CALLBACK_REGISTRY = copy.deepcopy(module.CALLBACK_REGISTRY)
+            all.append(step_meta)
+            clear_global(module)
         sys.path.remove(root)
     return all

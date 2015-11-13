@@ -25,7 +25,7 @@ def clear_global(moudles):
 
 
 base_path = '../simple-selenium'
-android_path = '../libraries/android'
+android_path = '../libraries/web'
 
 modules_android = load_steps(android_path)
 print len(modules_android)
