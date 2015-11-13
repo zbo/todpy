@@ -3,16 +3,18 @@ from django.db import models
 import sys
 import os
 import shutil
+
 sys.path.append('../')
-sys.path.append('../../') # Create your models here.
+sys.path.append('../../')  # Create your models here.
 from config.models import AppSetting, FeatureLocation
 
+
 class WorkSpace(models.Model):
-    type=models.CharField(max_length=255)
-    name=models.CharField(max_length=255)
-    rootlocation=models.CharField(max_length=755)
-    createat=models.DateTimeField(auto_now_add=True)
-    updateat=models.DateTimeField(auto_now=True)
+    type = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    rootlocation = models.CharField(max_length=755)
+    createat = models.DateTimeField(auto_now_add=True)
+    updateat = models.DateTimeField(auto_now=True)
 
     def fill(self, type, name, rootlocation):
         self.type = type.lower()
@@ -35,21 +37,26 @@ class WorkSpace(models.Model):
         all = FeatureLocation.getLocation(self.type)
         for item in all:
             source_folder = AppSetting.getSetting('projectbase')[0] + item
-            shutil.copytree(source_folder, self.getFolderPath()+'/'+str(self.type))
+            shutil.copytree(source_folder, self.getFolderPath() + '/' + str(self.type))
             lib_path.append(item)
         return lib_path
 
-class TestLog(models.Model):
-    #execution = models.OneToOneField(Execution)
-    content = models.TextField()
-    starttime = models.DateTimeField(auto_now_add=True)
-    endtime = models.DateTimeField(auto_now_add=True)
 
 class Execution(models.Model):
     workspace = models.ForeignKey(WorkSpace)
     status = models.CharField(max_length=20, default='queue')
-    testlog = models.OneToOneField(TestLog)
     executor = models.CharField(max_length=50)
     starttime = models.DateTimeField(auto_now_add=True)
     endtime = models.DateTimeField(auto_now_add=True)
 
+    def fill(self, workspace, status, executor):
+        self.workspace = workspace
+        self.status = status
+        self.executor = executor
+
+
+class TestLog(models.Model):
+    execution = models.ForeignKey(Execution)
+    content = models.TextField()
+    starttime = models.DateTimeField(auto_now_add=True)
+    endtime = models.DateTimeField(auto_now_add=True)

@@ -30,6 +30,7 @@ class Migration(migrations.Migration):
                 ('content', models.TextField()),
                 ('starttime', models.DateTimeField(auto_now_add=True)),
                 ('endtime', models.DateTimeField(auto_now_add=True)),
+                ('execution', models.ForeignKey(to='workspace.Execution')),
             ],
             options={
             },
@@ -48,12 +49,6 @@ class Migration(migrations.Migration):
             options={
             },
             bases=(models.Model,),
-        ),
-        migrations.AddField(
-            model_name='execution',
-            name='testlog',
-            field=models.OneToOneField(to='workspace.TestLog'),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='execution',

@@ -1,6 +1,7 @@
 __author__ = 'bob.zhu'
 from models import WorkSpace
 from auto.models import Feature
+from models import Execution, TestLog
 import uuid
 
 class WorkSpaceGenerater:
@@ -24,4 +25,8 @@ class ExecutionPlanSaver:
             return "execution already started"
         else:
             feature.lock_feature()
+            execution = Execution()
+            workspace = WorkSpace.objects.get(pk=feature.workspace)
+            execution.fill(workspace, "planed", "hardcode-executor")
+            execution.save()
             return "ok"
