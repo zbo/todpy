@@ -7,6 +7,7 @@ TOD.service.featureService = function(){
 	function getFeatureById(feature_id){
 		var feature = {};
 		try{
+
 			$.ajax({
 				type:"GET",
 				url: "auto/api/feature/"+feature_id+"/",

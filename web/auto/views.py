@@ -25,7 +25,6 @@ def create(request):
 
 # http://localhost:8000/auto/search_steps?key_word=aaa&type=ios
 def search_steps(request):
-    pdb.set_trace()
     key_word = request.GET.get('key_word')
     type = request.GET.get('type')
     response_data = Step.searchStep(key_word, type)
@@ -58,7 +57,7 @@ def get_feature(request, feature_id):
     feature_dto = FeatureDto(feature.name, feature.description)
     scenarios = []
     for sce in feature.scenario_set.all().filter(deleted=0):
-        s_dto = ScenarioDto(sce.description)
+        s_dto = ScenarioDto(sce.id, sce.description)
         s_dto.fill_steps(sce)
         scenarios.append(s_dto)
 

@@ -77,8 +77,8 @@ var StepInfoEdit = React.createClass({
         });
     },
     handleStepSelections: function(e, selections, next){
-        console.log("handle step selection")
-        console.log(selections);
+        // console.log("handle step selection")
+        // console.log(selections);
         
         var _selected = selections[0];
 
@@ -208,8 +208,15 @@ TOD.react.StepInfo = React.createClass({
         };
     },
     componentWillMount: function(){
+        if(this.props.data && this.props.data.co_variables && "string" === (typeof this.props.data.co_variables)){
+            this.props.data.step = {};
+            // debugger
+
+            this.props.data.step.co_variables = JSON.parse(this.props.data.co_variables);
+        }
+
         this.setState({
-            mode: this.props.data.mode,
+            mode: (this.props.data.mode || "display"),
             data: {
                 id: this.props.data.id,
                 type: this.props.data.type,
@@ -381,16 +388,17 @@ var ScenarioContainer = React.createClass({
 
         console.log("render scenario panel");
         // console.log(this.state.steps);
-
+        
         var stepList = this.state.steps.map(function(step){
-            return <TOD.react.StepInfo key={step.id} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
+            var key = _self.state.id+"_"+step.id
+            return <TOD.react.StepInfo key={key} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
         });
 
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <h3 className="panel-title" style={{"display": "inline-block"}}>Scenario: <i>{this.state.name}</i></h3>
-                    <button onClick={this.togglePanel} className="btn btn-xs btn-default" style={{"right": "24px","position": "absolute"}}>
+                    <button onClick={this.togglePanel} className="btn btn-xs btn-default pull-right">
                         <span className="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
@@ -399,7 +407,7 @@ var ScenarioContainer = React.createClass({
                          <button onClick={this.onAddButtonClick} data-name="add-step" type="button" className="btn btn-default">Add Step</button>
                          <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary">Save Scenario</button>
                     </div>
-                    <div className="scenario-description">
+                    <div className="scenario-description hide">
                         <p>{this.state.description}</p>
                     </div>
                     {stepList}

@@ -28,7 +28,7 @@ var FeatureList = React.createClass({
     handleTreenodeClick: function(id, node){
     	console.log("tree node clicked");
     	console.log(id);
-    	var url = window.location.protocal+"//"+window.location.host+"/auto/feature/"+id+"/";
+    	var url = window.location.protocol+"//"+window.location.host+"/auto/feature/"+id+"/";
         window.location = url;
         
     },

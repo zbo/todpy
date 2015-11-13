@@ -35,7 +35,7 @@ def test():
     feature_dto = FeatureDto(feature.name, feature.description)
     scenarios = []
     for sce in feature.scenario_set.filter(deleted=0):
-        s_dto = ScenarioDto(sce.description)
+        s_dto = ScenarioDto(sce.id, sce.description)
         s_dto.fill_steps(sce)
 
         scenarios.append(s_dto)
