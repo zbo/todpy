@@ -25,7 +25,7 @@ class StepDto:
         self.action_type = ''
         self.description = ''
 
-    def fill(self, co_file_name, co_firstlineno, co_argcount, co_varnames, co_name, step_name, action_type, co_variables, description):
+    def fill(self, co_file_name, co_firstlineno, co_argcount, co_varnames, co_name, step_name, action_type, co_variables, description, id):
         self.co_filename = co_file_name
         self.co_firstlineno = co_firstlineno
         self.co_argcount = co_argcount
@@ -35,6 +35,7 @@ class StepDto:
         self.action_type = action_type
         self.co_variables = co_variables
         self.description = description
+        self.id=id
 
     def render_json(self):
         json_ret = {}
@@ -47,7 +48,8 @@ class StepDto:
         json_ret['action_type'] = self.action_type
         json_ret['co_variables'] = self.co_variables
         json_ret['description'] = self.description
-        json_ret['co_variables'] = self.co_variables
+        json_ret['id'] = self.id
+        
         return json_ret
 
 
@@ -79,7 +81,8 @@ class FeatureDto:
 
 
 class ScenarioDto:
-    def __init__(self, description):
+    def __init__(self, id, description):
+        self.id = id
         self.description = description
         self.steps = []
 
@@ -90,11 +93,12 @@ class ScenarioDto:
         for id in sequence_array:
             step = models.Step.objects.get(pk=id)
             s_dto = StepDto()
-            s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description,step.action_type, step.co_variables, step.description_with_agrs)
+            s_dto.fill(step.module,step.location, step.argnumbers, step.varlist, step.function, step.description,step.action_type, step.co_variables, step.description_with_agrs, id)
             self.steps.append(s_dto)
 
     def render_json(self):
         json={}
+        json['id'] = self.id
         json['description'] = self.description
         steps = []
         for step in self.steps:

@@ -5,7 +5,26 @@ TOD.service.featureService = function(){
 	var scenarioService = TOD.service.scenarioService();
 
 	function getFeatureById(feature_id){
+		var feature = {};
+		try{
 
+			$.ajax({
+				type:"GET",
+				url: "auto/api/feature/"+feature_id+"/",
+				async: false,
+				success: function(res){
+					feature = res;
+				},
+				error: function(res){
+					console.log("ERROR!!!");
+					throw new Error("Feature Not Exist");
+				}
+			});	
+		} catch (e){
+			throw e;
+		}
+		
+		return feature;
 	}
 
 	function getFeatureListByPlatform(platform){
@@ -16,7 +35,7 @@ TOD.service.featureService = function(){
 		var featureList = [];
 		$.ajax({
 			type: "GET",
-			url: "/auto/feature/list",
+			url: "auto/api/feature/list",
 			async: false,
 			success: function(req, res){
 				console.log("Request success");

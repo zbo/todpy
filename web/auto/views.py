@@ -32,7 +32,10 @@ def search_steps(request):
 
 
 def features(request):
-    return render(request, 'auto/feature.html')
+    return render(request, 'auto/feature_list.html')
+
+def viewDetail(request, feature_id):
+    return render(request, 'auto/feature.html', {'featureId':feature_id})
 
 @csrf_exempt
 def save_feature(request):
@@ -54,11 +57,13 @@ def get_feature(request, feature_id):
     feature_dto = FeatureDto(feature.name, feature.description)
     scenarios = []
     for sce in feature.scenario_set.all().filter(deleted=0):
-        s_dto = ScenarioDto(sce.description)
+        s_dto = ScenarioDto(sce.id, sce.description)
         s_dto.fill_steps(sce)
         scenarios.append(s_dto)
+
     feature_dto.fill_scenarios(scenarios)
     return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
+
 
 
 def list_features(request):

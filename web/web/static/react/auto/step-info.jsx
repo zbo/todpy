@@ -77,8 +77,8 @@ var StepInfoEdit = React.createClass({
         });
     },
     handleStepSelections: function(e, selections, next){
-        console.log("handle step selection")
-        console.log(selections);
+        // console.log("handle step selection")
+        // console.log(selections);
         
         var _selected = selections[0];
 
@@ -208,8 +208,15 @@ TOD.react.StepInfo = React.createClass({
         };
     },
     componentWillMount: function(){
+        if(this.props.data && this.props.data.co_variables && "string" === (typeof this.props.data.co_variables)){
+            this.props.data.step = {};
+            // debugger
+
+            this.props.data.step.co_variables = JSON.parse(this.props.data.co_variables);
+        }
+
         this.setState({
-            mode: this.props.data.mode,
+            mode: (this.props.data.mode || "display"),
             data: {
                 id: this.props.data.id,
                 type: this.props.data.type,
@@ -256,8 +263,7 @@ TOD.react.StepInfo = React.createClass({
     }
 });
 
-
-TOD.react.ScenarioContainer = React.createClass({
+var ScenarioContainer = React.createClass({
     displayName: 'ScenarioContainer',
     getInitialState() {
         return {
@@ -269,40 +275,20 @@ TOD.react.ScenarioContainer = React.createClass({
                     id: 1,
                     mode: "display",
                     type: "Given",
-                    description: " a clean and valid account in system",
+                    description: "I open web brower",
                     step: {
-                    }
-                },
-                {
-                    id: 2,
-                    mode: "display",
-                    type: "When",
-                    description: "2. I login the system",
-                    step: {
-                    }
-                },
-                {
-                    id: 3,
-                    mode: "display",
-                    type: "Then",
-                    description: "3. I have authorization of developer",
-                    step: {
-                    }
-                },
-                {
-                    id: 4,
-                    mode: "display",
-                    type: "When",
-                    description: "4. I try to access NPA functionanlirty",
-                    step: {
-                    }
-                },
-                {
-                    id: 5,
-                    mode: "display",
-                    type: "Then",
-                    description: "5. I can see what I wanted to see",
-                    step: {
+                        "action_type": "Given",
+                        "co_firstlineno": 8,
+                        "co_name": "i_open_browser",
+                        "step_name": "I open web browser",
+                        "co_argcount": 1,
+                        "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
+                        "co_varnames": [
+                            "step"
+                        ],
+                        "co_variables":{},
+                        "description":"I open web browser",
+                        "value": "I open web browser"
                     }
                 }
             ]
@@ -331,6 +317,16 @@ TOD.react.ScenarioContainer = React.createClass({
     },
     componentWillMount:function() {
         PubSub.subscribe(TOD.events.getScenarioData, this.getScenarioData);
+    },
+    componentDidMount: function() {
+        if(this.props.data){
+            this.setState({
+                id: this.props.data.id,
+                name: this.props.data.description,
+                description: this.props.data.description,
+                steps: this.props.data.steps
+            });
+        }
     },
     onAddButtonClick: function(e){
         console.log("On add button clicked");
@@ -392,16 +388,17 @@ TOD.react.ScenarioContainer = React.createClass({
 
         console.log("render scenario panel");
         // console.log(this.state.steps);
-
+        
         var stepList = this.state.steps.map(function(step){
-            return <TOD.react.StepInfo key={step.id} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
+            var key = _self.state.id+"_"+step.id
+            return <TOD.react.StepInfo key={key} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
         });
 
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <h3 className="panel-title" style={{"display": "inline-block"}}>Scenario: <i>{this.state.name}</i></h3>
-                    <button onClick={this.togglePanel} className="btn btn-xs btn-default" style={{"right": "24px","position": "absolute"}}>
+                    <button onClick={this.togglePanel} className="btn btn-xs btn-default pull-right">
                         <span className="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
@@ -409,6 +406,9 @@ TOD.react.ScenarioContainer = React.createClass({
                     <div className="btn-group" role="group" style={{"display":"flex", "marginBottom": "5px"}} >
                          <button onClick={this.onAddButtonClick} data-name="add-step" type="button" className="btn btn-default">Add Step</button>
                          <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary">Save Scenario</button>
+                    </div>
+                    <div className="scenario-description hide">
+                        <p>{this.state.description}</p>
                     </div>
                     {stepList}
                 </div>
@@ -418,8 +418,10 @@ TOD.react.ScenarioContainer = React.createClass({
 });
 
 
-ReactDOM.render(
-   React.createElement(TOD.react.ScenarioContainer, null),
-   document.getElementById('scenarios-container')
-);
+if(document.getElementById('scenarios-container')){
+    ReactDOM.render(
+       React.createElement(ScenarioContainer, null),
+       document.getElementById('scenarios-container')
+    );    
+}
 
