@@ -58,5 +58,6 @@ class Execution(models.Model):
 class TestLog(models.Model):
     execution = models.ForeignKey(Execution)
     content = models.TextField()
+    infotype = models.CharField(max_length=50)
     starttime = models.DateTimeField(auto_now_add=True)
     endtime = models.DateTimeField(auto_now_add=True)

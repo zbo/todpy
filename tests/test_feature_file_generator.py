@@ -20,7 +20,7 @@ def test():
     django.setup()
     feature = Feature.objects.get(pk=1)
     generate_feature_plain_text = FeatureFileGenerator.generate_feature(feature)
-    workspace = WorkSpace.objects.first()
+    workspace = WorkSpace.objects.get(pk=2)
     feature = Feature.objects.first()
     FeatureFileGenerator.save_feature_file(feature,workspace)
     return generate_feature_plain_text

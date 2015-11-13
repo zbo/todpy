@@ -28,6 +28,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('content', models.TextField()),
+                ('infotype', models.CharField(max_length=50)),
                 ('starttime', models.DateTimeField(auto_now_add=True)),
                 ('endtime', models.DateTimeField(auto_now_add=True)),
                 ('execution', models.ForeignKey(to='workspace.Execution')),
