@@ -13,7 +13,7 @@ var FeatureList = React.createClass({
     		var _dataSource = featureService.getFeatureList();
     		_dataSource = _dataSource.map(function(data){
     			data.children=[];
-    			data.text = data.description;
+    			data.text = data.id+" : "+data.name;
     			data.id = ""+data.id;
     			return data;
     		});
@@ -27,6 +27,10 @@ var FeatureList = React.createClass({
     },
     handleTreenodeClick: function(id, node){
     	console.log("tree node clicked");
+    	console.log(id);
+    	var url = window.location.protocol+"//"+window.location.host+"/auto/feature/"+id+"/";
+        window.location = url;
+        
     },
     render: function() {
         return (
