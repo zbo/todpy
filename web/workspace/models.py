@@ -11,14 +11,14 @@ from config.models import AppSetting, FeatureLocation
 
 class WorkSpace(models.Model):
     type = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
+    entrance = models.CharField(max_length=255)
     rootlocation = models.CharField(max_length=755)
     createat = models.DateTimeField(auto_now_add=True)
     updateat = models.DateTimeField(auto_now=True)
 
-    def fill(self, type, name, rootlocation):
+    def fill(self, type, entrance, rootlocation):
         self.type = type.lower()
-        self.name = name
+        self.entrance = entrance
         self.rootlocation = rootlocation
 
     def generate_ws_folder(self):

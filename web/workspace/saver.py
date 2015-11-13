@@ -10,7 +10,7 @@ class WorkSpaceGenerater:
     def gen_workspace(type):
         workspace = WorkSpace()
         workspace_root = uuid.uuid4()
-        workspace.fill(type, 'test-work-space', workspace_root)
+        workspace.fill(type, 'no feature yet', workspace_root)
         root_path = workspace.generate_ws_folder()
         lib_path = workspace.move_lib_folders()
         workspace.save()

@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('type', models.CharField(max_length=255)),
-                ('name', models.CharField(max_length=255)),
+                ('entrance', models.CharField(max_length=255)),
                 ('rootlocation', models.CharField(max_length=755)),
                 ('createat', models.DateTimeField(auto_now_add=True)),
                 ('updateat', models.DateTimeField(auto_now=True)),

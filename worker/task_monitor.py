@@ -8,6 +8,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 from datetime import datetime
 import time
 from plan_retriver import *
+from lettuce_executor import *
 import django
 
 def work():
@@ -17,7 +18,8 @@ def work():
     else:
         sqlite_execution_plan_retriver.mark_execution_as_running(single_plan)
         print 'work execution found id:{0}, booked time:{1}, ==== start!'.format(single_plan.id, single_plan.starttime)
-
+        runner = lettuce_executor()
+        runner.runit()
 
 def heart_beat():
     iter_now = datetime.now()

@@ -52,7 +52,7 @@ def test():
 
     # 1, generate structure
     workspace_root = uuid.uuid4()
-    workspace.fill('web', 'test-work-space', workspace_root)
+    workspace.fill('web', 'from test_gen_workspace', workspace_root)
     root_path = workspace.generate_ws_folder()
 
     # 2, move reference python

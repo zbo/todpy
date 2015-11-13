@@ -27,7 +27,7 @@
   pk: 1
   fields:
     type: web
-    name: initial_workspace
+    entrance: no feature yet
     rootlocation: some-place
     createat: 2014-01-03
     updateat: 2014-01-04
@@ -46,8 +46,8 @@
   fields:
     status: running
     executor: init_data
-    starttime: 2014-01-01
-    endtime: 2014-01-02
+    starttime: 2016-01-01
+    endtime: 2016-01-02
     workspace: 1
 
 - model: workspace.Execution
@@ -55,8 +55,8 @@
   fields:
     status: finished
     executor: init_data
-    starttime: 2014-01-01
-    endtime: 2014-01-02
+    starttime: 2016-01-01
+    endtime: 2016-01-02
     workspace: 1
 
 - model: config.AppSetting
