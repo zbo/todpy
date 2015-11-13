@@ -33,6 +33,9 @@ class FeatureFileGenerator:
         for line in plain_text:
             file_object.write(line+'\r\n')
         file_object.close()
+        workspace.entrance = feature_file_name
+        workspace.save()
+        return feature_file_name
         #print file_path
 
 

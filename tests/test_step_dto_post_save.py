@@ -15,6 +15,7 @@ from auto.models import Feature, Scenario, Step
 from auto.dto import StepDto
 from auto.saver import StepDtoPostSaver
 from workspace.saver import WorkSpaceGenerater
+from auto.generator import FeatureFileGenerator
 from config.models import AppSetting, FeatureLocation
 from workspace.models import WorkSpace
 from django.contrib.admin.models import LogEntry
@@ -152,7 +153,7 @@ def test():
     saver = StepDtoPostSaver()
     result = saver.save(all_steps)
     result.update_workspace(workspace)
-    # plain_text = result.generate_feature()
+    FeatureFileGenerator.save_feature_file(result, workspace)
     # print result
     return result
 
