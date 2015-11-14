@@ -69,6 +69,7 @@ def list_features(request):
 def save_feature(request):
     if request.method != 'POST':
         return HttpResponse("only post allowed")
+    # elif: feature locked should early return
     else:
         json_data = request.body
         saver = StepDtoPostSaver()
@@ -82,6 +83,7 @@ def save_feature(request):
 def update_feature(request, feature_id):
     if request.method != 'POST':
         return HttpResponse("only post allowed")
+    # elif: feature locked should early return
     else:
         json_data = request.body
         updater = StepDtoPostUpdater()
