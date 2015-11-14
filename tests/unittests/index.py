@@ -33,6 +33,7 @@ class app_setting_tests(unittest.TestCase):
         self.assertEqual(len(results),1)
         self.assertEqual(results[0],'workspaces')
 
+    @unittest.skip("covered by others")
     def test_ab_gen_workspace(self):
         print '.'*20+'test_ab_gen_workspace'+'.'*20
         import test_gen_workspace
@@ -67,6 +68,7 @@ class app_setting_tests(unittest.TestCase):
         feature = test_update_all_by_feature.test()
         assert_update_feature.assert_all(self, feature)
 
+    @unittest.skip("covered by others")
     def test_bc_feature_file_generator(self):
         print '.'*20+'test_bc_feature_file_generator'+'.'*20
         import test_feature_file_generator

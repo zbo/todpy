@@ -1,5 +1,7 @@
 __author__ = 'bob.zhu'
 import models
+import shutil
+import os
 import pdb
 class FeatureFileGenerator:
     def __init__(self):
@@ -37,6 +39,18 @@ class FeatureFileGenerator:
         workspace.save()
         return feature_file_name
         #print file_path
+
+    @staticmethod
+    def update_feature_file(feature, workspace):
+        base_location = workspace.getFolderPath()
+        # [bob] here feature have been updated, so name can not be use, but workspace entrance still keep the file name
+        feature_file_name = workspace.entrance
+        file_path = "{0}/{1}/features/{2}.feature".format(base_location,workspace.type,feature_file_name)
+        # [bob] workspace entrance name will be updated by save_feature_file
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+        FeatureFileGenerator.save_feature_file(feature,workspace)
+        pass
 
 
 

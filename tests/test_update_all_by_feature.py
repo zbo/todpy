@@ -16,18 +16,8 @@ from auto.dto import StepDto
 from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
 from config.models import AppSetting, FeatureLocation
 from workspace.models import WorkSpace
-from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.models import Session
-# Shell Plus Django Imports
-from django.utils import timezone
-from django.conf import settings
-from django.core.cache import cache
-from django.db.models import Avg, Count, F, Max, Min, Sum, Q, Prefetch
-from django.core.urlresolvers import reverse
-from django.db import transaction
-from django.contrib import admin
+from auto.generator import FeatureFileGenerator
+
 
 def test():
     django.setup()
@@ -138,7 +128,7 @@ def test():
                                         "url"
                                     ],
                                     "co_variables": {"url":"http://www.qq.com"},
-                                    "description": "I open page 'http://www.qq.com/'"
+                                    "description": "I open page 'http://www.qqzone.com/'"
                                 }
                             }
                         ]
@@ -149,6 +139,9 @@ def test():
 
     updater = StepDtoPostUpdater()
     result = updater.update(all_steps)
+    workspace = WorkSpace.objects.get(pk=result.workspace)
+    FeatureFileGenerator.update_feature_file(result, workspace)
     return result
+
 if __name__ == '__main__':
     test()

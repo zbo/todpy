@@ -5,6 +5,7 @@ sys.path.append('../../')
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from models import Feature, Scenario, Step
+from workspace.models import WorkSpace
 from dto import DataEncoder, StepDto, FeatureDto, ScenarioDto
 from django.views.decorators.csrf import csrf_exempt
 from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
@@ -37,20 +38,6 @@ def features(request):
 def viewDetail(request, feature_id):
     return render(request, 'auto/feature.html', {'featureId':feature_id})
 
-@csrf_exempt
-def save_feature(request):
-    if request.method != 'POST':
-        return HttpResponse("only post allowed")
-    else:
-        json_data = request.body
-        saver = StepDtoPostSaver()
-        result = saver.save(json_data)
-        workspace = WorkSpaceGenerater.gen_workspace('web')
-        FeatureFileGenerator.save_feature_file(result, workspace)
-        result.update_workspace(workspace)
-        return HttpResponse(request.body)
-
-
 def get_feature(request, feature_id):
     feature = Feature.objects.filter(id=feature_id).first()
 
@@ -65,7 +52,6 @@ def get_feature(request, feature_id):
     return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
 
 
-
 def list_features(request):
     features = Feature.objects.all()
     feature_dtos = []
@@ -77,6 +63,21 @@ def list_features(request):
 
     return HttpResponse(json.dumps((feature_dtos),cls=DataEncoder), content_type="application/json")
 
+
+
+@csrf_exempt
+def save_feature(request):
+    if request.method != 'POST':
+        return HttpResponse("only post allowed")
+    else:
+        json_data = request.body
+        saver = StepDtoPostSaver()
+        result = saver.save(json_data)
+        workspace = WorkSpaceGenerater.gen_workspace('web')
+        FeatureFileGenerator.save_feature_file(result, workspace)
+        result.update_workspace(workspace)
+        return HttpResponse(request.body)
+
 @csrf_exempt
 def update_feature(request, feature_id):
     if request.method != 'POST':
@@ -85,6 +86,8 @@ def update_feature(request, feature_id):
         json_data = request.body
         updater = StepDtoPostUpdater()
         result = updater.update(json_data)
+        workspace = WorkSpace.objects.get(pk=result.workspace)
+        FeatureFileGenerator.update_feature_file(result, workspace)
         return HttpResponse(request.body)
 
 def exe_feature(request, feature_id):
