@@ -17,10 +17,13 @@ class lettuce_executor:
 
     def runit(self):
         print "======run it======="
-        print AppSetting.getSetting("projectbase")
-        print AppSetting.getSetting("workspace")
-        print self.workspace.rootlocation
-        print self.workspace.entrance
+        project_base = AppSetting.getSetting("projectbase")[0]
+        workspace_name = AppSetting.getSetting("workspace")[0]
+        root_location = self.workspace.rootlocation
+        entrance = self.workspace.entrance
+        file_place = os.path.join(project_base,workspace_name,root_location,'web/features',entrance)
+        file_path = file_place+'.feature'
+        print file_path
         print "==================="
 
 if __name__ == '__main__':
