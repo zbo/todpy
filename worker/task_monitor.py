@@ -16,9 +16,9 @@ def work():
     if single_plan is None:
         heart_beat()
     else:
-        sqlite_execution_plan_retriver.mark_execution_as_running(single_plan)
+        #sqlite_execution_plan_retriver.mark_execution_as_running(single_plan)
         print 'work execution found id:{0}, booked time:{1}, ==== start!'.format(single_plan.id, single_plan.starttime)
-        runner = lettuce_executor()
+        runner = lettuce_executor(single_plan.workspace)
         runner.runit()
 
 def heart_beat():
