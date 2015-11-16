@@ -12,7 +12,18 @@ var FeatureList = React.createClass({
     	try{
     		var _dataSource = featureService.getFeatureList();
     		_dataSource = _dataSource.map(function(data){
+                console.log(data);
+                
     			data.children=[];
+                if(data.scenarios){
+                    data.children = data.scenarios.map(function(scenario){
+                        var result = {};
+                        result.text = scenario.id+" : "+scenario.description;
+                        result.id = data.id+"|"+scenario.id;
+                        result.children = [];
+                        return result;
+                    });
+                }
     			data.text = data.id+" : "+data.name;
     			data.id = ""+data.id;
     			return data;
@@ -28,7 +39,11 @@ var FeatureList = React.createClass({
     handleTreenodeClick: function(id, node){
     	console.log("tree node clicked");
     	console.log(id);
-    	var url = window.location.protocol+"//"+window.location.host+"/auto/feature/"+id+"/";
+        var arr = id.split("|");
+        var url = window.location.protocol+"//"+window.location.host+"/auto/feature/"+arr[0]+"/";
+        if(arr[1]){
+            url = url+"scenario/"+arr[1]+"/";
+        }
         window.location = url;
         
     },
