@@ -76,7 +76,7 @@ def test():
                                         "element"
                                     ],
                                     "co_variables":{"text":"buy"},
-                                    "description":"I click element with text 'buy'"
+                                    "description":"I click element with text 'Trade'"
                                 }
                             },
                             {
@@ -127,8 +127,23 @@ def test():
                                         "step",
                                         "url"
                                     ],
-                                    "co_variables": {"url":"http://www.qq.com"},
-                                    "description": "I open page 'http://www.qqzone.com/'"
+                                    "co_variables": {"url":"http://cn.bing.com/"},
+                                    "description": "I open page 'http://cn.bing.com/'"
+                                }
+                            },
+                            {
+                                "new": {
+                                    "action_type": "Then",
+                                    "co_firstlineno": 4,
+                                    "co_name": "i_close_browser",
+                                    "step_name": "I close web browser",
+                                    "co_argcount": 1,
+                                    "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_browser.py",
+                                    "co_varnames": [
+                                        "step"
+                                    ],
+                                    "co_variables": {},
+                                    "description": "I close web browser"
                                 }
                             }
                         ]
