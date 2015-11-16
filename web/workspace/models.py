@@ -61,3 +61,8 @@ class TestLog(models.Model):
     infotype = models.CharField(max_length=50)
     starttime = models.DateTimeField(auto_now_add=True)
     endtime = models.DateTimeField(auto_now_add=True)
+
+    def fill(self, execution, content, infotype):
+        self.execution = execution
+        self.content = content
+        self.infotype = infotype

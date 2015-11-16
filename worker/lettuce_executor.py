@@ -30,7 +30,9 @@ class lettuce_executor:
         # subprocess.call([cmd], shell=True)
         process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdoutput, erroutput) = process.communicate()
-
+        log = TestLog()
+        log.fill(self.execution, stdoutput, "lettuce stdout")
+        log.save()
         # save std output to database
 
         print "==================="
