@@ -11,6 +11,7 @@ from workspace.models import WorkSpace, TestLog
 from config.models import FeatureLocation, AppSetting
 import subprocess
 import uuid
+import pdb
 
 
 class lettuce_executor:
@@ -24,17 +25,18 @@ class lettuce_executor:
         workspace_name = AppSetting.getSetting("workspace")[0]
         root_location = self.workspace.rootlocation
         entrance = self.workspace.entrance
+        workspace_web = os.path.join(project_base, workspace_name, root_location, 'web')
         file_place = os.path.join(project_base, workspace_name, root_location, 'web/features', entrance)
         file_path = file_place + '.feature'
-        cmd = '{0} {1}'.format('lettuce', file_path)
-        # subprocess.call([cmd], shell=True)
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        cmd_gen_bin = 'cd {0} && {1} {2} --with-subunit'.format(workspace_web, 'lettuce', file_path)
+        subprocess.call([cmd_gen_bin], shell=True)
+        cmd_gen_sub_unit2 ='subunit2junitxml < {0}/subunit.bin'.format(workspace_web)
+        process = subprocess.Popen(cmd_gen_sub_unit2, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdoutput, erroutput) = process.communicate()
         log = TestLog()
         log.fill(self.execution, stdoutput, "lettuce stdout")
         log.save()
-        # save std output to database
-
+        os.remove('{0}/subunit.bin'.format(workspace_web))
         print "==================="
 
 
