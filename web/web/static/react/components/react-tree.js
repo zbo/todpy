@@ -42,7 +42,7 @@ var Treenode = React.createClass({displayName: "Treenode",
   },
 
   render: function() {
-    var className = 'treenode';
+    var className = 'treenode list-group-item';
     var nodeTextClass = 'node-text';
     if (this.props.data.opened) {
       className += ' node-opened';

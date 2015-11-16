@@ -59,6 +59,12 @@ def list_features(request):
         # pdb.set_trace()
         feature_dto = FeatureDto(feature.name, feature.description)
         feature_dto.set_id(feature.id)
+        scenarios = []
+        for sce in feature.scenario_set.all().filter(deleted=0):
+            s_dto = ScenarioDto(sce.id, sce.description)
+            scenarios.append(s_dto)            
+
+        feature_dto.fill_scenarios(scenarios)
         feature_dtos.append(feature_dto)
 
     return HttpResponse(json.dumps((feature_dtos),cls=DataEncoder), content_type="application/json")
