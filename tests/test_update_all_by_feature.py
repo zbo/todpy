@@ -76,7 +76,7 @@ def test():
                                         "element"
                                     ],
                                     "co_variables":{"text":"buy"},
-                                    "description":"I click element with text 'Trade'"
+                                    "description":"I click element with text 'Trade2'"
                                 }
                             },
                             {
