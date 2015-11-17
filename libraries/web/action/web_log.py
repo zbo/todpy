@@ -4,14 +4,14 @@ from lettuce import *
 from selenium import webdriver
 import time
 import sys
-sys.path.append(sys.path[0] + "/../log")
-import sqlite_logger
+sys.path.append(sys.path[0] + "/../decorator")
+import global_decorator
 
 @step("I record log \'([^\']*)\'")
 def i_record_log(step, message):
     i_record_log_impl(message)
 
 
-@sqlite_logger.logit
+@global_decorator.logit
 def i_record_log_impl(message):
     print message
