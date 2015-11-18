@@ -80,9 +80,109 @@ def test():
                                 }
                             },
                             {
-                                "4": {
+                                "new": {
+                                    "action_type": "Then",
+                                    "co_firstlineno": 14,
+                                    "co_name": "i_click_element_with_text",
+                                    "step_name": "I click element with text '([^']*)'",
+                                    "co_argcount": 2,
+                                    "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_click.py",
+                                    "co_varnames": [
+                                        "step",
+                                        "text",
+                                        "element"
+                                    ],
+                                    "co_variables":{"text":"Sign Up"},
+                                    "description":"I click element with text 'Sign Up'"
+                                }
+                            },
+                            {
+                                "new": {
                                     "action_type": "Then",
                                     "co_firstlineno": 18,
+                                    "co_name": "i_close_browser",
+                                    "step_name": "I input '([^']*)' into textbox with id '([^']*)'",
+                                    "co_argcount": 2,
+                                    "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_edit.py",
+                                    "co_varnames": [
+                                        "step",
+                                        "text",
+                                        "id"
+                                    ],
+                                    "co_variables":{},
+                                    "description":"I input 'zbo2@qq.com' into textbox with id 'regUserName'"
+                                }
+                            },
+                            {
+                                "new": {
+                                    "action_type": "Then",
+                                    "co_firstlineno": 18,
+                                    "co_name": "i_close_browser",
+                                    "step_name": "I input '([^']*)' into textbox with id '([^']*)'",
+                                    "co_argcount": 2,
+                                    "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_edit.py",
+                                    "co_varnames": [
+                                        "step",
+                                        "text",
+                                        "id"
+                                    ],
+                                    "co_variables":{},
+                                    "description":"I input '123456' into textbox with id 'regPassword'"
+                                }
+                            },
+                            {
+                                "new": {
+                                    "action_type": "Then",
+                                    "co_firstlineno": 18,
+                                    "co_name": "i_close_browser",
+                                    "step_name": "I input '([^']*)' into textbox with id '([^']*)'",
+                                    "co_argcount": 2,
+                                    "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_edit.py",
+                                    "co_varnames": [
+                                        "step",
+                                        "text",
+                                        "id"
+                                    ],
+                                    "co_variables":{},
+                                    "description":"I input '123456' into textbox with id 'regRePassword'"
+                                }
+                            },
+                            {
+                                "new": {
+                                    "action_type": "Then",
+                                    "co_firstlineno": 18,
+                                    "co_name": "i_click_element_with_id",
+                                    "step_name": "I click element with id '([^']*)'",
+                                    "co_argcount": 2,
+                                    "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_click.py",
+                                    "co_varnames": [
+                                        "step",
+                                        "id"
+                                    ],
+                                    "co_variables":{},
+                                    "description":"I click element with id 'agree'"
+                                }
+                            },
+                            {
+                                "new": {
+                                    "action_type": "Then",
+                                    "co_firstlineno": 18,
+                                    "co_name": "i_click_element_with_id",
+                                    "step_name": "I click element with id '([^']*)'",
+                                    "co_argcount": 2,
+                                    "co_file_name": "/Users/bob.zhu/project/todpy/libraries/web/action/features/web_click.py",
+                                    "co_varnames": [
+                                        "step",
+                                        "id"
+                                    ],
+                                    "co_variables":{},
+                                    "description":"I click element with id 'regBtn'"
+                                }
+                            },
+                            {
+                                "4": {
+                                    "action_type": "Then",
+                                    "co_firstlineno": 4,
                                     "co_name": "i_close_browser",
                                     "step_name": "I close web browser",
                                     "co_argcount": 1,
@@ -90,8 +190,8 @@ def test():
                                     "co_varnames": [
                                         "step"
                                     ],
-                                    "co_variables":{},
-                                    "description":"I close web browser"
+                                    "co_variables": {},
+                                    "description": "I close web browser"
                                 }
                             }
                         ]

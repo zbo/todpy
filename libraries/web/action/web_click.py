@@ -2,6 +2,7 @@ __author__ = 'bob.zhu'
 from lettuce import *
 from selenium import webdriver
 import time
+import pdb
 import sys
 sys.path.append(sys.path[0] + "/../decorator")
 import global_decorator

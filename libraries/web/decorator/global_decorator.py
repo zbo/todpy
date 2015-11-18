@@ -22,7 +22,7 @@ def logit(func):
 
 
 def write_file(content):
-    file_object = open("./save.txt", "a")
+    file_object = open("./log.txt", "a")
     file_object.writelines(content + "\r\n")
     file_object.close()
     pass
