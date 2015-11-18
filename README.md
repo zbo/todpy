@@ -42,6 +42,11 @@ python manage.py runserver
 python manage.py startapp polls
 
 <h5 style="color:#C72A7E">Frontend javascript component:</h5>
+Please execute before you use the system:
+	'npm install --global grunt-cli'
+
+	'grunt build'
+
 
 For any select component in the page, used ``Select2``
 

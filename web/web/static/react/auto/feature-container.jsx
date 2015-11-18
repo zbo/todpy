@@ -1,4 +1,5 @@
 // var React = require('react');
+
 var TOD = TOD || {};
 TOD.react = TOD.react || {};
 
@@ -108,6 +109,7 @@ var FeatureContainer = React.createClass({
 TOD.react.FeatureContainer = FeatureContainer;
 
 // module.exports = FeatureContainer;
+
 if(document.getElementById('feature-container')){
     ReactDOM.render(
        React.createElement(FeatureContainer, null),

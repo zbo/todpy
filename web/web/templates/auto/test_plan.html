@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+<link href="{{ STATIC_URL }}css/react-tree.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+active_nav_path(window.location.pathname)
+</script>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	<h1 id="feature-page-header" class="page-header" >Test Plan Detail</h1>
+	
+	<div id="test-plan-viewer" class="well">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="input-name" placeholder="Name of Test Plan">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="input-description" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">
+              <textarea type="textarea" class="form-control" id="input-description" placeholder="Description" row="5"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="copy-from-test-plan" class="col-sm-2 control-label">Release Name:</label>
+            <div class="col-sm-10">
+              <select class="form-control" id="copy-from-test-plan" placeholder="Version">
+                <option value="-1" >No</option>
+                <option value="0" >Release 7.0 RC1</option>
+                <option value="1" >Release 7.1 RC1</option>
+                <option value="2" >Release 7.2 RC1</option>
+                <option value="3" >Release 7.3 RC1</option>
+                <option value="3" >Release 7.3 RC2</option>
+                <option value="3" >Release 7.4 RC1</option>
+                <option value="4" >Release 7.4 RC2</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"> Active
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"> Public
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="select-version" class="col-sm-2 control-label">Release Name:</label>
+            <div class="col-sm-10">
+              <select class="form-control" id="select-version" placeholder="Version">
+                <option value="0" >Release 7.0</option>
+                <option value="1" >Release 7.1</option>
+                <option value="2" >Release 7.2</option>
+                <option value="3" >Release 7.3</option>
+                <option value="4" >Release 7.4</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Test plan for Regression Cycle</label>
+            <div class="col-sm-10">
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0">Not for regression
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">RC1
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">RC2
+                </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary">Create</button>
+              <button type="submit" class="btn btn-default">Cancel</button>
+            </div>
+          </div>
+        </form>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/select2.full.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/bower_components/PubSub/pubsub.min.js"></script>
+    
+    <script type="text/javascript" src="{{ STATIC_URL }}js/common/tod-events.js"></script>
+	 <script type="text/javascript" src="{{ STATIC_URL }}js/service/step-service.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/service/scenario-service.js"></script>
+   	<script type="text/javascript" src="{{ STATIC_URL }}js/service/feature-service.js"></script>
+    <script type="text/jsx" src="{{ STATIC_URL}}react/components/react-select2.jsx"></script>
+    <script type="text/jsx" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>
+    <script type="text/jsx" src="{{ STATIC_URL }}react/auto/feature-container.jsx"></script>
+     <script type="text/jsx" src="{{ STATIC_URL }}react/auto/scenarios-list.jsx"></script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/views/feature/app.js"></script>
+{% endblock %}

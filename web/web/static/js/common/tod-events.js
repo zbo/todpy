@@ -5,3 +5,5 @@ TOD.events.testEvent = "some test event";
 
 TOD.events.getFeatureData = "TOD.event.getFeatureData";
 TOD.events.getScenarioData = "TOD.event.getScenarioData";
+
+TOD.events.runFeature = "TOD.event.runFeature";

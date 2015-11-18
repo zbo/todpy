@@ -19,12 +19,18 @@ var FeatureDisplayView = React.createClass({
             featureDto: _featureDto
         };
     },
+    runFeature: function(e){
+        console.log("start running");
+        PubSub.publish(TOD.events.runFeature);
+    },
     render: function() {
         return (
             <div>
-            	<div className="well well-sm">
-					
-						<div className="row">
+                <div className="page-header" style={{"textAlign":"right"}}>
+                    <button onClick={this.runFeature} className="btn btn-default">Run</button>
+                </div>
+            	<div className="well wel-sm">
+					<div className="row">
 							<FeatureContainer data={this.state.featureDto} />
 						</div>
 					

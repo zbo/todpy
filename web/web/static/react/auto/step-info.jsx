@@ -405,7 +405,7 @@ var ScenarioContainer = React.createClass({
                 <div className="panel-body">
                     <div className="btn-group" role="group" style={{"display":"flex", "marginBottom": "5px"}} >
                          <button onClick={this.onAddButtonClick} data-name="add-step" type="button" className="btn btn-default">Add Step</button>
-                         <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary">Save Scenario</button>
+                         <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary hide">Save Scenario</button>
                     </div>
                     <div className="scenario-description hide">
                         <p>{this.state.description}</p>
