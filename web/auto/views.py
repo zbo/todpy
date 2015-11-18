@@ -101,3 +101,7 @@ def update_feature(request, feature_id):
 def exe_feature(request, feature_id):
     result = ExecutionPlanSaver.save_execution_plan(feature_id)
     return HttpResponse("result:{0}".format(result))
+
+def exe_feature_status(request, feature_id):
+    result = Feature.objects.get(pk=feature_id)
+    return HttpResponse("locked:{0}".format(result.executionLock))
