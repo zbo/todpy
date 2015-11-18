@@ -17,3 +17,4 @@ def i_type_text_impl(id, text):
     element = world.browser.find_element_by_id(id)
     element.click()
     element.send_keys(text)
+    # time.sleep(2)
