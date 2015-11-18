@@ -9,10 +9,10 @@ sys.path.append('../../')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 from workspace.models import WorkSpace, TestLog
 from config.models import FeatureLocation, AppSetting
+from auto.models import Feature
 import subprocess
 import uuid
 import pdb
-
 
 class lettuce_executor:
     def __init__(self, execution):
@@ -37,7 +37,14 @@ class lettuce_executor:
         log.fill(self.execution, stdoutput, "lettuce stdout")
         log.save()
         os.remove('{0}/subunit.bin'.format(workspace_web))
+        self.unlock_feature()
         print "==================="
+
+    def unlock_feature(self):
+        # pdb.set_trace()
+        feature = Feature.objects.filter(workspace=self.workspace.id).first()
+        feature.unlock_feature()
+
 
 
 if __name__ == '__main__':

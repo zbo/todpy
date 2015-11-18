@@ -20,6 +20,7 @@ def work():
         print 'work execution found id:{0}, booked time:{1}, ==== start!'.format(single_plan.id, single_plan.starttime)
         runner = lettuce_executor(single_plan)
         runner.runit()
+        sqlite_execution_plan_retriver.mark_execution_as_finished(single_plan)
 
 def heart_beat():
     iter_now = datetime.now()
