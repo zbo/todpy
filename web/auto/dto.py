@@ -48,7 +48,8 @@ class StepDto:
         json_ret['action_type'] = self.action_type
         json_ret['co_variables'] = self.co_variables
         json_ret['description'] = self.description
-        json_ret['id'] = self.id
+        if hasattr(self, "id"):
+            json_ret['id'] = self.id
         
         return json_ret
 
