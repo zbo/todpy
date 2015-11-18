@@ -40,3 +40,12 @@ pip install djangorestframework django-pipeline django-pipeline-browserify
 python manage.py runserver
 
 python manage.py startapp polls
+
+<h5 style="color:#C72A7E">Frontend javascript component:</h5>
+
+For any select component in the page, used ``Select2``
+
+React Component used:
+``react-select2.jsx``
+``react-tree.jsx``
+``griddle``
