@@ -29,6 +29,18 @@ var FeatureDisplayView = React.createClass({
     },
     saveFeature: function(e){
         console.log("save feature");
+        PubSub.publish(TOD.events.getFeatureData);
+        PubSub.publish(TOD.events.getScenarioData);
+        
+        var featureData = TOD.react.data.feature,
+            scenarioData = TOD.react.data.scenarios;
+
+        var featureService = new TOD.service.featureService();
+        featureService.parseFeatureDto(featureData, scenarioData);
+
+        debugger
+
+        featureService.updateFeature(featureData, this.state.featureId);
     },
     closeMonitor: function(e){
         this.setState({

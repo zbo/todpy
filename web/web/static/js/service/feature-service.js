@@ -46,7 +46,7 @@ TOD.service.featureService = function(){
 	}
 
 	function saveFeature(feature){
-		console.log("saveFeature");
+		console.log("create Feature");
 		var _data = { "feature": feature};
 		console.log(JSON.stringify(_data));
 
@@ -66,6 +66,27 @@ TOD.service.featureService = function(){
 		});
 	}
 
+	function updateFeature(feature, feature_id){
+		console.log("save Feature");
+		var _data = { "feature": feature};
+		console.log(JSON.stringify(_data));
+
+		$.ajax({
+			type: "POST",
+			url: "/auto/update_feature/"+feature_id+"/",
+			processData: false,
+			data: JSON.stringify(_data),
+			success: function(res){
+				console.log("success");
+				console.log(res);
+			},
+			fail: function(res){
+				console.log("fail");
+				console.log(res);
+			}
+		});		
+	}
+
 	function parseFeatureFromReact(feature, scenarios){
 		var _scenario_dtos = scenarios.map(function(scenario){
 			var _scenario = scenarioService.parseScenario(scenario);
@@ -81,6 +102,7 @@ TOD.service.featureService = function(){
 		"getFeatureList": getFeatureList,
 		"getFeatureListByPlatform": getFeatureListByPlatform,
 		"parseFeatureDto": parseFeatureFromReact,
-		"saveFeature": saveFeature
+		"saveFeature": saveFeature,
+		"updateFeature": updateFeature
 	};
 }

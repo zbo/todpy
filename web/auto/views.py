@@ -91,6 +91,7 @@ def update_feature(request, feature_id):
         return HttpResponse("only post allowed")
     # elif: feature locked should early return
     else:
+        pdb.set_trace()
         json_data = request.body
         updater = StepDtoPostUpdater()
         result = updater.update(json_data)
