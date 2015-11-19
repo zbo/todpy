@@ -15,29 +15,69 @@ var FeatureDisplayView = React.createClass({
 		}
 
         return {
+            mode:"display",
             featureId: feature_id,
             featureDto: _featureDto
         };
     },
     runFeature: function(e){
         console.log("start running");
+        this.setState({
+            mode:"executing"
+        });
         PubSub.publish(TOD.events.runFeature);
     },
+    saveFeature: function(e){
+        console.log("save feature");
+    },
+    closeMonitor: function(e){
+        this.setState({
+            mode:"display"
+        });
+    },
     render: function() {
+        var _self = this;
+        var view = (function(){
+            if("display" === _self.state.mode){
+                return ( 
+                <div className="row">
+   
+                    <div className="col-md-12">
+                        <div className="well wel-sm">
+                           <div className="row">
+                                <FeatureContainer data={_self.state.featureDto} />
+                            </div>
+                        </div>
+                       <ScenarioList data={_self.state.featureDto.scenarios} />
+                   </div>
+                </div>
+                );
+            } else {
+                return (
+                <div className="row">
+                    <div className="col-md-9">
+                        <div className="well wel-sm">
+                           <div className="row">
+                                <FeatureContainer data={_self.state.featureDto} />
+                            </div>
+                        </div>
+                       <ScenarioList data={_self.state.featureDto.scenarios} />
+                   </div>
+                   <div className="col-md-3">
+                        <FeatureExecutionMonitor onMonitorClose={_self.closeMonitor}/>
+                   </div>
+                </div>
+                );
+            }
+        })();
+
         return (
             <div>
                 <div className="page-header" style={{"textAlign":"right"}}>
-                    <button onClick={this.runFeature} className="btn btn-default">Run</button>
+                    <button onClick={this.saveFeature} className="btn btn-success">Save</button>
+                    <button onClick={this.runFeature} className="btn btn-warning">Run</button>
                 </div>
-            	<div className="well wel-sm">
-					<div className="row">
-							<FeatureContainer data={this.state.featureDto} />
-						</div>
-					
-            	</div>
-
-            	<ScenarioList data={this.state.featureDto.scenarios} />
-            	
+                {view}                
             </div>
         );
     }

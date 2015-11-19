@@ -11,8 +11,13 @@ TOD.service.StepService = function(){
 		
 		var dataObj;
 		$.ajax({
-			url: "/auto/search_steps?type="+platform,
-			async: false 
+			url: "/auto/search_steps",
+			type: "GET",
+			async: false,
+			data: {
+				type: platform,
+				keyword: ""
+			}
 		}).fail(function(res){
 			console.log("fail");
 		}).success(function(res){

@@ -15,6 +15,7 @@ class DataEncoder(json.JSONEncoder):
 class StepDto:
     def __init__(self):
         self.uuid = ''
+        self.id=''
         self.co_filename = ''
         self.co_firstlineno = 0
         self.co_argcount = 0
