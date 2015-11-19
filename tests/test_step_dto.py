@@ -65,6 +65,7 @@ def test():
     #print result
     #print json.dumps(result, cls=DateEncoder)
     #print '=' * 80
+    return result
 
 
 if __name__ == '__main__':

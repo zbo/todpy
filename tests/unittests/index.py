@@ -7,22 +7,27 @@ import django
 import json
 import uuid
 sys.path.append('../../web')
+sys.path.append('../../web/web')
 sys.path.append('../')
 sys.path.append('../../../')
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 from config.models import AppSetting, FeatureLocation
 from auto.models import Feature
-
+import subprocess
 
 
 
 class app_setting_tests(unittest.TestCase):
     def setUp(self):
         django.setup()
+        # clear_sh = 'cd .. && python tool_reset_db.py'
+        # subprocess.call([clear_sh], shell=True)
         # import tool_clear_workspace
-        # tool_clear_workspace.do()
         # import tool_reset_db
+        # os.chdir('..')
+        # tool_clear_workspace.do()
         # tool_reset_db.do()
+        # os.chdir('unittests')
 
     def tearDown(self):
         pass
@@ -42,7 +47,8 @@ class app_setting_tests(unittest.TestCase):
     def test_ac_step_dto(self):
         print '.'*20+'test_ac_step_dto'+'.'*20
         import test_step_dto
-        test_step_dto.test()
+        result = test_step_dto.test()
+        json.dumps(result, cls=test_step_dto.DateEncoder)
 
     def test_ad_step_dto_post_save(self):
         print '.'*20+'test_ad_step_dto_post_save'+'.'*20
