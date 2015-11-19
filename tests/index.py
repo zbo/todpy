@@ -20,22 +20,15 @@ sys.path.append(unittests_path)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 from config.models import AppSetting, FeatureLocation
 from auto.models import Feature
-import subprocess
-#from unittest import *
+import tool_reset_db
+tool_reset_db.do()
+
 
 
 
 class app_setting_tests(unittest.TestCase):
     def setUp(self):
         django.setup()
-        # clear_sh = 'cd .. && python tool_reset_db.py'
-        # subprocess.call([clear_sh], shell=True)
-        # import tool_clear_workspace
-        # import tool_reset_db
-        # os.chdir('..')
-        # tool_clear_workspace.do()
-        # tool_reset_db.do()
-        # os.chdir('unittests')
 
     def tearDown(self):
         pass
