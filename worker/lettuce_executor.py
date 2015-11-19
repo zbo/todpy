@@ -25,6 +25,9 @@ class lettuce_executor:
         workspace_name = AppSetting.getSetting("workspace")[0]
         root_location = self.workspace.rootlocation
         entrance = self.workspace.entrance
+        log_path = os.path.join(project_base, workspace_name, root_location, 'log.txt')
+        if os.path.exists(log_path):
+            os.remove(log_path)
         workspace_web = os.path.join(project_base, workspace_name, root_location, 'web')
         file_place = os.path.join(project_base, workspace_name, root_location, 'web/features', entrance)
         file_path = file_place + '.feature'
