@@ -6,14 +6,22 @@ import os
 import django
 import json
 import uuid
-sys.path.append('../../web')
-sys.path.append('../../web/web')
-sys.path.append('../')
-sys.path.append('../../../')
+current_dir = path = sys.path[0]
+path_len= current_dir.index('todpy')+len('todpy')
+root_path=current_dir[:path_len]
+web_path=os.path.join(root_path,'web')
+web_web_path=os.path.join(root_path,'web/web')
+tests_path=os.path.join(root_path,'tests')
+unittests_path=os.path.join(root_path,'tests/unittests')
+sys.path.append(web_path)
+sys.path.append(web_web_path)
+sys.path.append(tests_path)
+sys.path.append(unittests_path)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 from config.models import AppSetting, FeatureLocation
 from auto.models import Feature
 import subprocess
+#from unittest import *
 
 
 
@@ -41,7 +49,7 @@ class app_setting_tests(unittest.TestCase):
     @unittest.skip("covered by others")
     def test_ab_gen_workspace(self):
         print '.'*20+'test_ab_gen_workspace'+'.'*20
-        import test_gen_workspace
+        from unittest import test_gen_workspace
         test_gen_workspace.test()
 
     def test_ac_step_dto(self):
