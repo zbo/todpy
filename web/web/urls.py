@@ -9,5 +9,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auto/', include('auto.urls')),
+    url(r'^workspace/', include('workspace.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 )

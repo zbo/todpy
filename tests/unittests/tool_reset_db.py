@@ -43,7 +43,6 @@ def do():
         os.remove(p)
 
     print '-' * 30 + 'make migrartions'
-    os.system('python ../web/manage.py makemigrations')
 
     execute_from_command_line(['manage.py', 'makemigrations'])
     execute_from_command_line(['manage.py', 'migrate'])
