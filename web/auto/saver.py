@@ -102,6 +102,7 @@ class StepDtoPostUpdater:
         self.CommonSaver = CommonSaver()
 
     def update(self, json_str):
+
         json_obj = json.loads(json_str)
         feature_name = json_obj['feature']['feature_name']
         feature_desc = json_obj['feature']['feature_description']

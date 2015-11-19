@@ -54,6 +54,7 @@ var StepInfoEdit = React.createClass({
             definedSteps: _definedSteps,
             data:{
                 id: this.props.data.id,
+                key: this.props.data.key,
                 type:this.props.data.type,
                 description: this.props.data.description,
                 step: this.props.data.step,
@@ -73,6 +74,7 @@ var StepInfoEdit = React.createClass({
         this.setState({
             data: {
                 id: this.state.data.id,
+                key: this.props.data.key,
                 type: selections[0].value,
                 description: this.state.data.description,
                 step:this.state.data.step
@@ -88,6 +90,7 @@ var StepInfoEdit = React.createClass({
         this.setState({
             data: {
                 id: this.state.data.id,
+                key: this.props.data.key,
                 type: this.state.data.type,
                 description: this.state.data.step.description,
                 step: _selected
@@ -212,16 +215,23 @@ TOD.react.StepInfo = React.createClass({
     },
     componentWillMount: function(){
         if(this.props.data && this.props.data.co_variables && "string" === (typeof this.props.data.co_variables)){
-            this.props.data.step = {};
-            // debugger
-
-            this.props.data.step.co_variables = JSON.parse(this.props.data.co_variables);
+            var _step = {}
+            debugger
+            for(var attribute in this.props.data){
+                _step[attribute] = this.props.data[attribute];
+            }
+            _step.co_variables = JSON.parse(this.props.data.co_variables);
+            _step.value = _step.step_name;
+            delete _step.id;
+            this.props.data.step = _step;
+            this.props.data.type = this.props.data.action_type;
         }
 
         this.setState({
             mode: (this.props.data.mode || "display"),
             data: {
                 id: this.props.data.id,
+                key: this.props.data.key,
                 type: this.props.data.type,
                 description: this.props.data.description,
                 step: this.props.data.step
@@ -238,6 +248,7 @@ TOD.react.StepInfo = React.createClass({
             mode: "display",
             data:{
                 id: _data.id,
+                key: _data.key,
                 type: _data.type,
                 description: _data.description,
                 step: _data.step
@@ -275,7 +286,7 @@ var ScenarioContainer = React.createClass({
             description: "description of scenario",
             steps: [
                 {
-                    id: 1,
+                    id: 'new',
                     mode: "display",
                     type: "Given",
                     description: "I open web brower",
@@ -334,9 +345,12 @@ var ScenarioContainer = React.createClass({
     onAddButtonClick: function(e){
         console.log("On add button clicked");
         var _steps = this.state.steps;
-        var _id = Math.round(1000000*Math.random());
+        
+        var _id='new',
+            _key = Math.round(1000000*Math.random());
         _steps.push({
             id: _id,
+            key:_key,
             mode: "edit",
             type: "",
             description: "",
@@ -351,8 +365,10 @@ var ScenarioContainer = React.createClass({
         console.log(step);
         console.log("delete button clicked");
 
+
         var _steps = this.state.steps.filter(function(_step){
-            if(_step.id==step.id){
+            if(('new'!==step.id &&_step.id===step.id)
+                || ('new' === step.id && 'new' === step.id && _step.key===step.key)){
                 return false;
             }
             return true;
@@ -367,18 +383,19 @@ var ScenarioContainer = React.createClass({
         console.log("step updated");
 
        var _steps = this.state.steps.map(function(_step){
-            if(_step.id==step.id){
+            if(('new'!==step.id &&_step.id===step.id)
+                || ('new' === step.id && 'new' === step.id && _step.key===step.key)){
                 return step;
             }
             return _step;
         });
 
-        console.log(_steps);
         this.setState({
             steps: _steps
         });
     },
     saveScenario: function(e){
+        // @Deprecated
         console.log("Save Scenario Info");
         console.log(this.state.steps);
     },
@@ -393,7 +410,7 @@ var ScenarioContainer = React.createClass({
         // console.log(this.state.steps);
         
         var stepList = this.state.steps.map(function(step){
-            var key = _self.state.id+"_"+step.id
+            var key = _self.state.id+"_"+('new'===step.id? step.key : step.id);
             return <TOD.react.StepInfo key={key} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
         });
 
