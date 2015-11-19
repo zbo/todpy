@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from auto.models import Feature
-from models import WorkSpace
+from models import WorkSpace, Execution, TestLog
 import sys,os
 import pdb
 
@@ -23,3 +23,10 @@ def read_log(request, feature_id):
     content =f.readlines()
     f.close()
     return HttpResponse(content)
+
+def read_console(request, feature_id):
+    feature = Feature.objects.get(pk=feature_id)
+    workspace_id = feature.workspace
+    execution = Execution.objects.filter(workspace_id=workspace_id).order_by('starttime').last()
+    testlog = execution.testlog_set.first()
+    return HttpResponse(testlog.content)

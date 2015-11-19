@@ -4,5 +4,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'api/read_log/(?P<feature_id>[0-9]+)/$', views.read_log, name='read_log')
+    url(r'api/read_log/(?P<feature_id>[0-9]+)/$', views.read_log, name='read_log'),
+    url(r'api/read_console/(?P<feature_id>[0-9]+)/$', views.read_console, name='read_console')
 ]
