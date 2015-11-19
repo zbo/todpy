@@ -35,6 +35,7 @@ var StepInfoEdit = React.createClass({
         var _index = Math.round(10000000*Math.random());
         return {
             index: _index,
+            definedSteps: [],
             data: {
                 id: -1,
                 type: "",
@@ -48,12 +49,14 @@ var StepInfoEdit = React.createClass({
         if(!this.props.data.id){
             this.props.data.id = Math.round(1000000*Math.random());
         }
+        var _definedSteps = (new TOD.service.StepService()).getDefinedStepsByPlatform("web")
         this.setState({
+            definedSteps: _definedSteps,
             data:{
                 id: this.props.data.id,
                 type:this.props.data.type,
                 description: this.props.data.description,
-                step: this.props.data.step
+                step: this.props.data.step,
             }
         });
     },
@@ -124,7 +127,7 @@ var StepInfoEdit = React.createClass({
         })];
 
 
-        var providedSteps = (new TOD.service.StepService()).getDefinedStepsByPlatform("web");
+        var providedSteps = this.state.definedSteps;
         var stepIndex = [providedSteps.findIndex(function(step){
             return _step.value===step.value;  
         })];
