@@ -38,7 +38,7 @@ var FeatureDisplayView = React.createClass({
         var featureService = new TOD.service.featureService();
         featureService.parseFeatureDto(featureData, scenarioData);
 
-        debugger
+        
 
         featureService.updateFeature(featureData, this.state.featureId);
     },
@@ -67,7 +67,7 @@ var FeatureDisplayView = React.createClass({
             } else {
                 return (
                 <div className="row">
-                    <div className="col-md-9">
+                    <div className="col-md-6">
                         <div className="well wel-sm">
                            <div className="row">
                                 <FeatureContainer data={_self.state.featureDto} />
@@ -75,7 +75,7 @@ var FeatureDisplayView = React.createClass({
                         </div>
                        <ScenarioList data={_self.state.featureDto.scenarios} />
                    </div>
-                   <div className="col-md-3">
+                   <div className="col-md-6">
                         <FeatureExecutionMonitor onMonitorClose={_self.closeMonitor}/>
                    </div>
                 </div>

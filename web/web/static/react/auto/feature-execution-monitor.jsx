@@ -29,7 +29,11 @@ var FeatureExecutionMonitor = React.createClass({
                     var _logs = _self.state.logs;
                     _logs.push("==============================");
                     _logs.push("Execution Started");
-                    _self.state.s_time = 
+                    _logs.push({
+                        "content":"...",
+                        "type":"content"
+                    });
+
                     _self.setState({
                         logs: _logs
                     }); 
@@ -44,12 +48,16 @@ var FeatureExecutionMonitor = React.createClass({
         })
         
     },
+    _interval_id: -1,
     pollForUpdate: function(){
     	// poll the server for execution log
-    	var _url = window.location.protocol+"//"+window.location.host+"/auto/feature/exe-status/"+this.state.featureId+"/";
+    	var _url = window.location.protocol+"//"+window.location.host+"/auto/feature/exe-status/"+this.state.featureId+"/",
+            _retrieve_log_url = window.location.protocol+"//"+window.location.host+"/workspace/api/read_log/"+this.state.featureId+"/",
+            _retrieve_console_output = window.location.protocol+"//"+window.location.host+"/workspace/api/read_console/"+this.state.featureId+"/";
+        
         var _self = this;
         
-        var interval_id = setInterval(function(){
+        _self._interval_id = setInterval(function(){
             $.ajax({
                 url:_url,
                 type:"GET",
@@ -58,21 +66,77 @@ var FeatureExecutionMonitor = React.createClass({
                     console.log(res);
                     var _logs = _self.state.logs;
                     if("locked:False"===res){
-                        console.log("Run success");
+                        // console.log("Run success");
+                        $.ajax({
+                            url: _retrieve_log_url,
+                            type:"GET",
+                            success: function(res){
+                                var lastLog = _logs.pop();
+
+                                lastLog.content = res;
+
+                                _logs.push(lastLog);
+                                
+                                _self.setState({
+                                    logs: _logs
+                                });         
+                            },
+                            fail: function(res){
+                                console.log("failure");
+                            }
+                        });
                         
                         _logs.push("Execution Finished");
                         _logs.push("==============================");
+                        clearInterval(_self._interval_id);
+
+                        $.ajax({
+                            url: _retrieve_console_output,
+                            type: "GET",
+                            success: function(res){
+                                var _log = {
+                                    content: res,
+                                    type: "console"
+                                };
+                                
+                                _logs.push(_log);
+                                _self.setState({
+                                    logs: _logs
+                                });         
+                            },
+                            fail: function(res){
+                                console.error(res);
+                            }
+                        });
 
                         _self.setState({
                             logs: _logs
                         }); 
-                        clearInterval(interval_id);
                     } else {
-                        console.log("Still running.....");
-                        _logs.push("Still running.....");
-                        _self.setState({
-                            logs: _logs
-                        }); 
+                        // console.log("Still running.....");
+
+                        // Request again for log
+                        $.ajax({
+                            url: _retrieve_log_url,
+                            type:"GET",
+                            success: function(res){
+                                var lastLog = _logs.pop();
+
+                                lastLog.content = res;
+
+                                _logs.push(lastLog);
+                                
+                                _self.setState({
+                                    logs: _logs
+                                });         
+                            },
+                            fail: function(res){
+                                console.log("failure");
+                            }
+                        });
+
+                        // _logs.push("Still running.....");
+                        
                     }
                 },
                 done: function(res){
@@ -81,18 +145,31 @@ var FeatureExecutionMonitor = React.createClass({
                 }
             });
         }, 2000);
-        
+    },
+    resetStatus:function(e){
+        if(this._interval_id!==-1){
+            clearInterval(this._interval_id);
+        }
+        this.props.onMonitorClose();
+
     },
     render:function() {
     	var logs = this.state.logs.map(function(log){
-    		return (
-    			<p>{log}</p>
-    		)
+            if((typeof log) === "string"){
+                return (
+                    <p>{log}</p>
+                );
+            } else {
+                return (
+                    <textarea style={{"width":"100%", "height":"600px"}} readOnly value={log.content}></textarea>
+                );
+            }
+    		
     	});
         return (
             <div className="panel panel-primary">
                 <div className="panel-heading">
-                    <button onClick={this.props.onMonitorClose} className="btn btn-xs btn-default pull-right"><span className="glyphicon glyphicon-remove"></span></button>
+                    <button onClick={this.resetStatus} className="btn btn-xs btn-default pull-right"><span className="glyphicon glyphicon-remove"></span></button>
                     <h4>Execution status</h4>
                 </div>
                 <div className="panel-body">

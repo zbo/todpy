@@ -216,7 +216,7 @@ TOD.react.StepInfo = React.createClass({
     componentWillMount: function(){
         if(this.props.data && this.props.data.co_variables && "string" === (typeof this.props.data.co_variables)){
             var _step = {}
-            debugger
+            
             for(var attribute in this.props.data){
                 _step[attribute] = this.props.data[attribute];
             }
