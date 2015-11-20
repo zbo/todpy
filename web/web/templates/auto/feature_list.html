@@ -5,9 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<script type="text/javascript">
-active_nav_path(window.location.pathname)
-</script>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	<div class="page-header"> 
 		<div class="btn-group pull-right">
@@ -39,6 +36,10 @@ active_nav_path(window.location.pathname)
 {% endblock %}
 
 {% block scripts %}
+	<script type="text/javascript">
+	active_nav_path(window.location.pathname)
+	</script>
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/select2.full.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/bower_components/PubSub/pubsub.min.js"></script>
     

@@ -9,8 +9,11 @@ var FeatureExecutionMonitor = React.createClass({
             logs:[]
         };
     },
-    componentWillMount: function() {
-    	PubSub.subscribe(TOD.events.runFeature, this.requestForStartExecution); 
+    componentDidMount: function() {
+        PubSub.subscribe(TOD.events.runFeature, this.requestForStartExecution);
+    },
+    componentWillUnmount:function() {
+        PubSub.unsubscribe(this.requestForStartExecution);
     },
     requestForStartExecution:function(){
         var _url = window.location.protocol+"//"+window.location.host+"/auto/feature/exe/"+this.state.featureId+"/";
