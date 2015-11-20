@@ -38,8 +38,6 @@ var FeatureDisplayView = React.createClass({
         var featureService = new TOD.service.featureService();
         featureService.parseFeatureDto(featureData, scenarioData);
 
-        
-
         featureService.updateFeature(featureData, this.state.featureId);
     },
     closeMonitor: function(e){

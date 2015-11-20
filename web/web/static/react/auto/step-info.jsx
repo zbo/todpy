@@ -399,6 +399,39 @@ var ScenarioContainer = React.createClass({
         console.log("Save Scenario Info");
         console.log(this.state.steps);
     },
+    editScenario:function(e){
+        console.log("edit scenario Info");
+
+        this.setState({
+            "editing": true,
+            new_name: this.state.name
+        });
+    },
+    cancelEdit: function(e){
+        console.log("cancelEdit");
+        var _state = this.state;
+        if(this.state.editing){
+            delete _state.editing;
+            this.setState(_state);
+        }
+    },
+    confirmEdit: function(e){
+        console.log("confirmEdit");        
+        var _state = this.state;
+
+        if(this.state.editing){
+            _state.name = _state.new_name;
+            delete _state.editing;
+            delete _state.new_name;
+            this.setState(_state);
+        }
+    },
+    onValueChange:function(e){
+        console.log(e);
+        this.setState({
+            new_name:e.target.value
+        });
+    },
     togglePanel: function(e){
         // console.log(this.getDOMNode());
         $(ReactDOM.findDOMNode(this)).find(".panel-body").toggle();
@@ -414,18 +447,41 @@ var ScenarioContainer = React.createClass({
             return <TOD.react.StepInfo key={key} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
         });
 
+        var scenario_info = (function(){
+            console.log(_self.state)
+            if(_self.state.editing){
+                return (
+                    <div className="input-group">
+                      <input type="text" onChange={_self.onValueChange} className="form-control" placeholder="Scenario name..." value={_self.state.new_name}></input>
+                      <span className="input-group-btn">
+                        <button onClick={_self.confirmEdit} className="btn btn-default" type="button"><span className="glyphicon glyphicon-ok"></span></button>
+                        <button onClick={_self.cancelEdit} className="btn btn-default" type="button"><span className="glyphicon glyphicon-remove"></span></button>
+                      </span>
+                    </div>
+                );
+            } else {
+                return (
+                    <i>{_self.state.name}</i>
+                );
+            }
+        })();
+
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title" style={{"display": "inline-block"}}>Scenario: <i>{this.state.name}</i></h3>
                     <button onClick={this.togglePanel} className="btn btn-xs btn-default pull-right">
                         <span className="glyphicon glyphicon-minus"></span>
                     </button>
+
+                    <h3 className="panel-title" style={{"display": "inline-block"}}>
+                        Scenario: {scenario_info}
+                    </h3>
                 </div>
                 <div className="panel-body">
                     <div className="btn-group" role="group" style={{"display":"flex", "marginBottom": "5px"}} >
                          <button onClick={this.onAddButtonClick} data-name="add-step" type="button" className="btn btn-default">Add Step</button>
-                         <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary hide">Save Scenario</button>
+                         <button onClick={this.editScenario} data-name="edit-scenario" type="button" className="btn btn-primary">Edit Scenario</button>
+                         <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary hide">Save Scenario</button>                         
                     </div>
                     <div className="scenario-description hide">
                         <p>{this.state.description}</p>

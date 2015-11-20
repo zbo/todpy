@@ -18,6 +18,7 @@
     <link href="{{ STATIC_URL }}css/dashboard.css" rel="stylesheet">
 
     <link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/jquery.growl.css" rel="stylesheet">
 
     {% block stylesheet %} {% endblock %}
 
@@ -25,7 +26,15 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
     <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="{{ STATIC_URL }}js/ie-emulation-modes-warning.js"></script>
+    
+</head>
+
+<body>
+{% include 'header.html' %}
+{% include 'nav.html' %}
+{% block content %} {% endblock %}
+
+<script src="{{ STATIC_URL }}js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -34,6 +43,7 @@
     <![endif]-->
     
     <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.growl.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/react.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/react-dom.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/JSXTransformer.js"></script>
@@ -45,13 +55,6 @@
     <!-- script src="{{ STATIC_URL }}js/holder.min.js"></script-->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ STATIC_URL }}js/ie10-viewport-bug-workaround.js"></script>
-</head>
-
-<body>
-{% include 'header.html' %}
-{% include 'nav.html' %}
-{% block content %} {% endblock %}
-
 {% block scripts %} {% endblock %}
 <!-- Bootstrap core JavaScript
 ================================================== -->

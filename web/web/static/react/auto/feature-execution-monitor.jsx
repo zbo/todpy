@@ -70,6 +70,7 @@ var FeatureExecutionMonitor = React.createClass({
                         $.ajax({
                             url: _retrieve_log_url,
                             type:"GET",
+                            async: false,
                             success: function(res){
                                 var lastLog = _logs.pop();
 
@@ -85,10 +86,15 @@ var FeatureExecutionMonitor = React.createClass({
                                 console.log("failure");
                             }
                         });
+
+
                         
                         _logs.push("Execution Finished");
                         _logs.push("==============================");
                         clearInterval(_self._interval_id);
+                        _self.setState({
+                            logs: _logs
+                        }); 
 
                         $.ajax({
                             url: _retrieve_console_output,
@@ -109,9 +115,6 @@ var FeatureExecutionMonitor = React.createClass({
                             }
                         });
 
-                        _self.setState({
-                            logs: _logs
-                        }); 
                     } else {
                         // console.log("Still running.....");
 
@@ -161,7 +164,7 @@ var FeatureExecutionMonitor = React.createClass({
                 );
             } else {
                 return (
-                    <textarea style={{"width":"100%", "height":"600px"}} readOnly value={log.content}></textarea>
+                    <textarea style={{"width":"100%", "height":"400px"}} readOnly value={log.content}></textarea>
                 );
             }
     		

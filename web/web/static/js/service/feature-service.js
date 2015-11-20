@@ -4,6 +4,20 @@ TOD.service.featureService = function(){
 
 	var scenarioService = TOD.service.scenarioService();
 
+	function growlSuccess(title, message){
+		$.growl.notice({
+			"title": title,
+			"message": message
+		});
+	}
+
+	function growlError(title, message){
+		$.growl.error({
+			"title": title,
+			"message": message
+		});
+	}
+
 	function getFeatureById(feature_id){
 		var feature = {};
 		try{
@@ -17,6 +31,7 @@ TOD.service.featureService = function(){
 				},
 				error: function(res){
 					console.log("ERROR!!!");
+					growlError("ERROR!!!!", "Feature Not Exist");
 					throw new Error("Feature Not Exist");
 				}
 			});	
@@ -40,6 +55,10 @@ TOD.service.featureService = function(){
 			success: function(req, res){
 				console.log("Request success");
 				featureList = req;
+			},
+			fail: function(req, res){
+				growlError("ERROR!!!!", "Some error occured");
+				throw new Error("Feature List error");
 			}
 		});
 		return featureList;
@@ -58,10 +77,13 @@ TOD.service.featureService = function(){
 			success: function(res){
 				console.log("success");
 				console.log(res);
+				growlSuccess("Congratulations", "Feature save success!");
 			},
 			fail: function(res){
 				console.log("fail");
 				console.log(res);
+				growlError("ERROR!!!!", "Feature save failed");
+				throw new Error("Feature Not Saved");
 			}
 		});
 	}
@@ -79,10 +101,13 @@ TOD.service.featureService = function(){
 			success: function(res){
 				console.log("success");
 				console.log(res);
+				growlSuccess("Congratulations", "Feature save success!");
 			},
 			fail: function(res){
 				console.log("fail");
 				console.log(res);
+				growlError("ERROR!!!!", "Feature save failed");
+				throw new Error("Feature Not Saved");
 			}
 		});		
 	}
