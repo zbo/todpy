@@ -17,6 +17,7 @@ sys.path.append(tests_path)
 sys.path.append(unittests_path)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 from django.core.management import execute_from_command_line
+import lettuce
 
 
 def test():
@@ -24,7 +25,8 @@ def test():
     file_obj = open(file_path)
     print file_obj.readlines()
     file_obj.close()
-    pass
+    feature = lettuce.Feature.from_file(file_path)
+    print feature.scenarios[0].steps
 
 
 if __name__ == '__main__':
