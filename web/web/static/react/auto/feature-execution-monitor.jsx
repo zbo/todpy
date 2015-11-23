@@ -18,6 +18,9 @@ var FeatureExecutionMonitor = React.createClass({
     requestForStartExecution:function(){
         var _url = window.location.protocol+"//"+window.location.host+"/auto/feature/exe/"+this.state.featureId+"/";
         var _self = this;
+
+        this.setState({logs:[]});
+
         $.ajax({
             url:_url,
             type:"GET",
@@ -89,7 +92,6 @@ var FeatureExecutionMonitor = React.createClass({
                                 console.log("failure");
                             }
                         });
-
 
                         
                         _logs.push("Execution Finished");
@@ -167,13 +169,13 @@ var FeatureExecutionMonitor = React.createClass({
                 );
             } else {
                 return (
-                    <textarea style={{"width":"100%", "height":"400px"}} readOnly value={log.content}></textarea>
+                    <textarea style={{"width":"100%", "height":"350px"}} readOnly value={log.content}></textarea>
                 );
             }
     		
     	});
         return (
-            <div className="panel panel-primary">
+            <div className="panel panel-primary affix" style={{"width":"40%"}}>
                 <div className="panel-heading">
                     <button onClick={this.resetStatus} className="btn btn-xs btn-default pull-right"><span className="glyphicon glyphicon-remove"></span></button>
                     <h4>Execution status</h4>
