@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
 from workspace.saver import WorkSpaceGenerater, ExecutionPlanSaver
 from auto.generator import FeatureFileGenerator
+import exceptions
 import json
 import pdb
 
@@ -77,13 +78,18 @@ def save_feature(request):
         return HttpResponse("only post allowed")
     # elif: feature locked should early return
     else:
-        json_data = request.body
-        saver = StepDtoPostSaver()
-        result = saver.save(json_data)
-        workspace = WorkSpaceGenerater.gen_workspace('web')
-        FeatureFileGenerator.save_feature_file(result, workspace)
-        result.update_workspace(workspace)
-        return HttpResponse(request.body)
+        try:
+            json_data = request.body
+            saver = StepDtoPostSaver()
+            result = saver.save(json_data)
+            item_id = result.id;
+            workspace = WorkSpaceGenerater.gen_workspace('web')
+            FeatureFileGenerator.save_feature_file(result, workspace)
+            result.update_workspace(workspace)
+            return HttpResponse(item_id);
+        except exceptions:
+            return HttpResponse(content='error', content_type=None, status=500, reason='save error')
+
 
 @csrf_exempt
 def update_feature(request, feature_id):

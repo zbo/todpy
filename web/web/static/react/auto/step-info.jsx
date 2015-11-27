@@ -281,9 +281,9 @@ var ScenarioContainer = React.createClass({
     displayName: 'ScenarioContainer',
     getInitialState() {
         return {
-            id: "UBP-XXXX",
-            name: "name of scenario",
-            description: "description of scenario",
+            id: "",
+            name: "",
+            description: "",
             steps: [
                 {
                     id: 'new',
@@ -494,10 +494,10 @@ var ScenarioContainer = React.createClass({
 });
 
 
-if(document.getElementById('scenarios-container')){
-    ReactDOM.render(
-       React.createElement(ScenarioContainer, null),
-       document.getElementById('scenarios-container')
-    );    
-}
+// if(document.getElementById('scenarios-container')){
+//     ReactDOM.render(
+//        React.createElement(ScenarioContainer, null),
+//        document.getElementById('scenarios-container')
+//     );    
+// }
 

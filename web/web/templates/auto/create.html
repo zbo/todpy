@@ -3,39 +3,9 @@
 {% block content %}
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div class="toolbar pull-right">
-        <button id="save_feature" class="btn btn-success btn-sm">Save</button>
-        <button id="create_scenario" class="btn btn-primary btn-sm">Create Scenario </button>
-        <button id="back_to_list_btn" class="btn btn-default btn-sm">Back</button>
+    <div id="create_view_container">
     </div>
-    <h1 class="page-header">Create new test</h1>
-
-    <div id="feature-container" class="well row">
-        
-    </div>
-
-    <div class="row">
-        <div id="scenarios-container" class="col-sm-8">
-            <div id="featureContainer">
-            </div>
-        </div>
-        <!-- /.col-sm-8 -->
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">recent use</h3>
-                    </div>
-                    <div class="panel-body">
-                        ....
-
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-sm-4 -->
-        </div>
-    </div>
-    
+</div>    
 
 {% endblock %}
 
@@ -45,16 +15,19 @@
     </script>
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/select2.full.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL}}js/bower_components/PubSub/pubsub.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bower_components/PubSub/src/pubsub.js"></script>
     
     <script type="text/javascript" src="{{ STATIC_URL }}js/common/tod-events.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/service/step-service.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/service/scenario-service.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/service/feature-service.js"></script>
 
-    <script type="text/jsx" src="{{ STATIC_URL}}react/auto/feature-container.jsx"></script>
-    <script type="text/jsx" src="{{ STATIC_URL}}react/components/react-select2.jsx"></script>
-    <script type="text/jsx" src="{{ STATIC_URL }}react/auto/step-info.jsx"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}react/build/auto/feature-container.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}react/build/components/react-select2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}react/build/auto/step-info.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}react/build/auto/scenarios-list.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}react/build/auto/feature-create-view.js"></script>
+    
     <!-- <script type="text/babel" src="{{ STATIC_URL }}react/auto/scenario-container.jsx"></script> -->
 
 
