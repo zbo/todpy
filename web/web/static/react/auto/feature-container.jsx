@@ -9,22 +9,11 @@ var FeatureContainer = React.createClass({
         return {
         	mode: "display",
         	feature_id: "new",
-        	feature_name: "Update apps order in App Gallery",
-        	feature_description: "As a Product manager I want to re-order the public apps so that RC apps come first, then followed by 3rd party apps and coming soon apps."
+        	feature_name: "111",
+        	feature_description: "1111"
         };
     },
-    componentDidMount:function() {
-
-        console.log(this.props);
-        if(this.props.data){
-            this.setState({
-                feature_id: this.props.data.feature_id,
-                feature_name: this.props.data.name,
-                feature_description: this.props.data.description
-            });
-        }
-    },
-    getFeatureData: function(){
+     getFeatureData: function(){
 		TOD.react.data.feature = this.state;
     },
     editButtonClicked: function(e){
@@ -39,12 +28,29 @@ var FeatureContainer = React.createClass({
     	});
     },
     saveButtonClicked: function(e){
+        function undefinedOrEmpty(s){
+            if( undefined===s || ""===s){
+                return true;
+            }
+            return false;
+        }
 
-        this.setState({
-    		mode: "display",
-            feature_name: this.state.newVal.feature_name,
-            feature_description: this.state.newVal.feature_description
-    	});	
+        if( undefinedOrEmpty(this.state.newVal.feature_name)
+            || undefinedOrEmpty(this.state.newVal.feature_description) ){
+            
+            $.growl.error({
+                "title": "Content Error",
+                "message": "Feature name cannot be empty"
+            });
+
+        } else {
+            this.setState({
+                mode: "display",
+                feature_name: this.state.newVal.feature_name,
+                feature_description: this.state.newVal.feature_description
+            });             
+        }
+
     },
     cancelButtonClicked: function (e){
     	this.setState({
@@ -62,6 +68,23 @@ var FeatureContainer = React.createClass({
     },
     componentWillMount:function() {
         PubSub.subscribe(TOD.events.getFeatureData, this.getFeatureData);
+
+        console.log(this.props);
+        if(this.props.data){
+            var _mode = this.props.data.mode? this.props.data.mode: "display";
+            console.log(_mode);
+            this.setState({
+                mode: _mode,
+                feature_id: this.props.data.feature_id,
+                feature_name: this.props.data.name,
+                feature_description: this.props.data.description,
+                newVal: {
+                    feature_id: this.props.data.feature_id,
+                    feature_name: this.props.data.name,
+                    feature_description: this.props.data.description
+                }
+            });
+        }
         return true;
     },
     render: function() {
@@ -75,6 +98,7 @@ var FeatureContainer = React.createClass({
 		        		<button onClick={this.saveButtonClicked} className="btn btn-primary btn-xs"><span className="glyphicon glyphicon-floppy-save"/>Save</button>
 		        		<button onClick={this.cancelButtonClicked} className="btn btn-danger btn-xs"><span className="glyphicon glyphicon-remove"/>Cancel</button>
 		        	</div>
+                    <h4>Edit Feature information</h4>
 		            <div className="form-horizontal" style={{"marginTop":"30px"}}>
                       <div className="form-group">
                         <label className="col-sm-2 control-label">Feature: </label>
@@ -98,7 +122,7 @@ var FeatureContainer = React.createClass({
 		        		<button onClick={this.editButtonClicked} className="btn btn-default btn-xs"><span className="glyphicon glyphicon-edit"/>Edit</button>
 		        	</div>
 		            <h3>Feature Name: {this.state.feature_name}</h3>
-		            <p id="feature_description">{this.state.feature_description}</p>
+		            <p id="feature_description" style={{"overflow": "auto","wordWrap": "break-word"}}>{this.state.feature_description}</p>
 		        </div>
 	        );
     	}
@@ -111,6 +135,7 @@ TOD.react.FeatureContainer = FeatureContainer;
 // module.exports = FeatureContainer;
 
 if(document.getElementById('feature-container')){
+    console.log("execute")
     ReactDOM.render(
        React.createElement(FeatureContainer, null),
        document.getElementById('feature-container')
