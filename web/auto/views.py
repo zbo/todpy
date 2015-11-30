@@ -81,7 +81,7 @@ def save_feature(request):
         saver = StepDtoPostSaver()
         result = saver.save(json_data)
         workspace = WorkSpaceGenerater.gen_workspace('web')
-        FeatureFileGenerator.save_feature_file(result, workspace)
+        FeatureFileGenerator.save_feature_file(result, workspace, json_data)
         result.update_workspace(workspace)
         return HttpResponse(request.body)
 

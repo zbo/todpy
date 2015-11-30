@@ -263,7 +263,7 @@ def test():
     updater = StepDtoPostUpdater()
     result = updater.update(all_steps)
     workspace = WorkSpace.objects.get(pk=result.workspace)
-    FeatureFileGenerator.update_feature_file(result, workspace)
+    FeatureFileGenerator.update_feature_file(result, workspace, all_steps)
     return result
 
 if __name__ == '__main__':

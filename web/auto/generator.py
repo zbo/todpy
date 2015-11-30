@@ -3,31 +3,30 @@ import models
 import shutil
 import os
 import pdb
+import json
 class FeatureFileGenerator:
     def __init__(self):
         pass
 
     @staticmethod
-    def generate_feature(feature):
+    def generate_feature(feature, json_str):
         plain_text = []
         feature_description= feature.description
         feature_name = feature.name
-
+        json_obj = json.loads(json_str)
         plain_text.append("Feature: {0}".format(feature_name))
         plain_text.append("  {0}".format(feature_description))
-        for scenario in feature.scenario_set.filter(deleted=0):
-            plain_text.append("  Scenario: {0}".format(scenario.description))
-            sequence = scenario.step_sequence
-            sequence = sequence[0:len(sequence)-1]
-            sequence_array = sequence.split('|')
-            for id in sequence_array:
-                step = models.Step.objects.get(pk=id)
-                plain_text.append("    {0} {1}".format(step.action_type,step.description_with_agrs))
+        scenarios = json_obj['feature']['scenarios']
+        for sce in scenarios:
+            plain_text.append("  Scenario: {0}".format(sce['scenario_name']))
+            for s1 in sce['steps']:
+                step_data=s1[s1.keys()[0]]
+                plain_text.append("    {0} {1}".format(step_data['action_type'],step_data['description']))
         return plain_text
 
     @staticmethod
-    def save_feature_file(feature, workspace):
-        plain_text = FeatureFileGenerator.generate_feature(feature)
+    def save_feature_file(feature, workspace, json_data):
+        plain_text = FeatureFileGenerator.generate_feature(feature, json_data)
         base_location = workspace.getFolderPath()
         feature_file_name = "{0}-{1}".format(str(feature.id),feature.name.replace(' ','-'))
         file_path = "{0}/{1}/features/{2}.feature".format(base_location,workspace.type,feature_file_name)
@@ -41,7 +40,7 @@ class FeatureFileGenerator:
         #print file_path
 
     @staticmethod
-    def update_feature_file(feature, workspace):
+    def update_feature_file(feature, workspace, json_data):
         base_location = workspace.getFolderPath()
         # [bob] here feature have been updated, so name can not be use, but workspace entrance still keep the file name
         feature_file_name = workspace.entrance
@@ -49,7 +48,7 @@ class FeatureFileGenerator:
         # [bob] workspace entrance name will be updated by save_feature_file
         if os.path.isfile(file_path):
             os.remove(file_path)
-        FeatureFileGenerator.save_feature_file(feature,workspace)
+        FeatureFileGenerator.save_feature_file(feature,workspace,json_data)
         pass
 
 
