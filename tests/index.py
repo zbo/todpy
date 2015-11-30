@@ -63,7 +63,6 @@ class app_setting_tests(unittest.TestCase):
         json_data = test_get_all_by_feature.test()
         assert_get_all_by_feature.assert_before_update(self,json_data)
 
-    @unittest.skip("failed out temp")
     def test_bb_update_all_by_feature(self):
         print '.'*20+'test_bb_update_all_by_feature'+'.'*20
         import test_update_all_by_feature

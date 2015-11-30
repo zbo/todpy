@@ -114,29 +114,5 @@ class StepDtoPostUpdater:
         feature_update.update_workspace(workspace)
 
         feature_update.save()
-        scenarios = json_obj['feature']['scenarios']
-        updated = []
-        newed = []
-        for sce in scenarios:
-            scenario_id = sce['scenario_id']
-            if str(scenario_id).lower() == 'new':
-                sce_saved = self.CommonSaver.save_new_scenario(feature_update, sce)
-                newed.append(sce_saved.id)
-            else:
-                updated.append(scenario_id)
-                scenario_exist = Scenario.objects.get(id=scenario_id)
-                self.CommonSaver.update_existing_scenario(feature_update, sce, scenario_exist)
-        self.mark_delete_scenarios(feature_update, updated, newed)
         return feature_update
 
-    def mark_delete_scenarios(self, feature, scenario_updated, newed):
-        for scenario in feature.scenario_set.all():
-            if scenario.id in scenario_updated or scenario.id in newed:
-                continue
-            else:
-                scenario.deleted=True
-                scenario.save()
-                for step in scenario.step_set.all():
-                    step.deleted = True
-                    step.save()
-        pass
