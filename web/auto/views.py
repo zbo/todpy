@@ -12,7 +12,31 @@ from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
 from workspace.saver import WorkSpaceGenerater, ExecutionPlanSaver
 from auto.generator import FeatureFileGenerator
 import json
+import lettuce
+import re
 import pdb
+
+compiled_regx = {}
+
+
+def match_definision(step_item, source_dict):
+    for patten in source_dict.keys():
+        if not compiled_regx.get(patten):
+            compiled_regx[patten] = re.compile(patten)
+        prog = compiled_regx.get(patten)
+        result = prog.search(step_item.original_sentence)
+        if result:
+            return source_dict.get(patten), patten, result
+    return None
+
+
+def extract_func_info(co_func, s_item, result):
+    action_type = result.string[0:result.regs[0][0] - 1].strip()
+    varlist_tuple = co_func.func_code.co_varnames
+    variables = []
+    for var in result.regs[1:]:
+        variables.append(result.string[var[0]:var[1]])
+    return action_type, varlist_tuple, variables
 
 
 def index(request):
@@ -39,34 +63,41 @@ def viewDetail(request, feature_id):
     return render(request, 'auto/feature.html', {'featureId':feature_id})
 
 def get_feature(request, feature_id):
-    feature = Feature.objects.filter(id=feature_id).first()
+    feature = Feature.objects.get(pk=feature_id)
+    feature_dto = get_feature_dto(feature)
+    return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
 
+
+def get_feature_dto(feature):
+    workspace = WorkSpace.objects.get(pk=feature.workspace)
+    workspace_path = workspace.getFolderPath()
+    dict = Step.getStepByFolder(workspace_path)
+    file_path = FeatureFileGenerator.get_workspace_entrance(workspace)
+    feature = lettuce.Feature.from_file(file_path)
     feature_dto = FeatureDto(feature.name, feature.description)
     scenarios = []
-    for sce in feature.scenario_set.all().filter(deleted=0):
-        s_dto = ScenarioDto(sce.id, sce.description)
-        s_dto.fill_steps(sce)
+    for sce in feature.scenarios:
+        s_dto = ScenarioDto('id_missing', sce.name)
+        for s_item in sce.steps:
+            co_func, patten, result = match_definision(s_item, dict)
+            action_type, varlist_tuple, variables = extract_func_info(co_func, s_item, result)
+            step_dto = StepDto()
+            func_code = co_func.func_code
+            step_dto.fill(func_code.co_filename, func_code.co_firstlineno, func_code.co_argcount,
+                          varlist_tuple, func_code.co_name, co_func.func_name, action_type, variables, patten,
+                          'id_no_use')
+            s_dto.steps.append(step_dto)
         scenarios.append(s_dto)
-
     feature_dto.fill_scenarios(scenarios)
-    return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
+    return feature_dto
 
 
 def list_features(request):
     features = Feature.objects.all()
     feature_dtos = []
     for feature in features:
-        # pdb.set_trace()
-        feature_dto = FeatureDto(feature.name, feature.description)
-        feature_dto.set_id(feature.id)
-        scenarios = []
-        for sce in feature.scenario_set.all().filter(deleted=0):
-            s_dto = ScenarioDto(sce.id, sce.description)
-            scenarios.append(s_dto)            
-
-        feature_dto.fill_scenarios(scenarios)
+        feature_dto = get_feature_dto(feature)
         feature_dtos.append(feature_dto)
-
     return HttpResponse(json.dumps((feature_dtos),cls=DataEncoder), content_type="application/json")
 
 

@@ -41,15 +41,19 @@ class FeatureFileGenerator:
 
     @staticmethod
     def update_feature_file(feature, workspace, json_data):
-        base_location = workspace.getFolderPath()
-        # [bob] here feature have been updated, so name can not be use, but workspace entrance still keep the file name
-        feature_file_name = workspace.entrance
-        file_path = "{0}/{1}/features/{2}.feature".format(base_location,workspace.type,feature_file_name)
-        # [bob] workspace entrance name will be updated by save_feature_file
+        file_path = FeatureFileGenerator.get_workspace_entrance(workspace)
         if os.path.isfile(file_path):
             os.remove(file_path)
         FeatureFileGenerator.save_feature_file(feature,workspace,json_data)
         pass
 
+    @staticmethod
+    def get_workspace_entrance(workspace):
+        base_location = workspace.getFolderPath()
+        # [bob] here feature have been updated, so name can not be use, but workspace entrance still keep the file name
+        feature_file_name = workspace.entrance
+        file_path = "{0}/{1}/features/{2}.feature".format(base_location, workspace.type, feature_file_name)
+        # [bob] workspace entrance name will be updated by save_feature_file
+        return file_path
 
 

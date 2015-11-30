@@ -91,9 +91,9 @@ class StepDtoPostSaver:
         feature_desc = json_obj['feature']['feature_description']
         feature_save = Feature().fill(feature_name, feature_desc, '', '')
         feature_save.save()
-        scenarios = json_obj['feature']['scenarios']
-        for sce in scenarios:
-            self.CommonSaver.save_new_scenario(feature_save, sce)
+        # scenarios = json_obj['feature']['scenarios']
+        # for sce in scenarios:
+        #     self.CommonSaver.save_new_scenario(feature_save, sce)
         return feature_save
 
 
