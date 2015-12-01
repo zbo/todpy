@@ -33,7 +33,6 @@ var FeatureExecutionMonitor = React.createClass({
                 }
                 if("result:ok"===res){
                     var _logs = _self.state.logs;
-                    _logs.push("==============================");
                     _logs.push("Execution Started");
                     _logs.push({
                         "content":"...",
@@ -95,7 +94,6 @@ var FeatureExecutionMonitor = React.createClass({
 
                         
                         _logs.push("Execution Finished");
-                        _logs.push("==============================");
                         clearInterval(_self._interval_id);
                         _self.setState({
                             logs: _logs
@@ -161,6 +159,9 @@ var FeatureExecutionMonitor = React.createClass({
         this.props.onMonitorClose();
 
     },
+    handleEnvSelection: function(e){
+        console.log("selected");
+    },
     render:function() {
     	var logs = this.state.logs.map(function(log){
             if((typeof log) === "string"){
@@ -169,19 +170,41 @@ var FeatureExecutionMonitor = React.createClass({
                 );
             } else {
                 return (
-                    <textarea style={{"width":"100%", "height":"350px"}} readOnly value={log.content}></textarea>
+                    <textarea style={{"width":"100%", "height":"300px"}} readOnly value={log.content}></textarea>
                 );
             }
-    		
     	});
+
+        var envs = [
+            {value:"local_jenkins",text:"local jenkins"},
+            {value:"local_environment", text:"local environment"},
+            {value:"jenkins_trunk",text:"jenkins trunk"}];
+
+
         return (
             <div className="panel panel-primary affix" style={{"width":"40%"}}>
                 <div className="panel-heading">
                     <button onClick={this.resetStatus} className="btn btn-xs btn-default pull-right"><span className="glyphicon glyphicon-remove"></span></button>
-                    <h4>Execution status</h4>
+                    <h5>Execution status</h5>
                 </div>
                 <div className="panel-body">
-            	   {logs}
+                    <fieldset>
+                        <legend>Execute configuration</legend>
+                        <div className="form-horizontal">
+                      <div className="form-group">
+                        <label className="col-sm-2 control-label">Execution on: </label>
+                        <div className="col-sm-10">
+                          <Select2Component id="execution_env_select" styleWidth="100%" placeholder="select execution environment"
+                            onSelection={this.handleEnvSelection} dataSet={envs} ></Select2Component>
+                        </div>
+                      </div>
+                    </div>
+                    </fieldset>
+            	    <fieldset>
+                        <legend>Execution Log</legend>
+                        <div> {logs}</div>
+                    </fieldset>
+
                 </div>
             </div>
         );

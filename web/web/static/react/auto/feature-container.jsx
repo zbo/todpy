@@ -37,7 +37,7 @@ var FeatureContainer = React.createClass({
 
         if( undefinedOrEmpty(this.state.newVal.feature_name)
             || undefinedOrEmpty(this.state.newVal.feature_description) ){
-            
+
             $.growl.error({
                 "title": "Content Error",
                 "message": "Feature name cannot be empty"
@@ -53,9 +53,25 @@ var FeatureContainer = React.createClass({
 
     },
     cancelButtonClicked: function (e){
-    	this.setState({
-    		mode: "display"
-    	});
+        function undefinedOrEmpty(s){
+            if( undefined===s || ""===s){
+                return true;
+            }
+            return false;
+        }
+
+        if( undefinedOrEmpty(this.state.feature_name)
+            || undefinedOrEmpty(this.state.feature_description) ){
+
+            $.growl.error({
+                "title": "Content Error",
+                "message": "Feature name cannot be empty"
+            });
+        } else {
+            this.setState({
+                mode: "display"
+            });
+        }
     },
     handleValueChange: function(e){
         var _index = e.target.dataset['name'];

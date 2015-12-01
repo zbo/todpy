@@ -15,9 +15,12 @@ var ScenarioList = React.createClass({
         } 
     },
     render: function() {
+        var index = 0;
+
     	var scenarioComponents = this.state.scenarios.map(function(scenario){
+            var _key = scenario.id + ":" + (index++);
     		return (
-    			<ScenarioContainer key={scenario.id} data={scenario}/>
+    			<ScenarioContainer key={_key} data={scenario}/>
     		);
     	});
 

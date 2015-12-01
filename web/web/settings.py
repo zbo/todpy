@@ -44,7 +44,8 @@ INSTALLED_APPS = (
     'workspace',
     'django_extensions',
     'pipeline',
-    'rest_framework'
+    'rest_framework',
+    'django_auth_ldap_ad'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -159,3 +160,42 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+#Authentication setting
+
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', 'django_auth_ldap_ad.backend.LDAPBackend')
+
+
+AUTH_LDAP_SERVER_URI    = ["ldap://10.32.51.55:389"]
+AUTH_LDAP_SEARCH_DN     = "DC=rcoffice,DC=ringcentral,DC=com"
+AUTH_LDAP_USER_ATTR_MAP = {
+     "first_name": "cn",
+     "last_name": "sn",
+     "email": "email"
+     }
+
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    # Groups on left side are memberOf key values. If all the groups are found in single entry, then the flag is set to
+    # True. If no entry contains all required groups then the flag is set False.
+
+    "is_superuser" : ["CN=GIT SJC Service,OU=Service Accounts,OU=RingCentral"], 
+    # Above example will match on entry "CN=WebAdmin,DC=mydomain,OU=People,OU=Users" 
+    # Above will NOT match "CN=WebAdmin,OU=People,OU=Users" (missing DC=mydomain).
+    "is_staff": ["CN=GIT SJC Service,OU=Service Accounts,OU=RingCentral"]
+    # "is_staff" : ["CN=Developer,DC=mydomain","CN=Tester,DC=mydomain"] 
+    # True if one of the conditions is true.
+
+}
+#CN=GIT SJC Service,OU=Service Accounts,OU=RingCentral,
+# All people that are to be staff are also to belong to this group  
+AUTH_LDAP_USER_GROUPS_BY_GROUP = {
+     "AdminGroup" : AUTH_LDAP_USER_FLAGS_BY_GROUP["is_staff"],
+  }
+
+  # Map django user preferences
+AUTH_LDAP_USER_ATTR_MAP = {
+     "first_name": "givenName",
+     "last_name": "sn",
+     "email": "mail"
+  }
+

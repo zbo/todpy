@@ -89,6 +89,7 @@ class app_setting_tests(unittest.TestCase):
         import test_execute_sample
         result = test_execute_sample.test()
 
+    @unittest.skip("covered by others")
     def test_bf_post_execution_plan(self):
         print '.'*20+'test_bf_execution_plan'+'.'*20
         import test_post_exe_plan

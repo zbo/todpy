@@ -14,13 +14,13 @@ from auto.generator import FeatureFileGenerator
 import exceptions
 import json
 import pdb
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     steps = Step.getStepByFolder('../simple-selenium')
     return render(request, 'auto/index.html', {'steps': steps})
 
-
+@login_required()
 def create(request):
     return render(request, 'auto/create.html')
 

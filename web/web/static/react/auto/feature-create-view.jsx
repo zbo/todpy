@@ -32,7 +32,6 @@ var FeatureCreateView = React.createClass({
        			"message" : "The data is invalid"
        		})
        	}
-       	
         
     },
     addScenario: function(){

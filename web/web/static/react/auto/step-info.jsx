@@ -334,6 +334,7 @@ var ScenarioContainer = React.createClass({
     },
     componentDidMount: function() {
         if(this.props.data){
+
             this.setState({
                 id: this.props.data.id,
                 name: this.props.data.description,
@@ -469,18 +470,25 @@ var ScenarioContainer = React.createClass({
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <button onClick={this.togglePanel} className="btn btn-xs btn-default pull-right">
+                    
+                    <button onClick={this.togglePanel} className="btn btn-xs btn-default ">
                         <span className="glyphicon glyphicon-minus"></span>
                     </button>
+                    <button onClick={this.editScenario} data-name="remove-scenario" type="button" className="btn btn-xs btn-danger pull-right">
+                        <span className="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button onClick={this.editScenario} data-name="edit-scenario" type="button" className="btn btn-xs btn-primary pull-right">
+                        <span className="glyphicon glyphicon-edit"></span>
+                    </button>
+                    
 
-                    <h3 className="panel-title" style={{"display": "inline-block"}}>
+                    <h3 className="panel-title" style={{"display": "inline-block", "margin-left":"10px"}}>
                         Scenario: {scenario_info}
                     </h3>
                 </div>
                 <div className="panel-body">
                     <div className="btn-group" role="group" style={{"display":"flex", "marginBottom": "5px"}} >
                          <button onClick={this.onAddButtonClick} data-name="add-step" type="button" className="btn btn-default">Add Step</button>
-                         <button onClick={this.editScenario} data-name="edit-scenario" type="button" className="btn btn-primary">Edit Scenario</button>
                          <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary hide">Save Scenario</button>                         
                     </div>
                     <div className="scenario-description hide">
