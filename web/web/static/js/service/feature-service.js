@@ -75,9 +75,12 @@ TOD.service.featureService = function(){
 			processData: false,
 			data: JSON.stringify(_data),
 			success: function(res){
-				console.log("success");
-				console.log(res);
+				console.log("success");				
 				growlSuccess("Congratulations", "Feature save success!");
+				console.log(res);
+				
+				var url = window.location.protocol+"//"+window.location.host+"/auto/feature/"+res+"/";
+				window.location = url;
 			},
 			fail: function(res){
 				console.log("fail");
@@ -113,12 +116,18 @@ TOD.service.featureService = function(){
 	}
 
 	function parseFeatureFromReact(feature, scenarios){
-		var _scenario_dtos = scenarios.map(function(scenario){
-			var _scenario = scenarioService.parseScenario(scenario);
-			return _scenario;
-		});
+		try{
+			var _scenario_dtos = scenarios.map(function(scenario){
+				var _scenario = scenarioService.parseScenario(scenario);
+				return _scenario;
+			});
+			
+			feature.scenarios = _scenario_dtos;	
+			return true;
+		} catch( e ){
+			return false;
+		}
 		
-		feature.scenarios = _scenario_dtos;
 
 	}
 

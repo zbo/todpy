@@ -40,10 +40,29 @@ var FeatureDisplayView = React.createClass({
 
         featureService.updateFeature(featureData, this.state.featureId);
     },
+    addScenario: function(){
+        var new_scenario = {
+            id: "new",
+            name: "",
+            description: "",
+            steps: []
+        };
+
+        var _scenarios = this.state.featureDto.scenarios;
+        _scenarios.push(new_scenario);
+        this.setState({
+            featureDto: this.state.featureDto
+        });
+
+    },
     closeMonitor: function(e){
         this.setState({
             mode:"display"
         });
+    },
+    backToList: function(){
+        var url = window.location.protocol+"//"+window.location.host+"/auto/features/";
+        window.location = url;
     },
     render: function() {
         var _self = this;
@@ -58,7 +77,10 @@ var FeatureDisplayView = React.createClass({
                                 <FeatureContainer data={_self.state.featureDto} />
                             </div>
                         </div>
-                       <ScenarioList data={_self.state.featureDto.scenarios} />
+                        <fieldset>
+                            <legend>Scenarios</legend>
+                            <ScenarioList data={_self.state.featureDto.scenarios} />
+                        </fieldset>
                    </div>
                 </div>
                 );
@@ -71,7 +93,10 @@ var FeatureDisplayView = React.createClass({
                                 <FeatureContainer data={_self.state.featureDto} />
                             </div>
                         </div>
-                       <ScenarioList data={_self.state.featureDto.scenarios} />
+                        <fieldset>
+                            <legend>Scenarios</legend>
+                            <ScenarioList data={_self.state.featureDto.scenarios} />
+                        </fieldset>
                    </div>
                    <div className="col-md-6">
                         <FeatureExecutionMonitor onMonitorClose={_self.closeMonitor}/>
@@ -86,6 +111,8 @@ var FeatureDisplayView = React.createClass({
                 <div className="page-header" style={{"textAlign":"right"}}>
                     <button onClick={this.saveFeature} className="btn btn-success">Save</button>
                     <button onClick={this.runFeature} className="btn btn-warning">Run</button>
+                    <button onClick={this.addScenario} className="btn btn-primary">Add scenraio</button>
+                    <button onClick={this.backToList} className="btn btn-default">Back</button>
                 </div>
                 {view}                
             </div>
