@@ -97,6 +97,7 @@ def list_features(request):
     feature_dtos = []
     for feature in features:
         feature_dto = get_feature_dto(feature)
+        feature_dto.set_id(feature.id)
         feature_dtos.append(feature_dto)
     return HttpResponse(json.dumps((feature_dtos),cls=DataEncoder), content_type="application/json")
 
