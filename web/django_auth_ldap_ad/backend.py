@@ -3,6 +3,7 @@ import ldap,ldap.sasl
 from django.contrib.auth.models import User, Group
 
 import six
+import pdb
 
 
 class LDAPBackendException( Exception ):
@@ -35,8 +36,8 @@ class LDAPBackend(object):
            else: #end up here with mock
               ldap_connection = self.ldap_connection
               
-           for key,value in self.ldap_settings.CONNECTION_OPTIONS.items():
-              ldap_connection.set_option( key , value )
+           # for key,value in self.ldap_settings.CONNECTION_OPTIONS.items():
+           #    ldap_connection.set_option( key , value )
 
            # Do search
            try:
@@ -54,26 +55,28 @@ class LDAPBackend(object):
             return None
          
 
-    def ldap_open_connection( self, ldap_url, username, password ):
+    def ldap_open_connection( self, ldap_url, _username, _password ):
          ldap_session = ldap.initialize(ldap_url,trace_level=self.ldap_settings.TRACE_LEVEL)
-         
-         sasl_auth = ldap.sasl.sasl( {
-               ldap.sasl.CB_AUTHNAME:username,
-               ldap.sasl.CB_PASS    :password,
-               },
-               self.ldap_settings.SASL_MECH
-            )
-         
-         ldap_session.sasl_interactive_bind_s("", sasl_auth)
+
+         ldap_session.bind_s( self.ldap_settings.BIND_DN, self.ldap_settings.BIND_PASSWORD)
+         # ldap_session.sasl_interactive_bind_s(_username,_password)
+         # sasl_auth = ldap.sasl.sasl( {
+         #       ldap.sasl.CB_AUTHNAME:username,
+         #       ldap.sasl.CB_PASS    :password,
+         #       },
+         #       self.ldap_settings.SASL_MECH
+         #    )
+
+         #
+         # ldap_session.sasl_interactive_bind_s("", sasl_auth)
          return ldap_session
     
     # Search for user, returns users info (dict)
     def ldap_search_user(self, connection, username, password ):
-
-
       result_set = []
-      ldap_result_id = connection.search( self.ldap_settings.SEARCH_DN , ldap.SCOPE_SUBTREE, self.ldap_settings.SEARCH_FILTER % { "user" : username }) 
-      result_all_type, result_all_data = connection.result(ldap_result_id, 1)
+      
+      ldap_result_id = connection.search( self.ldap_settings.SEARCH_DN , ldap.SCOPE_SUBTREE, self.ldap_settings.SEARCH_FILTER%{ "user" : username })
+      result_all_type, result_all_data = connection.result(ldap_result_id, 0, 10)
       result_entries = []
       for result_type, result_data in result_all_data:
          if result_type != None:
@@ -134,12 +137,12 @@ class LDAPBackend(object):
        # We need to do save before we can use the groups (for m2m binding)
        user.save()
        # user.groups.add( Group.objects.get(name = "ODAdmin"))
-       for wanted_group, requirements in self.ldap_settings.USER_GROUPS_BY_GROUP.items():
-          if check_for_membership( members_of, requirements ):
-              user.groups.add( Group.objects.get(name=wanted_group) )
-          else:
-              user.groups.remove( Group.objects.get(name=wanted_group) )
-       user.save()
+       # for wanted_group, requirements in self.ldap_settings.USER_GROUPS_BY_GROUP.items():
+       #    if check_for_membership( members_of, requirements ):
+       #        user.groups.add( Group.objects.get(name=wanted_group) )
+       #    else:
+       #        user.groups.remove( Group.objects.get(name=wanted_group) )
+       # user.save()
        return user
        
 
@@ -154,8 +157,10 @@ class LDAPSettings(object):
         'USER_ATTR_MAP' : {},
         'TRACE_LEVEL' : 0,
         'SASL_MECH' : 'DIGEST-MD5',
-        'SEARCH_DN'     : "DC=localdomain,DC=ORG",
-        'SEARCH_FILTER' : "(SAMAccountName=%(user)s)"
+        'SEARCH_DN'     : "DC=rcoffice,DC=ringcentral,DC=com",
+        'SEARCH_FILTER' : "(|(SAMAccountName=%(user)s)(distinguishedName=%(user)s))",
+        "BIND_DN" : "CN=GIT SJC Service,OU=Service Accounts,OU=RingCentral,DC=rcoffice,DC=ringcentral,DC=com",
+        "BIND_PASSWORD" : "7a$GLCq0810d2x"
     }
 
     def __init__(self, prefix='AUTH_LDAP_'):

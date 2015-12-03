@@ -163,11 +163,19 @@ REST_FRAMEWORK = {
 
 #Authentication setting
 
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', 'django_auth_ldap_ad.backend.LDAPBackend')
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', 
+    'django_auth_ldap_ad.backend.LDAPBackend')
 
+import ldap
+AUTH_LDAP_SERVER_URI    = ["ldap://10.32.51.55"]
+AUTH_LDAP_BIND_DN = "CN=GIT SJC Service,OU=Service Accounts,OU=RingCentral,DC=rcoffice,DC=ringcentral,DC=com"
+AUTH_LDAP_BIND_PASSWORD = "7a$GLCq0810d2x"
 
-AUTH_LDAP_SERVER_URI    = ["ldap://10.32.51.55:389"]
-AUTH_LDAP_SEARCH_DN     = "DC=rcoffice,DC=ringcentral,DC=com"
+AUTH_LDAP_CONNECTION_OPTIONS ={
+    ldap.OPT_REFERRALS:10
+}
+
+AUTH_LDAP_SEARCH_DN = "DC=rcoffice,DC=ringcentral,DC=com"
 AUTH_LDAP_USER_ATTR_MAP = {
      "first_name": "cn",
      "last_name": "sn",
@@ -181,7 +189,7 @@ AUTH_LDAP_USER_FLAGS_BY_GROUP = {
     "is_superuser" : ["CN=GIT SJC Service,OU=Service Accounts,OU=RingCentral"], 
     # Above example will match on entry "CN=WebAdmin,DC=mydomain,OU=People,OU=Users" 
     # Above will NOT match "CN=WebAdmin,OU=People,OU=Users" (missing DC=mydomain).
-    "is_staff": ["CN=GIT SJC Service,OU=Service Accounts,OU=RingCentral"]
+    "is_staff": ["OU=RingCentral,DC=rcoffice, DC=ringcentral,DC=com"]
     # "is_staff" : ["CN=Developer,DC=mydomain","CN=Tester,DC=mydomain"] 
     # True if one of the conditions is true.
 
@@ -192,10 +200,10 @@ AUTH_LDAP_USER_GROUPS_BY_GROUP = {
      "AdminGroup" : AUTH_LDAP_USER_FLAGS_BY_GROUP["is_staff"],
   }
 
-  # Map django user preferences
-AUTH_LDAP_USER_ATTR_MAP = {
-     "first_name": "givenName",
-     "last_name": "sn",
-     "email": "mail"
-  }
+#   # Map django user preferences
+# AUTH_LDAP_USER_ATTR_MAP = {
+#      "first_name": "givenName",
+#      "last_name": "sn",
+#      "email": "mail"
+#   }
 

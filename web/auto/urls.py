@@ -6,9 +6,12 @@ from . import views
 urlpatterns = [
     # ex: /auto/
     # url('^', include('django.contrib.auth.urls')),
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.index, name='index'), 
     # ex: /auto/create
     url(r'create', views.create, name='create'),
+    url(r'accounts/login/', views.login, name="login"),
+    url(r'accounts/auth/', views.do_login, name="do_login"),
+    url(r'accounts/logout/', views.logout, name="login"),
 
     # ex: /auto/search_steps
     url(r'search_steps', views.search_steps, name='search_steps'),

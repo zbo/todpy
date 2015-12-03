@@ -2,8 +2,9 @@ import sys
 
 sys.path.append('../')
 sys.path.append('../../')
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from models import Feature, Scenario, Step
 from workspace.models import WorkSpace
 from dto import DataEncoder, StepDto, FeatureDto, ScenarioDto
@@ -15,27 +16,55 @@ import exceptions
 import json
 import pdb
 from django.contrib.auth.decorators import login_required
+import django_auth_ldap_ad.backend as ldap_backend
+from django.contrib.auth import login as django_login
+from django.contrib.auth import authenticate, logout as django_logout
+
+
+def login(request):
+    return render(request, 'auth/login.html')
+
+def logout(request):
+    django_logout(request)
+    return render(request, 'auth/login.html')
 
 def index(request):
     steps = Step.getStepByFolder('../simple-selenium')
     return render(request, 'auto/index.html', {'steps': steps})
 
-@login_required()
+@login_required(login_url='accounts/login/')
 def create(request):
     return render(request, 'auto/create.html')
 
+@csrf_exempt
+def do_login(request):
+    _username = request.GET.get('username')
+    _password = request.GET.get('password')
+    # ldap = ldap_backend.LDAPBackend()
+    user = authenticate(username=_username,password=_password)
 
-# http://localhost:8000/auto/search_steps?key_word=aaa&type=ios
+    if not user.is_authenticated():
+        return HttpResponse(content='error', content_type=None, status=500, reason='Authenticate error')
+    else:
+        if user.is_active:
+            django_login(request, user)
+
+        if None != request.GET.get('next'):
+            return HttpResponse(request.GET.get('next'))
+        else:
+            return HttpResponse('/auto/features/')
+
 def search_steps(request):
     key_word = request.GET.get('key_word')
     type = request.GET.get('type')
     response_data = Step.searchStep(key_word, type)
     return HttpResponse(json.dumps(response_data, cls=DataEncoder), content_type="application/json")
 
-
+@login_required(login_url='accounts/login/')
 def features(request):
     return render(request, 'auto/feature_list.html')
 
+@login_required(login_url='accounts/login/')
 def viewDetail(request, feature_id):
     return render(request, 'auto/feature.html', {'featureId':feature_id})
 
@@ -52,7 +81,7 @@ def get_feature(request, feature_id):
     feature_dto.fill_scenarios(scenarios)
     return HttpResponse(json.dumps((feature_dto), cls=DataEncoder), content_type="application/json")
 
-
+@login_required(login_url='accounts/login/')
 def list_features(request):
     features = Feature.objects.all()
     feature_dtos = []
@@ -112,8 +141,10 @@ def exe_feature_status(request, feature_id):
     result = Feature.objects.get(pk=feature_id)
     return HttpResponse("locked:{0}".format(result.executionLock))
 
+@login_required(login_url='accounts/login/')
 def testplan(request, testplan_id):
     return render(request, 'auto/test_plan.html')
 
+@login_required(login_url='accounts/login/')
 def list_testplans(request):
     return render(request, 'auto/test_plan_list.html')
