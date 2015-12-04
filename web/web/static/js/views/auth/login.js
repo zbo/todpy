@@ -16,7 +16,7 @@ $(document).ready(function($){
   				console.log(res);
   				window.location = res
   			},
-  			fail: function(res){
+  			error: function(res){
   				console.log("fail");
   				console.log(res);
   				$.growl.error({

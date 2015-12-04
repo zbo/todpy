@@ -44,7 +44,7 @@ class LDAPBackend(object):
               ldap_user_info = self.ldap_search_user( ldap_connection,username,password ) 
            except LDAPBackendException:
               return None
-           
+
            return self.get_local_user( username, ldap_user_info )
         return None
         
@@ -55,21 +55,25 @@ class LDAPBackend(object):
             return None
          
 
-    def ldap_open_connection( self, ldap_url, _username, _password ):
-         ldap_session = ldap.initialize(ldap_url,trace_level=self.ldap_settings.TRACE_LEVEL)
+    def ldap_open_connection( self, ldap_url, username, password ):
+        ldap_session = ldap.initialize(ldap_url,trace_level=self.ldap_settings.TRACE_LEVEL)
 
-         ldap_session.bind_s( self.ldap_settings.BIND_DN, self.ldap_settings.BIND_PASSWORD)
-         # ldap_session.sasl_interactive_bind_s(_username,_password)
-         # sasl_auth = ldap.sasl.sasl( {
-         #       ldap.sasl.CB_AUTHNAME:username,
-         #       ldap.sasl.CB_PASS    :password,
-         #       },
-         #       self.ldap_settings.SASL_MECH
-         #    )
+        _username = username
+        if not username.endswith('@rcoffice.ringcentral.com'):
+            _username = username+'@rcoffice.ringcentral.com'
 
-         #
-         # ldap_session.sasl_interactive_bind_s("", sasl_auth)
-         return ldap_session
+        ldap_session.bind_s(_username, password)
+        # ldap_session.sasl_interactive_bind_s(_username,_password)
+        # sasl_auth = ldap.sasl.sasl( {
+        #       ldap.sasl.CB_AUTHNAME:username,
+        #       ldap.sasl.CB_PASS    :password,
+        #       },
+        #       self.ldap_settings.SASL_MECH
+        #    )
+
+        #
+        # ldap_session.sasl_interactive_bind_s("", sasl_auth)
+        return ldap_session
     
     # Search for user, returns users info (dict)
     def ldap_search_user(self, connection, username, password ):
@@ -158,7 +162,7 @@ class LDAPSettings(object):
         'TRACE_LEVEL' : 0,
         'SASL_MECH' : 'DIGEST-MD5',
         'SEARCH_DN'     : "DC=rcoffice,DC=ringcentral,DC=com",
-        'SEARCH_FILTER' : "(|(SAMAccountName=%(user)s)(distinguishedName=%(user)s))",
+        'SEARCH_FILTER' : "(|(|(SAMAccountName=%(user)s)(distinguishedName=%(user)s))(userPrincipalName=%(user)s))",
         "BIND_DN" : "CN=GIT SJC Service,OU=Service Accounts,OU=RingCentral,DC=rcoffice,DC=ringcentral,DC=com",
         "BIND_PASSWORD" : "7a$GLCq0810d2x"
     }

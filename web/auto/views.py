@@ -41,9 +41,10 @@ def do_login(request):
     _username = request.GET.get('username')
     _password = request.GET.get('password')
     # ldap = ldap_backend.LDAPBackend()
+
     user = authenticate(username=_username,password=_password)
 
-    if not user.is_authenticated():
+    if user is None or not user.is_authenticated():
         return HttpResponse(content='error', content_type=None, status=500, reason='Authenticate error')
     else:
         if user.is_active:
