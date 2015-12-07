@@ -339,7 +339,13 @@ var ScenarioContainer = React.createClass({
                 id: this.props.data.id,
                 name: this.props.data.description,
                 description: this.props.data.description,
-                steps: this.props.data.steps
+                steps: this.props.data.steps.map(function(e){
+                    e.key = Math.round(1000000*Math.random());
+                    if( 'new' !== e.id || 'id_no_use'===e.id){
+                        e.id=e.key
+                    }
+                    return e;
+                })
             });
         }
     },
@@ -440,11 +446,13 @@ var ScenarioContainer = React.createClass({
     render: function() {
         var _self = this;
 
-        console.log("render scenario panel");
+        console.log("render scenario panel: "+this.props.react_key);
         // console.log(this.state.steps);
         
         var stepList = this.state.steps.map(function(step){
-            var key = _self.state.id+"_"+('new'===step.id? step.key : step.id);
+            var scenario_key = _self.props.react_key;
+
+            var key = scenario_key+"_"+step.key;
             return <TOD.react.StepInfo key={key} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
         });
 
@@ -482,7 +490,7 @@ var ScenarioContainer = React.createClass({
                     </button>
                     
 
-                    <h3 className="panel-title" style={{"display": "inline-block", "margin-left":"10px"}}>
+                    <h3 className="panel-title" style={{"display": "inline-block", "marginLeft":"10px"}}>
                         Scenario: {scenario_info}
                     </h3>
                 </div>

@@ -10,7 +10,7 @@ var ScenarioList = React.createClass({
     componentDidMount() {
         if(this.props.data){
         	this.setState({
-        		scenarios: this.props.data
+                scenarios: this.props.data
         	});
         } 
     },
@@ -18,9 +18,9 @@ var ScenarioList = React.createClass({
         var index = 0;
 
     	var scenarioComponents = this.state.scenarios.map(function(scenario){
-            var _key = scenario.id + ":" + (index++);
+            var _key = "scenario:" + (index++);
     		return (
-    			<ScenarioContainer key={_key} data={scenario}/>
+    			<ScenarioContainer key={_key} react_key={_key} data={scenario}/>
     		);
     	});
 
