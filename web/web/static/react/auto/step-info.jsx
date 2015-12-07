@@ -213,15 +213,17 @@ TOD.react.StepInfo = React.createClass({
             }
         };
     },
-    componentWillMount: function(){
-        if(this.props.data && this.props.data.co_variables && "string" === (typeof this.props.data.co_variables)){
+    componentDidMount: function(){
+        if(this.props.data && this.props.data.co_variables
+            // && "string" === (typeof this.props.data.co_variables)
+         ){
             var _step = {}
             
             for(var attribute in this.props.data){
                 _step[attribute] = this.props.data[attribute];
             }
-            _step.co_variables = JSON.parse(this.props.data.co_variables);
-            _step.value = _step.step_name;
+            // _step.co_variables = JSON.parse(this.props.data.co_variables);
+            // _step.value = _step.step_name;
             delete _step.id;
             this.props.data.step = _step;
             this.props.data.type = this.props.data.action_type;
@@ -340,8 +342,10 @@ var ScenarioContainer = React.createClass({
                 name: this.props.data.description,
                 description: this.props.data.description,
                 steps: this.props.data.steps.map(function(e){
+                    console.log("step:")
+                    console.log(e);
                     e.key = Math.round(1000000*Math.random());
-                    if( 'new' !== e.id || 'id_no_use'===e.id){
+                    if( 'new' === e.id || 'id_no_use'===e.id){
                         e.id=e.key
                     }
                     return e;
