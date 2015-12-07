@@ -92,7 +92,7 @@ TOD.util.stepParser = {
 	parseDescription: function(step_Definition){
 		var _argCount = step_Definition.co_argcount,
 			_varNames = step_Definition.co_varnames,
-			_stepText = step_Definition.step_name,
+			_stepText = step_Definition.description,
 			_variables = step_Definition.co_variables;
 
 		if(_argCount<=1){

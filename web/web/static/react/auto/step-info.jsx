@@ -348,6 +348,7 @@ var ScenarioContainer = React.createClass({
                     if( 'new' === e.id || 'id_no_use'===e.id){
                         e.id=e.key
                     }
+                    console.log(TOD.util.stepParser.parseDescription(e));
                     return e;
                 })
             });
