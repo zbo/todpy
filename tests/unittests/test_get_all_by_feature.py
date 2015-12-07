@@ -46,8 +46,11 @@ def extract_func_info(co_func, s_item, result):
     action_type = result.string[0:result.regs[0][0] - 1].strip()
     varlist_tuple = co_func.func_code.co_varnames
     variables = []
+    variables_ret={}
     for var in result.regs[1:]:
         variables.append(result.string[var[0]:var[1]])
+    for i in range(0,len(variables)):
+        variables_ret[varlist_tuple[i+1]] = variables[i]
     return action_type, varlist_tuple, variables
 
 
