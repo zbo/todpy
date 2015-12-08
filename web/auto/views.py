@@ -162,7 +162,7 @@ def update_feature(request, feature_id):
         updater = StepDtoPostUpdater()
         result = updater.update(json_data)
         workspace = WorkSpace.objects.get(pk=result.workspace)
-        FeatureFileGenerator.update_feature_file(result, workspace)
+        FeatureFileGenerator.update_feature_file(result, workspace, json_data)
         return HttpResponse(request.body)
 
 def exe_feature(request, feature_id):
