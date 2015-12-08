@@ -161,7 +161,7 @@ def test():
     saver = StepDtoPostSaver()
     result = saver.save(all_steps)
     result.update_workspace(workspace)
-    FeatureFileGenerator.save_feature_file(result, workspace)
+    FeatureFileGenerator.save_feature_file(result, workspace, all_steps)
     # print result
     return result
 

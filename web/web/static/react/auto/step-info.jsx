@@ -213,15 +213,17 @@ TOD.react.StepInfo = React.createClass({
             }
         };
     },
-    componentWillMount: function(){
-        if(this.props.data && this.props.data.co_variables && "string" === (typeof this.props.data.co_variables)){
+    componentDidMount: function(){
+        if(this.props.data && this.props.data.co_variables
+            // && "string" === (typeof this.props.data.co_variables)
+         ){
             var _step = {}
             
             for(var attribute in this.props.data){
                 _step[attribute] = this.props.data[attribute];
             }
-            _step.co_variables = JSON.parse(this.props.data.co_variables);
-            _step.value = _step.step_name;
+            // _step.co_variables = JSON.parse(this.props.data.co_variables);
+            // _step.value = _step.step_name;
             delete _step.id;
             this.props.data.step = _step;
             this.props.data.type = this.props.data.action_type;
@@ -313,11 +315,11 @@ var ScenarioContainer = React.createClass({
         TOD.react.data.scenarios = TOD.react.data.scenarios || [];
         var _self = this;
         var _index = TOD.react.data.scenarios.findIndex(function(scenario){
-            if(!_self.state.id){
+            if(!_self.state.key){
                 return false;
             }
 
-            if(_self.state.id===scenario.id){
+            if(_self.state.key===scenario.key){
                 return true;
             }
         });
@@ -334,11 +336,23 @@ var ScenarioContainer = React.createClass({
     },
     componentDidMount: function() {
         if(this.props.data){
+
             this.setState({
                 id: this.props.data.id,
+                key: this.props.react_key,
                 name: this.props.data.description,
                 description: this.props.data.description,
-                steps: this.props.data.steps
+                steps: this.props.data.steps.map(function(e){
+                    console.log("step:")
+                    console.log(e);
+                    e.key = Math.round(1000000*Math.random());
+                    if( 'new' === e.id || 'id_no_use'===e.id){
+                        e.id=e.key
+                    }
+                    e.value = e.description;
+                    TOD.util.stepParser.parseDescription(e);
+                    return e;
+                })
             });
         }
     },
@@ -439,11 +453,13 @@ var ScenarioContainer = React.createClass({
     render: function() {
         var _self = this;
 
-        console.log("render scenario panel");
+        console.log("render scenario panel: "+this.props.react_key);
         // console.log(this.state.steps);
         
         var stepList = this.state.steps.map(function(step){
-            var key = _self.state.id+"_"+('new'===step.id? step.key : step.id);
+            var scenario_key = _self.props.react_key;
+
+            var key = scenario_key+"_"+step.key;
             return <TOD.react.StepInfo key={key} data={step} onContentChange={_self.updateStep} onDeleteButtonClick={_self.deleteStep}/>
         });
 
@@ -469,18 +485,25 @@ var ScenarioContainer = React.createClass({
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <button onClick={this.togglePanel} className="btn btn-xs btn-default pull-right">
+                    
+                    <button onClick={this.togglePanel} className="btn btn-xs btn-default ">
                         <span className="glyphicon glyphicon-minus"></span>
                     </button>
+                    <button onClick={this.editScenario} data-name="remove-scenario" type="button" className="btn btn-xs btn-danger pull-right">
+                        <span className="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button onClick={this.editScenario} data-name="edit-scenario" type="button" className="btn btn-xs btn-primary pull-right">
+                        <span className="glyphicon glyphicon-edit"></span>
+                    </button>
+                    
 
-                    <h3 className="panel-title" style={{"display": "inline-block"}}>
+                    <h3 className="panel-title" style={{"display": "inline-block", "marginLeft":"10px"}}>
                         Scenario: {scenario_info}
                     </h3>
                 </div>
                 <div className="panel-body">
                     <div className="btn-group" role="group" style={{"display":"flex", "marginBottom": "5px"}} >
                          <button onClick={this.onAddButtonClick} data-name="add-step" type="button" className="btn btn-default">Add Step</button>
-                         <button onClick={this.editScenario} data-name="edit-scenario" type="button" className="btn btn-primary">Edit Scenario</button>
                          <button onClick={this.saveScenario} data-name="save-step" type="button" className="btn btn-primary hide">Save Scenario</button>                         
                     </div>
                     <div className="scenario-description hide">

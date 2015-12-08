@@ -10,14 +10,17 @@ var ScenarioList = React.createClass({
     componentDidMount() {
         if(this.props.data){
         	this.setState({
-        		scenarios: this.props.data
+                scenarios: this.props.data
         	});
         } 
     },
     render: function() {
+        var index = 0;
+
     	var scenarioComponents = this.state.scenarios.map(function(scenario){
+            var _key = "scenario:" + (index++);
     		return (
-    			<ScenarioContainer key={scenario.id} data={scenario}/>
+    			<ScenarioContainer key={_key} react_key={_key} data={scenario}/>
     		);
     	});
 
