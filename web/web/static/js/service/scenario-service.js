@@ -8,6 +8,12 @@ TOD.service.scenarioService = function(){
 
 	function parseReactScenarioContainer(react_scenario){
 		var dto = {};
+		if(undefined === react_scenario.name || "" === react_scenario.name){
+			throw { 
+				type: "VALIDATE_ERROR",
+				message: "Scenario name could not be empty"
+			};
+		}
 
 		dto.scenario_name = react_scenario.name;
 		dto.scenario_id = react_scenario.id;

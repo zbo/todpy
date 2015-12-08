@@ -24,7 +24,8 @@ var FeatureCreateView = React.createClass({
             scenarioData = TOD.react.data.scenarios;
         
        	var featureService = new TOD.service.featureService();
-       	if(featureService.parseFeatureDto(featureData, scenarioData)){
+       	
+        if(featureService.parseFeatureDto(featureData, scenarioData)){
        		featureService.saveFeature(featureData);
        	} else {
        		$.growl.error({

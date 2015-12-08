@@ -118,9 +118,21 @@ TOD.service.featureService = function(){
 	function parseFeatureFromReact(feature, scenarios){
 		try{
 			var _scenario_dtos = scenarios.map(function(scenario){
-				var _scenario = scenarioService.parseScenario(scenario);
-				return _scenario;
+				try{
+					var _scenario = scenarioService.parseScenario(scenario);
+					return _scenario;
+				} catch (e) {
+					throw e
+				}
 			});
+
+			if(undefined===feature.feature_name || ""===feature.feature_name 
+				|| undefined===feature.feature_description || ""===feature.feature_description){
+				throw {
+					type: "VALIDATION_ERROR",
+					message: "feature information cannot be empty"
+				};
+			}
 			
 			feature.scenarios = _scenario_dtos;	
 			return true;
