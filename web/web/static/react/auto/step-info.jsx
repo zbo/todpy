@@ -315,11 +315,11 @@ var ScenarioContainer = React.createClass({
         TOD.react.data.scenarios = TOD.react.data.scenarios || [];
         var _self = this;
         var _index = TOD.react.data.scenarios.findIndex(function(scenario){
-            if(!_self.state.id){
+            if(!_self.state.key){
                 return false;
             }
 
-            if(_self.state.id===scenario.id){
+            if(_self.state.key===scenario.key){
                 return true;
             }
         });
@@ -339,6 +339,7 @@ var ScenarioContainer = React.createClass({
 
             this.setState({
                 id: this.props.data.id,
+                key: this.props.react_key,
                 name: this.props.data.description,
                 description: this.props.data.description,
                 steps: this.props.data.steps.map(function(e){
