@@ -106,14 +106,32 @@ var FeatureDisplayView = React.createClass({
             }
         })();
 
+        var buttonGroup=(function(){
+            if("display" === _self.state.mode){
+                return (
+                    <div className="page-header" style={{"textAlign":"right"}}>
+                        <button onClick={_self.saveFeature} className="btn btn-success">Save</button>
+                        <button onClick={_self.runFeature} className="btn btn-warning">Execute</button>
+                        <button onClick={_self.addScenario} className="btn btn-primary">Add scenraio</button>
+                        <button onClick={_self.backToList} className="btn btn-default">Back</button>
+                    </div>
+                );
+                
+            } else {
+                return (
+                    <div className="page-header" style={{"textAlign":"right"}}>
+                        <button onClick={_self.runFeature} className="btn btn-warning">run</button>
+                        <button onClick={_self.runFeature} className="btn btn-primary">debug</button>
+                        <button onClick={_self.closeMonitor} className="btn btn-default">Edit Feature</button>
+                    </div>
+                );
+            }
+
+        })();
+
         return (
             <div>
-                <div className="page-header" style={{"textAlign":"right"}}>
-                    <button onClick={this.saveFeature} className="btn btn-success">Save</button>
-                    <button onClick={this.runFeature} className="btn btn-warning">Run</button>
-                    <button onClick={this.addScenario} className="btn btn-primary">Add scenraio</button>
-                    <button onClick={this.backToList} className="btn btn-default">Back</button>
-                </div>
+                {buttonGroup}
                 {view}                
             </div>
         );

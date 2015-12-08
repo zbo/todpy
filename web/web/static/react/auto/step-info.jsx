@@ -1,3 +1,4 @@
+
 // var React = require('react');
 var TOD = TOD || {};
 TOD.react = TOD.react || {};
@@ -12,7 +13,6 @@ var StepInfoDisplay = React.createClass({
         this.props.onDeleteButtonClick(this.props.data);
     },
     render: function() {
-        console.log("React Render")
         var _self = this;
         return (
         <div className="row">
@@ -61,15 +61,6 @@ var StepInfoEdit = React.createClass({
             }
         });
     },
-    // handleItemChange: function(e){
-    //     var updateProp = e.target.dataset.name;
-    //     console.log(updateProp);
-        
-    //     this.state.data[updateProp] = e.target.value;
-    //     this.setState({
-    //       data: this.state.data
-    //     });
-    // },
     handleTypeSelections: function(e, selections){
         this.setState({
             data: {
@@ -340,6 +331,7 @@ var ScenarioContainer = React.createClass({
             this.setState({
                 id: this.props.data.id,
                 key: this.props.react_key,
+                editing: this.props.data.mode==="edit",
                 name: this.props.data.description,
                 description: this.props.data.description,
                 steps: this.props.data.steps.map(function(e){
@@ -362,6 +354,7 @@ var ScenarioContainer = React.createClass({
         
         var _id='new',
             _key = Math.round(1000000*Math.random());
+
         _steps.push({
             id: _id,
             key:_key,
@@ -433,7 +426,13 @@ var ScenarioContainer = React.createClass({
         console.log("confirmEdit");        
         var _state = this.state;
 
-        if(this.state.editing){
+        if(undefined===_state.new_name || ""===_state.new_name){
+            $.growl.error({
+                "title":"Validation Error",
+                "message":"Scenario Name cannot be empty"
+            })
+
+        } else if(this.state.editing){
             _state.name = _state.new_name;
             delete _state.editing;
             delete _state.new_name;

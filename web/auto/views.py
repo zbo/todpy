@@ -117,7 +117,7 @@ def get_feature_dto(feature):
             step_dto = StepDto()
             func_code = co_func.func_code
             step_dto.fill(func_code.co_filename, func_code.co_firstlineno, func_code.co_argcount,
-                          varlist_tuple, func_code.co_name, co_func.func_name, action_type, variables, patten,
+                          varlist_tuple, func_code.co_name, patten, action_type, variables, patten,
                           'id_no_use')
             s_dto.steps.append(step_dto)
         scenarios.append(s_dto)
