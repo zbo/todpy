@@ -182,7 +182,7 @@ var FeatureExecutionMonitor = React.createClass({
 
 
         return (
-            <div className="panel panel-primary affix" style={{"width":"40%"}}>
+            <div className="panel panel-primary">
                 <div className="panel-heading">
                     <button onClick={this.resetStatus} className="btn btn-xs btn-default pull-right"><span className="glyphicon glyphicon-remove"></span></button>
                     <h5>Execution status</h5>
