@@ -178,6 +178,10 @@ def testplan(request, testplan_id):
     return render(request, 'auto/test_plan.html')
 
 @login_required(login_url='accounts/login/')
+def testplan_create(request):
+    return render(request, 'auto/test_plan.html')
+
+@login_required(login_url='accounts/login/')
 def list_testplans(request):
     return render(request, 'auto/test_plan_list.html')
 

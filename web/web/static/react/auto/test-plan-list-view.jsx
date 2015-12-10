@@ -44,39 +44,28 @@ var TestplanListView = React.createClass({
       testPlanData:testPlanData
     };
   },
+
+  createTestPlan: function(){
+    var url = window.location.protocol+"//"+window.location.host+"/auto/testplan/create";
+		window.location = url;
+  },
+
   render: function(){
       var TestPlanGriddle = React.createElement(Griddle,
       { results: this.state.testPlanData,
         columns: ["id","name","Description","TestCaseQty","Active","Public"],
-        columnMetadata: columnMeta
+        columnMetadata: columnMeta,
+        showFilter: true
       });
       return(
         <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         	<div className="page-header">
         		<div className="btn-group pull-right">
-        			<button id="create-feature-btn" className="btn btn-default">Create New Test Plan</button>
+        			<button id="create-testplan-btn" onClick={this.createTestPlan} className="btn btn-default">Create New Test Plan</button>
         		</div>
         		<h1>Test Plan List</h1>
         	</div>
-        	<div className="jumbotron">
-        		<div className="container">
-        			<div className="row">
-        				<div className="col-md-12">
-        					<div className="btn-group pull-right">
-        						<button className="btn btn-xs btn-default"><span className="glyphicon glyphicon-collapse-down"/></button>
-        					</div>
-        					<h3>This is Filter Container</h3>
-        				</div>
-        			</div>
-        		</div>
-        	</div>
-        	<div className="well">
-        			<div className="row">
-        				<div className="col-md-12">
-        					   {TestPlanGriddle}
-        				</div>
-        			</div>
-        	</div>
+          {TestPlanGriddle}
         </div>
       );
   }

@@ -8,7 +8,7 @@ urlpatterns = [
     # url('^', include('django.contrib.auth.urls')),
     url(r'^$', views.features, name='features'),
     # ex: /auto/create
-    url(r'create', views.create, name='create'),
+    url(r'feature/create', views.create, name='create'),
     url(r'accounts/login/', views.login, name="login"),
     url(r'accounts/auth/', views.do_login, name="do_login"),
     url(r'accounts/logout/', views.logout, name="login"),
@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'feature/exe/(?P<feature_id>[0-9]+)/$', views.exe_feature, name='exe_feature'),
     url(r'feature/exe-status/(?P<feature_id>[0-9]+)/$', views.exe_feature_status, name='exe_feature_status'),
     url(r'testplan/(?P<testplan_id>[0-9]+)/$', views.testplan, name='testplan'),
+    url(r'testplan/create', views.testplan_create, name='testplan_create'),
     url(r'testplans', views.list_testplans, name='list_testplans'),
 
     # mock data
