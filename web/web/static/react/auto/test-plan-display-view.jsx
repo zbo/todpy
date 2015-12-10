@@ -1,18 +1,40 @@
 var TestplanDisplayView = React.createClass({
     displayName: 'TestplanDisplayView',
     getInitialState: function(){
+      featureId = getEndingFromUrl();
+      releaseList = [1,2,3,4,5];
+      versionList = [1.1,2.1,3.2,4.2,5.2];
+      var description, name;
+      var testPlanFor = "0"
+      if(!window.location.pathname.endsWith('create')){
+          description = "some from server"
+          name = "some from server"
+          testPlanFor = "2"
+      }
       return {
           mode:"display",
-          featureId: 1,
-          releaseList:[1,2,3,4,5],
-          versionList:[1.1,2.1,3.2,4.2,5.2],
-          active:false,
-          testPlanFor:"2"
+          featureId: "new",
+          releaseList: releaseList,
+          versionList: versionList,
+          active: false,
+          testPlanFor: testPlanFor,
+          description: description,
+          name: name
       };
     },
 
     cycleChange: function(sender){
       this.setState({testPlanFor:sender.target.value});
+    },
+
+    saveTestPlan: function(sender){
+      var url = window.location.protocol+"//"+window.location.host+"/auto/testplans/";
+      window.location = url;
+    },
+
+    cancelTestPlan: function(sender){
+        var url = window.location.protocol+"//"+window.location.host+"/auto/testplans/";
+    		window.location = url;
     },
 
     render: function(){
@@ -26,17 +48,17 @@ var TestplanDisplayView = React.createClass({
           <div className="row">
             <h1 id="feature-page-header" className="page-header">Test Plan Detail</h1>
             <div id="test-plan-viewer" className="well">
-              <form className="form-horizontal">
+              <div className="form-horizontal">
                 <div className="form-group">
                   <label htmlFor="input-name" className="col-sm-2 control-label">Name</label>
                   <div className="col-sm-8">
-                    <input type="text" className="form-control" id="input-name" placeholder="Name of Test Plan"/>
+                    <input type="text" className="form-control" id="input-name" placeholder="Name of Test Plan" value={this.state.name}/>
                   </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="input-description" className="col-sm-2 control-label">Description</label>
                   <div className="col-sm-8">
-                    <textarea type="textarea" className="form-control" id="input-description" placeholder="Description" row="5"></textarea>
+                    <textarea type="textarea" className="form-control" id="input-description" placeholder="Description" row="5">{this.state.description}</textarea>
                   </div>
                 </div>
                 <div className="form-group">
@@ -87,12 +109,11 @@ var TestplanDisplayView = React.createClass({
                 </div>
                 <div className="form-group">
                   <div className="col-sm-offset-2 col-sm-10">
-                    <button type="submit" className="btn btn-primary">Create</button>
-                    <button type="submit" className="btn btn-default">Cancel</button>
+                    <button onClick={this.saveTestPlan} className="btn-xs btn-primary"><span className="glyphicon glyphicon-floppy-save"/>Save</button>
+                    <button onClick={this.cancelTestPlan} className="btn-xs btn-danger"><span className="glyphicon glyphicon-remove"/>Cancel</button>
                   </div>
                 </div>
-
-              </form>
+              </div>
             </div>
           </div>
 
