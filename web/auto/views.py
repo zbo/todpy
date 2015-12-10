@@ -190,3 +190,6 @@ def api_list_testplans(request):
     from mock.mockTestPlanList import mocker
     get_mock = mocker.get_mock_testplan_list()
     return HttpResponse(json.dumps(get_mock, None), content_type="application/json")
+
+def sample(request):
+    return render(request, 'auto/sample.html')

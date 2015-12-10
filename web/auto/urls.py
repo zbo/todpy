@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'testplans', views.list_testplans, name='list_testplans'),
 
     # mock data
-    url(r'api/testplan/list', views.api_list_testplans, name='api_list_testplans')
+    url(r'api/testplan/list', views.api_list_testplans, name='api_list_testplans'),
+    url(r'sample/', views.sample, name='spample')
 
 ]

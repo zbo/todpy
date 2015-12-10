@@ -1,6 +1,6 @@
 var LinkComponent = React.createClass({
   render: function(){
-    url ="testplan/" + this.props.rowData.id;
+    url =window.location.protocol+"//"+window.location.host+"/auto/testplan/" + this.props.rowData.id;
     return <a href={url}>{this.props.data}</a>
   }
 });

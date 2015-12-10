@@ -37,6 +37,12 @@ var TestplanDisplayView = React.createClass({
     		window.location = url;
     },
 
+    dataChange: function(sender){
+        this.setState({description: $("#input-description").val()});
+        this.setState({name: $("#input-name").val()});
+
+    },
+
     render: function(){
         var releaseOptionView = this.state.releaseList.map(function(release){
           return (<option key={release}>{release}</option>)
@@ -52,17 +58,17 @@ var TestplanDisplayView = React.createClass({
                 <div className="form-group">
                   <label htmlFor="input-name" className="col-sm-2 control-label">Name</label>
                   <div className="col-sm-8">
-                    <input type="text" className="form-control" id="input-name" placeholder="Name of Test Plan" value={this.state.name}/>
+                    <input type="text" onChange={this.dataChange} className="form-control" id="input-name" placeholder="Name of Test Plan" value={this.state.name}/>
                   </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="input-description" className="col-sm-2 control-label">Description</label>
                   <div className="col-sm-8">
-                    <textarea type="textarea" className="form-control" id="input-description" placeholder="Description" row="5">{this.state.description}</textarea>
+                    <textarea type="textarea" onChange={this.dataChange} className="form-control" value={this.state.description} id="input-description" placeholder="Description" row="5"/>
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="copy-from-test-plan" className="col-sm-2 control-label">Release Name:</label>
+                  <label htmlFor="copy-from-test-plan" className="col-sm-2 control-label">Release Name</label>
                   <div className="col-sm-8">
                     <select className="form-control" id="copy-from-test-plan" placeholder="Version">
                       {releaseOptionView}
@@ -85,7 +91,7 @@ var TestplanDisplayView = React.createClass({
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="select-version" className="col-sm-2 control-label">Version Name:</label>
+                  <label htmlFor="select-version" className="col-sm-2 control-label">Version Name</label>
                   <div className="col-sm-8">
                     <select className="form-control" id="select-version" placeholder="Version">
                       {versionOptionView}
@@ -94,7 +100,7 @@ var TestplanDisplayView = React.createClass({
                 </div>
 
                 <div className="form-group">
-                  <label className="col-sm-2 control-label">Test plan for Regression Cycle</label>
+                  <label className="col-sm-2 control-label">Regression Cycle</label>
                   <div className="col-sm-10">
                       <label className="radio-inline">
                         <input type="radio" onChange={this.cycleChange} checked={this.state.testPlanFor==0} id="inlineRadio1" value="0"/>Not for regression
@@ -107,6 +113,32 @@ var TestplanDisplayView = React.createClass({
                       </label>
                   </div>
                 </div>
+
+                <div className="form-group">
+                  <div className="col-sm-offset-2 col-sm-6">
+                    <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                    manage features
+                    </button>
+                  </div>
+                  <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div className="modal-dialog" role="document">
+                  	<div className="modal-content">
+                  		<div className="modal-header">
+                  			<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  			<h4 className="modal-title" id="myModalLabel">Features connect to this test plan</h4>
+                  		</div>
+                  		<div className="modal-body">
+                  			...
+                  		</div>
+                  		<div className="modal-footer">
+                  			<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                  			<button type="button" className="btn btn-primary">Save changes</button>
+                  		</div>
+                  	</div>
+                  </div>
+                </div>
+              </div>
+
                 <div className="form-group">
                   <div className="col-sm-offset-2 col-sm-10">
                     <button onClick={this.saveTestPlan} className="btn-xs btn-primary"><span className="glyphicon glyphicon-floppy-save"/>Save</button>
@@ -116,6 +148,7 @@ var TestplanDisplayView = React.createClass({
               </div>
             </div>
           </div>
+
 
       );//end of return
     }
