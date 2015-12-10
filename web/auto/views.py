@@ -180,3 +180,9 @@ def testplan(request, testplan_id):
 @login_required(login_url='accounts/login/')
 def list_testplans(request):
     return render(request, 'auto/test_plan_list.html')
+
+@login_required(login_url='accounts/login/')
+def api_list_testplans(request):
+    from mock.mockTestPlanList import mocker
+    get_mock = mocker.get_mock_testplan_list()
+    return HttpResponse(json.dumps(get_mock, None), content_type="application/json")

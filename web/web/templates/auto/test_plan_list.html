@@ -5,35 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<div class="page-header">
-		<div class="btn-group pull-right">
-			<button id="create-feature-btn" class="btn btn-default">Create New Test Plan</button>
-		</div>
-		<h1>Test Plan List</h1>
-	</div>
-	<div class="jumbotron">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="btn-group pull-right">
-						<button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-collapse-down"/></button>
-					</div>
-					<h3>This is Filter Container</h3>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	<div class="well">
-			<div class="row">
-				<div class="col-md-12">
-					<div id="test-plan-list-view">
-					</div>
-				</div>
-			</div>
-	</div>
-</div>
+<div id="test-plan-list-view"/>
 
 {% endblock %}
 
@@ -43,17 +15,15 @@
 	</script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/select2.full.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/bower_components/PubSub/pubsub.min.js"></script>
-
     <script type="text/javascript" src="{{ STATIC_URL }}js/common/tod-events.js"></script>
-	 <script type="text/javascript" src="{{ STATIC_URL }}js/service/step-service.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/service/scenario-service.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/service/step-service.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/service/scenario-service.js"></script>
    	<script type="text/javascript" src="{{ STATIC_URL }}js/service/feature-service.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/service/testplan-service.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}react/components/react-tree.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/bower_components/underscore/underscore.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}react/build/components/gridLinkComponent.js"></script>
-
-
+    <script type="text/javascript" src="{{ STATIC_URL }}react/build/components/gridLinkComponent.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/bower_components/griddle-react/build/griddle.js"></script>
-
+    <script type="text/jsx" src="{{ STATIC_URL }}react/auto/test-plan-list-view.jsx"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/views/testplan/app.js"></script>
 {% endblock %}
