@@ -1,3 +1,10 @@
+var LinkComponent = React.createClass({
+  render: function(){
+    url ="testplan/" + this.props.rowData.id;
+    return <a href={url}>{this.props.data}</a>
+  }
+});
+
 var columnMeta = [
   {
     "columnName": "id",
@@ -9,7 +16,7 @@ var columnMeta = [
       "order": 2,
       "locked": false,
       "visible": true,
-      "customComponent": GridLinkComponent
+      "customComponent": LinkComponent
   },{
     "columnName": "Description",
       "order": 3,
@@ -33,6 +40,7 @@ var columnMeta = [
       "visible": true
   }
 ];
+
 var TestplanListView = React.createClass({
   displayName: 'TestplanListView',
 
