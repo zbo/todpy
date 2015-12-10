@@ -1,9 +1,34 @@
+var TestCaseConnectView = React.createClass({
+    displayName: 'TestCaseConnectView',
+    render: function(){
+      var fearureconnected = this.props.data.map(function(item){
+        return <a key={item} className="btn btn-default" role="button">{item}</a>
+      });
+      return (
+        <div id="test-case-connected" className="well">
+          <div className="form-horizontal">
+            <div className="form-group">
+              <label>Feature Connected:</label>
+            </div>
+            <div className="form-group">
+              {fearureconnected}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+});
+
 var TestplanDisplayView = React.createClass({
     displayName: 'TestplanDisplayView',
     getInitialState: function(){
       featureId = getEndingFromUrl();
       releaseList = [1,2,3,4,5];
       versionList = [1.1,2.1,3.2,4.2,5.2];
+      testcaseall = [1,2,3,4,5,6,7,8];
+      testcaseconnected = [3,4,5];
+
       var description, name;
       var testPlanFor = "0"
       if(!window.location.pathname.endsWith('create')){
@@ -19,7 +44,9 @@ var TestplanDisplayView = React.createClass({
           active: false,
           testPlanFor: testPlanFor,
           description: description,
-          name: name
+          name: name,
+          testcaseall: testcaseall,
+          testcaseconnected: testcaseconnected
       };
     },
 
@@ -75,7 +102,7 @@ var TestplanDisplayView = React.createClass({
                     </select>
                   </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group hide">
                   <div className="col-sm-offset-2 col-sm-10">
                     <div className="checkbox">
                       <label>
@@ -147,6 +174,7 @@ var TestplanDisplayView = React.createClass({
                 </div>
               </div>
             </div>
+            <TestCaseConnectView data={this.state.testcaseconnected}/>
           </div>
 
 
