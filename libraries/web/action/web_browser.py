@@ -36,3 +36,9 @@ def i_close_browser(step):
 @global_decorator.logit
 def i_close_browser_imple():
     world.browser.close()
+
+@step("I want sleep \'([^\']*)\' seconds")
+def i_sleep_for_a_while(step, seconds):
+    seconds = int(seconds)
+    import time
+    time.sleep(seconds)

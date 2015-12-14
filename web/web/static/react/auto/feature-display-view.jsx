@@ -31,7 +31,7 @@ var FeatureDisplayView = React.createClass({
         console.log("save feature");
         PubSub.publish(TOD.events.getFeatureData);
         PubSub.publish(TOD.events.getScenarioData);
-        
+
         var featureData = TOD.react.data.feature,
             scenarioData = TOD.react.data.scenarios;
 
@@ -68,9 +68,9 @@ var FeatureDisplayView = React.createClass({
         var _self = this;
         var view = (function(){
             if("display" === _self.state.mode){
-                return ( 
+                return (
                 <div className="row">
-   
+
                     <div className="col-md-12">
                         <div className="well wel-sm">
                            <div className="row">
@@ -110,19 +110,19 @@ var FeatureDisplayView = React.createClass({
             if("display" === _self.state.mode){
                 return (
                     <div className="page-header" style={{"textAlign":"right"}}>
-                        <button onClick={_self.saveFeature} className="btn btn-success">Save</button>
-                        <button onClick={_self.runFeature} className="btn btn-warning">Execute</button>
-                        <button onClick={_self.addScenario} className="btn btn-primary">Add scenraio</button>
-                        <button onClick={_self.backToList} className="btn btn-default">Back</button>
+                        <button onClick={_self.saveFeature} id="btn_save_feature" className="btn btn-success">Save</button>
+                        <button onClick={_self.runFeature} id="btn_exe_feature" className="btn btn-warning">Execute</button>
+                        <button onClick={_self.addScenario} id="btn_add_scenario" className="btn btn-primary">Add scenraio</button>
+                        <button onClick={_self.backToList} id="btn_back_feature" className="btn btn-default">Back</button>
                     </div>
                 );
-                
+
             } else {
                 return (
                     <div className="page-header" style={{"textAlign":"right"}}>
-                        <button onClick={_self.runFeature} className="btn btn-warning">run</button>
-                        <button onClick={_self.runFeature} className="btn btn-primary">debug</button>
-                        <button onClick={_self.closeMonitor} className="btn btn-default">Edit Feature</button>
+                        <button onClick={_self.runFeature} id="btn_run_feature" className="btn btn-warning">run</button>
+                        <button onClick={_self.runFeature} id="btn_debug_feature" className="btn btn-primary">debug</button>
+                        <button onClick={_self.closeMonitor} id="btn_edit_feature" className="btn btn-default">Edit Feature</button>
                     </div>
                 );
             }
@@ -132,7 +132,7 @@ var FeatureDisplayView = React.createClass({
         return (
             <div>
                 {buttonGroup}
-                {view}                
+                {view}
             </div>
         );
     }
@@ -141,6 +141,6 @@ var FeatureDisplayView = React.createClass({
 ReactDOM.render(
     React.createElement(FeatureDisplayView, null),
     document.getElementById('feature-info-container')
-);  
+);
 
 // module.exports = FeatureDisplayView;

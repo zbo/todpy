@@ -19,12 +19,12 @@ var FeatureCreateView = React.createClass({
     saveFeature: function(){
     	PubSub.publish(TOD.events.getFeatureData);
         PubSub.publish(TOD.events.getScenarioData);
-        
+
         var featureData = TOD.react.data.feature,
             scenarioData = TOD.react.data.scenarios;
-        
+
        	var featureService = new TOD.service.featureService();
-       	
+
         if(featureService.parseFeatureDto(featureData, scenarioData)){
        		featureService.saveFeature(featureData);
        	} else {
@@ -33,7 +33,7 @@ var FeatureCreateView = React.createClass({
        			"message" : "The data is invalid"
        		})
        	}
-        
+
     },
     addScenario: function(){
     	var new_scenario = {
@@ -60,9 +60,9 @@ var FeatureCreateView = React.createClass({
         return (
              <div>
                 <div className="page-header" style={{"textAlign":"right"}}>
-                    <button onClick={this.saveFeature} className="btn btn-success">Save</button>
-                    <button onClick={this.addScenario} className="btn btn-primary">Create Scenario</button>
-                    <button onClick={this.backToList} className="btn btn-default">Back</button>
+                    <button onClick={this.saveFeature} id="btn_save_feature" className="btn btn-success">Save</button>
+                    <button onClick={this.addScenario} id="btn_create_feature" className="btn btn-primary">Create Scenario</button>
+                    <button onClick={this.backToList} id="btn_back_feature" className="btn btn-default">Back</button>
                 </div>
                 <div className="row">
    					<div className="col-md-12">
@@ -76,7 +76,7 @@ var FeatureCreateView = React.createClass({
                        		<ScenarioList data={_self.state.scenarios} />
                        	</fieldset>
                     </div>
-                </div>         
+                </div>
             </div>
         );
     }
