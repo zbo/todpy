@@ -93,6 +93,9 @@ class app_setting_tests(unittest.TestCase):
         feature = Feature.objects.get(pk=feature_id)
         assert_post_execution_plan.assert_all(self, result, feature)
 
+    def test_db_add_case_feature1(self):
+        print '.'*20+'test_db_add_case_feature1'+'.'*20
+
 
 
 

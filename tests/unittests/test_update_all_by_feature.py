@@ -31,8 +31,8 @@ def test():
     django.setup()
     all_steps = '''{
             "feature": {
-                "feature_name": "change name feature name",
-                "feature_description": "not fun now",
+                "feature_name": "test okcoin user reg form",
+                "feature_description": "just for test",
                 "feature_id": 1,
                 "scenarios": [
                     {

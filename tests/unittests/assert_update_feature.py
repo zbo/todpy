@@ -3,8 +3,8 @@ from auto.models import Feature, Scenario, Step
 
 
 def assert_all(instance, feature):
-    instance.assertEqual(feature.name, 'change name feature name')
-    instance.assertEqual(feature.description, 'not fun now')
+    instance.assertEqual(feature.name, 'test okcoin user reg form')
+    instance.assertEqual(feature.description, 'just for test')
     # instance.assertEqual(feature.scenario_set.count(), 3)
     # instance.assertEqual(feature.scenario_set.first().step_sequence, '1|7|3|8|9|10|11|12|13|4|')
     # instance.assertEqual(feature.scenario_set.get(id=2).step_sequence, '5|6|')
