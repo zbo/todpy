@@ -79,8 +79,8 @@ var TestPlanManageDialog = React.createClass({
             <div className="col-sm-6 bg-success">connected</div>
         </div>
         <div className="form-horizontal">
-            <div className="col-sm-6 well">{featureNotconnected}</div>
-            <div className="col-sm-6 well">{fearureconnected}</div>
+            <div id="well-not-connected" className="col-sm-6 well">{featureNotconnected}</div>
+            <div id="well-connected" className="col-sm-6 well">{fearureconnected}</div>
         </div>
       </div>
         );
@@ -141,6 +141,16 @@ var TestplanDisplayView = React.createClass({
         this.setState({description: $("#input-description").val()});
         this.setState({name: $("#input-name").val()});
 
+    },
+
+    saveFeatureConnection: function(sender){
+        console.log("aa")
+        buttonarr=$("#well-connected").find("button")
+        connectedFeature=[]
+        for(i=0; i<buttonarr.length; i++){
+          connectedFeature.push(buttonarr[i].innerHTML)
+        }
+        this.setState({testcaseconnected:connectedFeature});
     },
 
     render: function(){
@@ -232,7 +242,7 @@ var TestplanDisplayView = React.createClass({
                   		</div>
                   		<div className="modal-footer">
                   			<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                  			<button type="button" className="btn btn-primary">Save changes</button>
+                  			<button type="button" onClick={this.saveFeatureConnection} className="btn btn-primary" data-dismiss="modal">Save changes</button>
                   		</div>
                   	</div>
                   </div>
