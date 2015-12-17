@@ -15,7 +15,8 @@ def i_open_browser(step):
 
 @global_decorator.logit
 def i_open_browser_impl():
-    world.browser = webdriver.Chrome()
+    world.browser = webdriver.Firefox()
+    world.browser.maximize_window()
 
 
 @step("I open page \'([^\']*)\'")
