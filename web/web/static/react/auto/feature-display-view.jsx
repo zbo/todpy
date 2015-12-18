@@ -20,6 +20,9 @@ var FeatureDisplayView = React.createClass({
             featureDto: _featureDto
         };
     },
+    viewRemote: function(e){
+        window.open('http://10.32.36.71:6080/vnc_auto.html')
+    },
     runFeature: function(e){
         console.log("start running");
         this.setState({
@@ -120,8 +123,9 @@ var FeatureDisplayView = React.createClass({
             } else {
                 return (
                     <div className="page-header" style={{"textAlign":"right"}}>
-                        <button onClick={_self.runFeature} id="btn_run_feature" className="btn btn-warning">run</button>
-                        <button onClick={_self.runFeature} id="btn_debug_feature" className="btn btn-primary">debug</button>
+                        <button onClick={_self.viewRemote} id="btn_view_remote" className="btn btn-success">View Remote</button>
+                        <button onClick={_self.runFeature} id="btn_run_feature" className="btn btn-warning">Run</button>
+                        <button onClick={_self.runFeature} id="btn_debug_feature" className="btn btn-primary">Debug</button>
                         <button onClick={_self.closeMonitor} id="btn_edit_feature" className="btn btn-default">Edit Feature</button>
                     </div>
                 );
