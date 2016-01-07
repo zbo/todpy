@@ -66,3 +66,12 @@ class TestLog(models.Model):
         self.execution = execution
         self.content = content
         self.infotype = infotype
+
+
+class TestExecutionScreenshot(models.Model):
+    execution = models.ForeignKey(Execution)
+    screen_shot = models.BinaryField()
+
+    def fill(self, execution, screen_shot):
+        self.execution = execution
+        self.screen_shot = screen_shot

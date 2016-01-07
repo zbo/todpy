@@ -9,9 +9,9 @@ import global_decorator
 
 @step("I record log \'([^\']*)\'")
 def i_record_log(step, message):
-    i_record_log_impl(message)
+    i_record_log_impl(step, message)
 
 
 @global_decorator.logit
-def i_record_log_impl(message):
+def i_record_log_impl(step, message):
     print message

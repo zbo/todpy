@@ -13,6 +13,7 @@ from auto.models import Feature
 import subprocess
 import uuid
 import pdb
+import traceback
 
 class lettuce_executor:
     def __init__(self, execution):
@@ -31,7 +32,9 @@ class lettuce_executor:
         workspace_web = os.path.join(project_base, workspace_name, root_location, 'web')
         file_place = os.path.join(project_base, workspace_name, root_location, 'web/features', entrance)
         file_path = file_place + '.feature'
+
         cmd_gen_bin = 'cd {0} && {1} {2} --with-subunit'.format(workspace_web, 'lettuce', file_path)
+
         subprocess.call([cmd_gen_bin], shell=True)
         cmd_gen_sub_unit2 ='subunit2junitxml < {0}/subunit.bin'.format(workspace_web)
         process = subprocess.Popen(cmd_gen_sub_unit2, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -40,6 +43,9 @@ class lettuce_executor:
         log.fill(self.execution, stdoutput, "lettuce stdout")
         log.save()
         os.remove('{0}/subunit.bin'.format(workspace_web))
+
+
+
         self.unlock_feature()
         print "==================="
 

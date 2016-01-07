@@ -9,11 +9,11 @@ import global_decorator
 
 @step("I input \'([^\']*)\' into textbox with id \'([^\']*)\'")
 def i_type_text(step, text, id):
-    i_type_text_impl(id, text)
+    i_type_text_impl(step, id, text)
 
 
 @global_decorator.logit
-def i_type_text_impl(id, text):
+def i_type_text_impl(step, id, text):
     element = world.browser.find_element_by_id(id)
     element.click()
     element.send_keys(text)

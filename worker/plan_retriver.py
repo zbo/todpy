@@ -28,6 +28,8 @@ class sqlite_execution_plan_retriver:
         execution.status='finished'
         execution.save()
 
+
+
 if __name__ =='__main__':
     execution = sqlite_execution_plan_retriver.retrive_first_one()
     print execution.endtime
