@@ -119,11 +119,17 @@ var FeatureExecutionReport = React.createClass({
     				scenario.step = [scenario.step];
     			}
 
+    			var hasFailed = false;
+
     			var steps = scenario.step.map(function(_step){
     				var s = _step['@attributes'];
     				var pass = JSON.parse(s.pass);
     				var path = pass? scenario['@attributes'].path+"/"+s.img: scenario['@attributes'].path+"/error.png",
     					_class = pass? "bg-success": "bg-danger";
+
+    				if(!pass && !hasFailed){
+    					hasFailed=true;
+    				}
 
     				return (
     					<p className={_class} >
@@ -132,8 +138,10 @@ var FeatureExecutionReport = React.createClass({
     				);
     			});
 
+    			var panelClass = hasFailed? "panel panel-danger": "panel panel-success";
+
     			return (
-    				<div className="panel panel-primary">
+    				<div className={panelClass}>
 	    				<div className="panel-heading" data-path={scenario['@attributes'].path}>
 	    					{scenario['@attributes'].name}
 	    				</div>
@@ -174,7 +182,7 @@ var FeatureExecutionReport = React.createClass({
    	                <ReactBootstrap.Tab eventKey={1} title="Step Screenshot">
 	                	{screenshot_index}
 	                </ReactBootstrap.Tab>
-	                <ReactBootstrap.Tab eventKey={2} title="Error Screenshot">
+	                <ReactBootstrap.Tab eventKey={2} title="Test Log">
 	                </ReactBootstrap.Tab>
 	            </ReactBootstrap.Tabs>
 	            {screenshotDialog}
