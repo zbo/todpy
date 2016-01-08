@@ -70,7 +70,8 @@ var FeatureExecutionReport = React.createClass({
 			  processData: false,
 			  data:JSON.stringify({
 			    path: _pathTo,
-			    featureId: _self.state.featureId
+			    featureId: _self.state.featureId,
+			    'csrfmiddlewaretoken': $("#csrf_crendential>input")[0].value
 			  }),
 			  success: function(res){
 			  	var _screenshots = _self.state.screenshots;
