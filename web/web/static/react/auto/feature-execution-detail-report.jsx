@@ -65,7 +65,7 @@ var FeatureExecutionReport = React.createClass({
     		
 
     		$.ajax({
-			  url:"http://localhost:8000/workspace/api/read_screenshot_by_path",
+			  url:window.location.protocol+"//"+window.location.host+"/workspace/api/read_screenshot_by_path",
 			  type: "POST",
 			  processData: false,
 			  data:JSON.stringify({
