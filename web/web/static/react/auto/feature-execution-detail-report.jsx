@@ -110,7 +110,15 @@ var FeatureExecutionReport = React.createClass({
     		var feature = result.feature,
     			scenarios = feature.scenario;
 
+    		if(scenarios.map===undefined){
+    			scenarios = [scenarios];
+    		}
+
     		var $scenarios = scenarios.map(function(scenario){
+    			if(scenario.step.map === undefined){
+    				scenario.step = [scenario.step];
+    			}
+
     			var steps = scenario.step.map(function(_step){
     				var s = _step['@attributes'];
     				var pass = JSON.parse(s.pass);
