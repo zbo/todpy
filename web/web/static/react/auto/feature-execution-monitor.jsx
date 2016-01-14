@@ -14,11 +14,13 @@ var FeatureExecutionMonitor = React.createClass({
                 tests:0
             },
             showModal: false,
+            showHistoryModal: false,
             logs:[]
         };
     },
     componentDidMount: function() {
         PubSub.subscribe(TOD.events.runFeature, this.requestForStartExecution);
+
     },
     componentWillUnmount:function() {
         PubSub.unsubscribe(this.requestForStartExecution);
@@ -36,7 +38,7 @@ var FeatureExecutionMonitor = React.createClass({
                 console.log("success");
                 if("result:execution already started"===res){
                     alert(res);
-                    // window.clearInterval(interval_id);
+
                     return ;
                 }
                 if("result:ok"===res){
@@ -217,6 +219,19 @@ var FeatureExecutionMonitor = React.createClass({
             showModal:false
         })
     },
+    showHistoryModal: function(e){
+        console.log("show detail modal");
+
+        this.setState({
+            showHistoryModal: true
+        })
+
+    },
+    closeHistoryModal: function(e){
+        this.setState({
+            showHistoryModal:false
+        })  
+    },
     render:function() {
 
         var _self = this;
@@ -257,10 +272,28 @@ var FeatureExecutionMonitor = React.createClass({
             );
         })();
 
+        var historyModal = !this.state.showHistoryModal?"":(function(){
+            return (
+                <ReactBootstrap.Modal show={_self.state.showHistoryModal} onHide={_self.closeHistoryModal}>
+                  <ReactBootstrap.Modal.Header closeButton>
+                    <ReactBootstrap.Modal.Title>Test Execution History Report</ReactBootstrap.Modal.Title>
+                  </ReactBootstrap.Modal.Header>
+                  <ReactBootstrap.Modal.Body>
+                    <FeatureExecutionHistory data={_self.state} ></FeatureExecutionHistory>
+                    <hr />
+                  </ReactBootstrap.Modal.Body>
+                  <ReactBootstrap.Modal.Footer>
+                    <button className="btn btn-default" onClick={_self.closeHistoryModal}>Close</button>
+                  </ReactBootstrap.Modal.Footer>
+                </ReactBootstrap.Modal>
+            );
+        })();
+
         return (
             <div className="panel panel-primary">
                 <div className="panel-heading">
                     <button onClick={this.resetStatus} className="btn btn-xs btn-default pull-right"><span className="glyphicon glyphicon-remove"></span></button>
+                    <button onClick={this.showHistoryModal} className="btn btn-xs btn-default pull-right"><span className="glyphicon glyphicon-time">History</span></button>
                     <h5>Execution status</h5>
                 </div>
                 <div className="panel-body">
@@ -293,6 +326,7 @@ var FeatureExecutionMonitor = React.createClass({
 
                 </div>
                 {detailModal}
+                {historyModal}
             </div>
         );
     }

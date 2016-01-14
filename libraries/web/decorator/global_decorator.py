@@ -6,6 +6,7 @@ from lettuce import *
 from selenium import webdriver
 import os
 
+
 def logit(func):
     def wrapper(*args):
         # pdb.set_trace()
@@ -22,7 +23,7 @@ def logit(func):
             _screenshot = os.path.join(world.scenario_root, "error.png")
             world.browser.get_screenshot_as_file(_screenshot)
             try:
-                index_file = open(os.path.join(world.feature_root, "index.xml"), "a")
+                index_file = open(os.path.join(world.dir_root, "index.xml"), "a")
                 for s in _step.scenario.steps:
                     if not s.passed:
                         errorLog = "" if _flag else traceback.format_exc()
@@ -57,11 +58,11 @@ def save_snapshot(_step, _func_name):
     _image_name = str(_line_no)+"_"+_func_name+".png"
     try:
         world.browser.get_screenshot_as_file(os.path.join(world.scenario_root, _image_name))
-        index_file = open(os.path.join(world.feature_root, "index.xml"), "a")
+        index_file = open(os.path.join(world.dir_root, "index.xml"), "a")
         step_info = "<step name=\""+_step.__dict__.get('original_sentence')+"\" img=\""+_image_name+"\" pass=\"true\"></step>\r\n"
         index_file.writelines(step_info)
     except Exception, e:
-        index_file = open(os.path.join(world.feature_root, "index.xml"), "a")
+        index_file = open(os.path.join(world.dir_root, "index.xml"), "a")
         step_info = "<step name=\""+_step.__dict__.get('original_sentence')+"\" pass=\"true\"></step>\r\n"
         index_file.writelines(step_info)
 
