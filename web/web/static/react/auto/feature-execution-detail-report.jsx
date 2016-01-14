@@ -107,7 +107,7 @@ var FeatureExecutionReport = React.createClass({
 
     	var screenshot_index = (function(){
     		var result = _self.state.detail_result;
-    		var feature = result.feature,
+    		var feature = result.testplan.feature,
     			scenarios = feature.scenario;
 
     		if(scenarios.map===undefined){
