@@ -113,7 +113,6 @@ def after_each_feature(feature):
 
 @after.all
 def teardown(total):
-    pdb.set_trace()
     _file = "index.csv"
     _fieldnames = ["id", "directory", "pass", "failure", "error", "total"]
 

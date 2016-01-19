@@ -263,7 +263,7 @@ TOD.react.StepInfo = React.createClass({
         })();
 
         return (
-            <div className="well well-sm">
+            <div className="well well-sm" data-id={_self.state.data.key}>
                 {component}
             </div>
         );
@@ -326,6 +326,36 @@ var ScenarioContainer = React.createClass({
         PubSub.subscribe(TOD.events.getScenarioData, this.getScenarioData);
     },
     componentDidMount: function() {
+        var _self = this;
+
+        $('.step-list').sortable({
+            cursor: "pointer",
+            update: function(e, d){
+                console.log('draggale');
+                console.log(e);
+                console.log(d);
+                var $arr = e.target.childNodes,
+                    item = d.item[0];
+
+                var _steps = _self.state.steps,
+                    _map = {},
+                    _result = [];
+
+                for(var i=0, N=_steps.length; i<N; i++){
+                    _map[_steps[i].key] = _steps[i];
+                }
+
+                for(var i=0, N = $arr.length; i<N; i++){
+                    var _id = $arr[i].dataset['id'];
+                    if(_id!==undefined){
+                        _result.push(_map[_id]);
+                    }
+                }
+
+                _self.state.steps = _result
+            }
+        })  
+
         if(this.props.data){
 
             this.setState({
@@ -347,6 +377,37 @@ var ScenarioContainer = React.createClass({
                 })
             });
         }
+    },
+    componentDidUpdate: function(prevProps, prevState) {
+        // var _self = this;
+
+        // $('.step-list').sortable({
+        //     cursor: "pointer",
+        //     update: function(e, d){
+        //         console.log('draggale');
+        //         console.log(e);
+        //         console.log(d);
+        //         var $arr = e.target.childNodes,
+        //             item = d.item[0];
+
+        //         var _steps = _self.state.steps,
+        //             _map = {},
+        //             _result = [];
+
+        //         for(var i=0, N=_steps.length; i<N; i++){
+        //             _map[_steps[i].key] = _steps[i];
+        //         }
+
+        //         for(var i=0, N = $arr.length; i<N; i++){
+        //             var _id = $arr[i].dataset['id'];
+        //             _result.push(_map[_id]);
+        //         }
+
+        //         _self.setState({
+        //             steps: _result
+        //         });
+        //     }
+        // })  
     },
     onAddButtonClick: function(e){
         console.log("On add button clicked");
@@ -508,7 +569,9 @@ var ScenarioContainer = React.createClass({
                     <div className="scenario-description hide">
                         <p>{this.state.description}</p>
                     </div>
-                    {stepList}
+                    <div className="step-list">
+                        {stepList}
+                    </div>
                 </div>
             </div>
         );

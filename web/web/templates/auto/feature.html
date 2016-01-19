@@ -2,6 +2,12 @@
 
 {% block stylesheet %}
 <link href="{{ STATIC_URL }}css/react-tree.css" rel="stylesheet">
+<style type="text/css">
+.ui-sortable-handle {
+    cursor: pointer;
+}
+
+</style>
 {% endblock %}
 
 {% block content %}
@@ -32,6 +38,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/bower_components/bootstrap/js/modal.js"></script>
     
     <script type="text/javascript" src="{{ STATIC_URL }}js/bower_components/react-bootstrap/react-bootstrap.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/select2.full.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL}}js/bower_components/PubSub/pubsub.min.js"></script>
     
