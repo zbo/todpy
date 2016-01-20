@@ -12,16 +12,52 @@ from django.db import models
 
 
 # Create your models here.
+class Project(models.Model):
+    def fill(self, name, prefix, description):
+        self.name = name
+        self.prefix = prefix
+        self.description = description
+        self.url = ""
+        return self
+
+    def update_url(self, url):
+        self.url = url
+
+    name = models.CharField(max_length=255)
+    prefix = models.CharField(max_length=16)
+    description = models.CharField(max_length=1023)
+    url = models.URLField(default="")
+
+
+class TestSuite(models.Model):
+    def fill(self, name, description, project, parent_id, level):
+        self.name = name
+        self.description = description
+        self.project = project
+        self.parent_id = parent_id
+        self.level = level
+        return self
+
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=1023)
+    parent_id = models.CharField(max_length=255)
+    project = models.ForeignKey(Project)
+    level = models.IntegerField()
+
 
 class Feature(models.Model):
     def fill(self, name, description, module, location):
         self.name = name
         self.description = description
         self.module = module
+        self.feature_key = ""
         if self.workspace == None:
             self.location = location
             self.workspace = -1
         return self
+
+    def update_feature_key(self, key):
+        self.key = key
 
     def update_workspace(self, workspace):
         self.workspace = workspace.id
@@ -30,7 +66,7 @@ class Feature(models.Model):
 
     def generate_feature(self):
         return FeatureFileGenerator.generate_feature(self)
-        return plain_text
+        # return plain_text
 
     def lock_feature(self):
         self.executionLock = True
@@ -47,6 +83,9 @@ class Feature(models.Model):
     workspace = models.IntegerField()
     deleted = models.BooleanField(default=False)
     executionLock = models.BooleanField(default=False)
+    feature_key = models.CharField(default="default_key",max_length=255)
+    # project_id = models.ForeignKey(Project)
+    # suite_id = models.ForeignKey(TestSuite)
 
 
 class Scenario(models.Model):

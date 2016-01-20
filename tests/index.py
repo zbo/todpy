@@ -45,6 +45,21 @@ class app_setting_tests(unittest.TestCase):
         from unittest import test_gen_workspace
         test_gen_workspace.test()
 
+    def test_project_gen(self):
+        print '.'*20+'test_project_gen'+'.'*20
+        import test_project_gen
+        result = test_project_gen.test()
+
+        import test_testsuite_operation
+        test_testsuite_operation.test()
+        print result
+
+    def test_testsuite_gen(self):
+        print '.'*20+'test_testsuite_gen'+'.'*20
+        import test_testsuite_operation
+        test_testsuite_operation.test()
+        pass
+
     def test_ac_step_dto(self):
         print '.'*20+'test_ac_step_dto'+'.'*20
         import test_step_dto

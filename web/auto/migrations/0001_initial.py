@@ -21,6 +21,20 @@ class Migration(migrations.Migration):
                 ('workspace', models.IntegerField()),
                 ('deleted', models.BooleanField(default=False)),
                 ('executionLock', models.BooleanField(default=False)),
+                ('feature_key', models.CharField(default=b'default_key', max_length=255)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Project',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=255)),
+                ('prefix', models.CharField(max_length=16)),
+                ('description', models.CharField(max_length=1023)),
+                ('url', models.URLField(default=b'')),
             ],
             options={
             },
@@ -54,6 +68,20 @@ class Migration(migrations.Migration):
                 ('action_type', models.CharField(default=b'Then', max_length=20)),
                 ('co_variables', models.CharField(max_length=255)),
                 ('scenario', models.ForeignKey(to='auto.Scenario')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TestSuite',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=255)),
+                ('description', models.CharField(max_length=1023)),
+                ('parent_id', models.CharField(max_length=255)),
+                ('level', models.IntegerField()),
+                ('project', models.ForeignKey(to='auto.Project')),
             ],
             options={
             },

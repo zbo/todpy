@@ -107,3 +107,12 @@ class ScenarioDto:
             steps.append(step.render_json())
         json['steps']=steps
         return json
+
+
+class ProjectDto:
+    def __init__(self, id, name, prefix, description):
+        self.id = id
+        self.name = name
+        self.prefix = prefix
+        self.description = description
+        self.testsuites = []
