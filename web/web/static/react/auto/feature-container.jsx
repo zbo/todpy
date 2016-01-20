@@ -10,7 +10,9 @@ var FeatureContainer = React.createClass({
         	mode: "display",
         	feature_id: "new",
         	feature_name: "111",
-        	feature_description: "1111"
+        	feature_description: "1111",
+            project_id: "1",
+            suite_id: "1"
         };
     },
      getFeatureData: function(){
@@ -48,7 +50,7 @@ var FeatureContainer = React.createClass({
                 mode: "display",
                 feature_name: this.state.newVal.feature_name,
                 feature_description: this.state.newVal.feature_description
-            });             
+            });
         }
 
     },
@@ -104,7 +106,7 @@ var FeatureContainer = React.createClass({
         return true;
     },
     render: function() {
-        
+
     	if("edit"===this.state.mode){
     		var _name = this.state.newVal.feature_name,
     			_description = this.state.newVal.feature_description;
@@ -128,7 +130,7 @@ var FeatureContainer = React.createClass({
                           <input onChange={this.handleValueChange} data-name="feature_description" type="text" className="form-control" value={_description}></input>
                         </div>
                       </div>
-                    </div>		            
+                    </div>
 		        </div>
     		);
     	} else {
@@ -142,7 +144,7 @@ var FeatureContainer = React.createClass({
 		        </div>
 	        );
     	}
-        
+
     }
 });
 
@@ -155,5 +157,5 @@ if(document.getElementById('feature-container')){
     ReactDOM.render(
        React.createElement(FeatureContainer, null),
        document.getElementById('feature-container')
-    );    
+    );
 }
