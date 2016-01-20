@@ -87,4 +87,16 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model,),
         ),
+        migrations.AddField(
+            model_name='feature',
+            name='project',
+            field=models.ForeignKey(to='auto.Project'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='feature',
+            name='suite',
+            field=models.ForeignKey(to='auto.TestSuite'),
+            preserve_default=True,
+        ),
     ]

@@ -28,3 +28,9 @@
     type: projectbase
     value: /Users/bob.zhu/project/todpy/
     # value: /Users/ian.zhang/Documents/workspace/todpy/
+
+- model: config.AppSetting
+  pk: 3
+  fields:
+    type: todrepo
+    value: git@git.ringcentral.com:bob.zhu/todrepo.git

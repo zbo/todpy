@@ -34,6 +34,8 @@ def test():
                 "feature_name": "test okcoin user reg form",
                 "feature_description": "just for test",
                 "feature_id": 1,
+                "project_id": 1,
+                "suite_id": 2,
                 "scenarios": [
                     {
                         "scenario_name": "first updated scenario",

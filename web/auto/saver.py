@@ -89,7 +89,11 @@ class StepDtoPostSaver:
         json_obj = json.loads(json_str)
         feature_name = json_obj['feature']['feature_name']
         feature_desc = json_obj['feature']['feature_description']
+        project_id = json_obj['feature']['project_id']
+        suite_id = json_obj['feature']['suite_id']
         feature_save = Feature().fill(feature_name, feature_desc, '', '')
+        feature_save.project_id = project_id
+        feature_save.suite_id = suite_id
         feature_save.save()
         # scenarios = json_obj['feature']['scenarios']
         # for sce in scenarios:
@@ -107,10 +111,14 @@ class StepDtoPostUpdater:
         feature_name = json_obj['feature']['feature_name']
         feature_desc = json_obj['feature']['feature_description']
         feature_id = json_obj['feature']['feature_id']
+        project_id = json_obj['feature']['project_id']
+        suite_id = json_obj['feature']['suite_id']
         feature_update = Feature.objects.get(id=feature_id)
         workspace_id = feature_update.workspace
         workspace = WorkSpace.objects.get(id=workspace_id)
         feature_update.fill(feature_name, feature_desc, '', '')
+        feature_update.project_id = project_id
+        feature_update.suite_id = suite_id
         feature_update.update_workspace(workspace)
 
         feature_update.save()

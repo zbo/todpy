@@ -47,6 +47,8 @@ def test():
             "feature_name": "first feature name",
             "feature_description": "I want to test this first test case for fun",
             "feature_id": "new",
+            "project_id": 1,
+            "suite_id": 1,
             "scenarios": [
                 {
                     "scenario_name": "first scenario",

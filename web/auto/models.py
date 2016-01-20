@@ -84,8 +84,8 @@ class Feature(models.Model):
     deleted = models.BooleanField(default=False)
     executionLock = models.BooleanField(default=False)
     feature_key = models.CharField(default="default_key",max_length=255)
-    # project_id = models.ForeignKey(Project)
-    # suite_id = models.ForeignKey(TestSuite)
+    project = models.ForeignKey(Project)
+    suite = models.ForeignKey(TestSuite)
 
 
 class Scenario(models.Model):
