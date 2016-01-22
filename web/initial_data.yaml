@@ -33,4 +33,5 @@
   pk: 3
   fields:
     type: todrepo
-    value: git@git.ringcentral.com:bob.zhu/todrepo.git
+    # value: git@git.ringcentral.com:bob.zhu/todrepo.git
+    value: git@10.32.36.71:root/todrepo.git
