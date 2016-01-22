@@ -2,9 +2,6 @@ __author__ = 'bob.zhu'
 import sys
 import os
 import django
-import json
-import uuid
-import unittest
 
 current_dir = path = sys.path[0]
 path_len= current_dir.index('todpy')+len('todpy')
@@ -19,26 +16,8 @@ sys.path.append(web_web_path)
 sys.path.append(tests_path)
 sys.path.append(unittests_path)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
-# Shell Plus Model Imports
-from auto.models import Feature, Scenario, Step
-from auto.dto import StepDto
-from auto.saver import StepDtoPostSaver
-from workspace.saver import WorkSpaceGenerater
-from auto.generator import FeatureFileGenerator
 from config.models import AppSetting, FeatureLocation
-from workspace.models import WorkSpace
-from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.models import Session
-# Shell Plus Django Imports
-from django.utils import timezone
-from django.conf import settings
-from django.core.cache import cache
-from django.db.models import Avg, Count, F, Max, Min, Sum, Q, Prefetch
-from django.core.urlresolvers import reverse
-from django.db import transaction
-from django.contrib import admin
+
 
 import git
 import shutil
@@ -51,8 +30,11 @@ def new_feature():
     test_file.close()
     return file_path
 
-def update_feature():
-    pass
+def delete_feature():
+    feature_root = os.path.join(workspace_path, "todrepo")
+    file_path = os.path.join(feature_root, "test.py")
+    os.remove(file_path)
+    return file_path
 
 def test():
     django.setup()
@@ -61,11 +43,33 @@ def test():
     os.mkdir(workspace_path)
     git_repo_address = AppSetting.getSetting("todrepo")
     git_obj = git.cmd.Git(workspace_path)
+    # test clone repo
     git_obj.clone(git_repo_address)
-    file_path = new_feature()
     git_repo = git.Repo(os.path.join(git_obj.working_dir, "todrepo"))
+    # test check local branch
+    new_branch = git_repo.create_head('bob-branch')
+    git_repo.head.reference = new_branch
+    new_branch.checkout()
+
+    # test new file to repo
+    file_path = new_feature()
+
     git_repo.index.add([file_path])
-    git_repo.index.commit("trigger from tod test")
+    git_repo.index.commit("trigger from tod test new file")
+
+    # # test delete file from repo
+    # file_path = delete_feature()
+    # git_repo.index.remove([file_path])
+    # git_repo.index.commit("trigger from tod test delete file")
+    #
+    # merge branches
+    master = git_repo.heads.master
+    master.checkout()
+    merge_base = git_repo.merge_base(master, new_branch)
+    git_repo.index.merge_tree(new_branch, base=merge_base)
+    git_repo.index.commit("Merged past and now into future ;)",
+                parent_commits=(new_branch.commit, master.commit))
+
     origin = git_repo.remote('origin')
     origin.push()
     return ''
