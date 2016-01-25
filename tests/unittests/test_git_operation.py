@@ -72,6 +72,7 @@ def test():
 
     origin = git_repo.remote('origin')
     origin.push()
+    git_repo.git.branch('-D', 'bob-branch')
     return ''
 
 
