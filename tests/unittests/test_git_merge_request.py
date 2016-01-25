@@ -2,6 +2,8 @@ __author__ = 'bob.zhu'
 import sys
 import os
 import django
+import httplib,urllib
+import json
 
 current_dir = path = sys.path[0]
 path_len= current_dir.index('todpy')+len('todpy')
@@ -58,8 +60,52 @@ def test():
     git_repo.git.push('--set-upstream', 'origin', 'bob-branch')
     git_repo.git.checkout('master')
     git_repo.git.branch('-D', 'bob-branch')
-    print 'finished'
 
+    # create merge request, accept, and delete remote branch
+    response = create_merge_request()
+    resp_obj=json.loads(response.read())
+    mr_id=resp_obj['id']
+    response = accept_merge_request(mr_id)
+    response = delete_remote_branch()
+    print response
+
+
+def delete_remote_branch():
+    headers = {"Content-Type": "application/x-www-form-urlencoded",
+               "Connection": "Keep-Alive"}
+    params = urllib.urlencode({'private_token': 'nc4jzpZaxnDxer4s8mL2'})
+    conn = httplib.HTTPConnection("10.32.36.71")
+    conn.request(method="DELETE", url="http://10.32.36.71/api/v3/projects/1/repository/branches/bob-branch",
+                 body=params,
+                 headers=headers)
+    response = conn.getresponse()
+    return response
+
+
+def accept_merge_request(mr_id):
+    headers = {"Content-Type": "application/x-www-form-urlencoded",
+               "Connection": "Keep-Alive"}
+    params = urllib.urlencode({'private_token': 'nc4jzpZaxnDxer4s8mL2'})
+    conn = httplib.HTTPConnection("10.32.36.71")
+    conn.request(method="PUT", url="http://10.32.36.71/api/v3/projects/1/merge_request/{0}/merge".format(mr_id), body=params,
+                 headers=headers)
+    response = conn.getresponse()
+    return response
+
+
+def create_merge_request():
+    headers = {"Content-Type": "application/x-www-form-urlencoded",
+               "Connection": "Keep-Alive"}
+    params = urllib.urlencode({
+        'private_token': 'nc4jzpZaxnDxer4s8mL2',
+        'source_branch': 'bob-branch',
+        'target_branch': 'master',
+        'title': 'test merge request'})
+    conn = httplib.HTTPConnection("10.32.36.71")
+    conn.request(method="POST", url="http://10.32.36.71/api/v3/projects/1/merge_requests", body=params,
+                 headers=headers)
+    response = conn.getresponse()
+    return response
 
 
 if __name__ == '__main__':
