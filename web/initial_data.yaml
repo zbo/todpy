@@ -35,3 +35,9 @@
     type: todrepo
     # value: git@git.ringcentral.com:bob.zhu/todrepo.git
     value: git@10.32.36.71:root/todrepo.git
+
+- model: config.AppSetting
+  pk: 4
+  fields:
+    type: gitlocal
+    value: workspaces_git/git

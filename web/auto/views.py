@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from auto.saver import StepDtoPostSaver, StepDtoPostUpdater
 from workspace.saver import WorkSpaceGenerater, ExecutionPlanSaver
 from auto.generator import FeatureFileGenerator
+from auto.gitsaver import GitRepoSaver
 import exceptions
 import json
 import lettuce
@@ -146,6 +147,7 @@ def save_feature(request):
             result = saver.save(json_data)
             item_id = result.id
             workspace = WorkSpaceGenerater.gen_workspace('web')
+            GitRepoSaver.save_feature_file_to_git(result, request.user.username, json_data)
             FeatureFileGenerator.save_feature_file(result, workspace, json_data)
             result.update_workspace(workspace)
             return HttpResponse(item_id);
@@ -162,6 +164,7 @@ def update_feature(request, feature_id):
         updater = StepDtoPostUpdater()
         result = updater.update(json_data)
         workspace = WorkSpace.objects.get(pk=result.workspace)
+        GitRepoSaver.update_feature_file_to_git()
         FeatureFileGenerator.update_feature_file(result, workspace, json_data)
         return HttpResponse(request.body)
 

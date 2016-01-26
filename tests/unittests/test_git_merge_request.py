@@ -68,6 +68,7 @@ def test():
     response = accept_merge_request(mr_id)
     response = delete_remote_branch()
     print response
+    git_repo.remotes.origin.pull()
 
 
 def delete_remote_branch():
