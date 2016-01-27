@@ -164,7 +164,7 @@ def update_feature(request, feature_id):
         updater = StepDtoPostUpdater()
         result = updater.update(json_data)
         workspace = WorkSpace.objects.get(pk=result.workspace)
-        GitRepoSaver.update_feature_file_to_git()
+        GitRepoSaver.update_feature_file_to_git(result, request.user.username, json_data)
         FeatureFileGenerator.update_feature_file(result, workspace, json_data)
         return HttpResponse(request.body)
 

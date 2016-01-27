@@ -57,7 +57,19 @@ class GitRepoSaver:
 
     @staticmethod
     def update_feature_file_to_git(feature, folder_name, json_data):
-        pass
+        try:
+            project_base = AppSetting.getSetting('projectbase')
+            work_space = AppSetting.getSetting('gitlocal')
+            workspace_path = os.path.join(project_base[0], work_space[0])
+            git_obj = git.cmd.Git(workspace_path)
+            user_folder = os.path.join(git_obj.working_dir, "todrepo", folder_name)
+            feature_file_name = "{0}-{1}".format(str(feature.id),feature.name.replace(' ', '-'))
+            file_path = os.path.join(user_folder, feature_file_name)
+            os.remove(file_path)
+            GitRepoSaver.save_feature_file_to_git(feature, folder_name, json_data)
+
+        except exceptions:
+            pass
 
     @staticmethod
     def save_feature_file_to_git(feature, folder_name, json_data):
@@ -78,7 +90,7 @@ class GitRepoSaver:
             user_folder = os.path.join(git_obj.working_dir, "todrepo", folder_name)
             if not os.path.exists(user_folder):
                 os.mkdir(user_folder)
-            feature_file_name = "{0}-{1}".format(str(feature.id),feature.name.replace(' ','-'))
+            feature_file_name = "{0}-{1}".format(str(feature.id),feature.name.replace(' ', '-'))
             file_path = os.path.join(user_folder, feature_file_name)
             if os.path.exists(file_path):
                 os.remove(file_path)
